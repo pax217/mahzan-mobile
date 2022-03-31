@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="http://prismlibrary.com"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="Mahzan.Mobile.Views.LoginPage">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Image Grid.Row="1" 
+               Source="mahzan_logo.png"
+               WidthRequest="150"
+               HeightRequest="150"
+               Margin="0,50,0,30">
+        </Image>
+
+        <StackLayout Grid.Row="2" Padding="30,20">
+            <Entry Placeholder="Usuario"
+                   Text="{Binding UserName}">
+            </Entry>
+            <Entry Grid.Row="3"
+                   x:Name="entryUserName" 
+                   Placeholder="Contraseña"
+                   IsPassword="True"
+                   Text="{Binding Password}">
+            </Entry>
+            <Button Grid.Row="4"
+                    x:Name="entryPassword"
+                    Text="Inciar Sesión"
+                    BackgroundColor="SteelBlue"
+                    BorderRadius="20"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    Command="{Binding LoginCommand}">
+            </Button>
+            <Label Grid.Row="5"></Label>
+            <StackLayout Grid.Row="6"
+                         Orientation="Horizontal">
+                <Label Text="¿Olvidaste tu Contraseña?"></Label>
+            </StackLayout>
+        </StackLayout>
+    </Grid>
+</ContentPage>
