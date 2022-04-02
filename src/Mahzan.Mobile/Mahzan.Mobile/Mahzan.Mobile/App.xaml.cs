@@ -1,4 +1,8 @@
 ﻿using System;
+using Mahzan.Mobile.Services.SHA1;
+using Mahzan.Mobile.Services.User;
+using Mahzan.Mobile.SqLite._Base;
+using Mahzan.Mobile.SqLite.Entities;
 using Mahzan.Mobile.ViewModels;
 using Mahzan.Mobile.Views;
 using Prism;
@@ -36,11 +40,20 @@ namespace Mahzan.Mobile
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            RegisterNavigation(containerRegistry);
+            RegisterDependencies(containerRegistry);
         }
 
-        protected void RegisterNavigation(IContainerRegistry containerRegistry)
+        protected void RegisterDependencies(IContainerRegistry containerRegistry)
         {
+            //Services
+            containerRegistry.Register<IUserService,UserService>();
+            containerRegistry.Register<ISHA1,SHA1>();
+            
+            //Repository
+            containerRegistry.Register<IRepository<User>, Repository<User>>();
+            
+            //Navigation
+            containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<LoginPage, LoginPageViewModel>();
         }
     }
