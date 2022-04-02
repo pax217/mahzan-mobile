@@ -1,4 +1,6 @@
 ﻿using System;
+using Mahzan.Mobile.Services.SHA1;
+using Mahzan.Mobile.Services.User;
 using Mahzan.Mobile.ViewModels;
 using Mahzan.Mobile.Views;
 using Prism;
@@ -41,6 +43,11 @@ namespace Mahzan.Mobile
 
         protected void RegisterNavigation(IContainerRegistry containerRegistry)
         {
+            //Services
+            containerRegistry.Register<IUserService, UserService>();
+            containerRegistry.Register<ISHA1, SHA1>();
+            
+            //Navigation
             containerRegistry.RegisterForNavigation<LoginPage, LoginPageViewModel>();
         }
     }
