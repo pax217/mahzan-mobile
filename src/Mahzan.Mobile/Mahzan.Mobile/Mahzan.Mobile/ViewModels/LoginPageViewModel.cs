@@ -57,6 +57,7 @@ public class LoginPageViewModel : ViewModelBase
             }
             
             await NavigationService.NavigateAsync("SelectStorePage");
+            
         }
     }
 }
