@@ -5,8 +5,12 @@ using Mahzan.Mobile.SqLite._Base;
 using Mahzan.Mobile.SqLite.Entities;
 using Mahzan.Mobile.ViewModels;
 using Mahzan.Mobile.ViewModels.Administrator;
+using Mahzan.Mobile.ViewModels.Settings;
+using Mahzan.Mobile.ViewModels.Settings.Printer;
 using Mahzan.Mobile.Views;
 using Mahzan.Mobile.Views.Administrator;
+using Mahzan.Mobile.Views.Settings;
+using Mahzan.Mobile.Views.Settings.Printer;
 using Prism;
 using Prism.Ioc;
 using Xamarin.Forms;
@@ -49,6 +53,7 @@ namespace Mahzan.Mobile
         {
             //Repository
             containerRegistry.Register<IRepository<User>, Repository<User>>();
+            containerRegistry.Register<IRepository<BluetoothDevice>, Repository<BluetoothDevice>>();
             
             //Services
             containerRegistry.Register<IUserService, UserService>();
@@ -60,6 +65,10 @@ namespace Mahzan.Mobile
             containerRegistry.RegisterForNavigation<LoginPage, LoginPageViewModel>();
             
             containerRegistry.RegisterForNavigation<AdministratorDashboardPage, AdministratorDashboardPageViewModel>();
+            
+            // Settings
+            containerRegistry.RegisterForNavigation<IndexSettingsPage, IndexSettingsPageViewModel>();
+            containerRegistry.RegisterForNavigation<SelectPrinterPage, SelectPrinterPageViewModel>();
         }
     }
 }

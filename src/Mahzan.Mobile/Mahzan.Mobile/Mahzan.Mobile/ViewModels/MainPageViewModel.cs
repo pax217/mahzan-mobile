@@ -7,6 +7,7 @@ using Mahzan.Mobile.Models.Menu;
 using Mahzan.Mobile.SqLite._Base;
 using Mahzan.Mobile.SqLite.Entities;
 using Mahzan.Mobile.Views;
+using Mahzan.Mobile.Views.Settings;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
@@ -18,7 +19,7 @@ namespace Mahzan.Mobile.ViewModels
     {
         private INavigationService _navigationService;
         
-        
+        private readonly IRepository<User> _userRepository;
         public ObservableCollection<MyMenuItem> MenuItems { get; set; }
         
         private MyMenuItem selectedMenuItem;
@@ -76,19 +77,17 @@ namespace Mahzan.Mobile.ViewModels
         }
         
         public MainPageViewModel(
-            INavigationService navigationService)
+            INavigationService navigationService,
+            IRepository<User> userRepository)
         {
             //Navigation
             _navigationService = navigationService;
 
             //Repository
-
-
-
-
+            _userRepository = userRepository;
+            
             Task.Run(() => BuildMenu());
-
-
+            
             NavigateCommand = new DelegateCommand(Navigate);
         }
         
@@ -96,21 +95,21 @@ namespace Mahzan.Mobile.ViewModels
         {
             MenuItems = new ObservableCollection<MyMenuItem>();
 
-            //List<User> aspNetUsers = await _userRepository.Get();
+            List<User> aspNetUsers = await _userRepository.Get();
 
-            // Role = aspNetUsers.FirstOrDefault().Role;
-            // UserName = aspNetUsers.FirstOrDefault().UserName;
+            Role = aspNetUsers.FirstOrDefault().Role;
+            UserName = aspNetUsers.FirstOrDefault().UserName;
             // StoreName = aspNetUsers.FirstOrDefault().StoreName;
             // PontOfSale = aspNetUsers.FirstOrDefault().PointOfSaleName;
 
-            // switch (aspNetUsers.FirstOrDefault().Role)
-            // {
-            //     case "MEMBER":
-            //         MenuItems = BuildMenuMember();
-            //         break;
-            //     default:
-            //         break;
-            // }
+            switch (aspNetUsers.FirstOrDefault().Role)
+            {
+                case "Administrator":
+                    MenuItems = BuildMenuMember();
+                    break;
+                default:
+                    break;
+            }
         }
         
         async void Navigate()
@@ -123,6 +122,50 @@ namespace Mahzan.Mobile.ViewModels
             {
                 Application.Current.MainPage = new LoginPage();
             }
+        }
+        
+        private ObservableCollection<MyMenuItem> BuildMenuMember()
+        {
+            ObservableCollection<MyMenuItem> result = new ObservableCollection<MyMenuItem>();
+
+            /*result.Add(new MyMenuItem()
+            {
+                Icon = "ic_viewa",
+                PageName = nameof(IndexSalesPage),
+                Title = "Ventas",
+            });
+
+            result.Add(new MyMenuItem()
+            {
+                Icon = "ic_viewb",
+                PageName = nameof(IndexProductsPage),
+                Title = "Productos",
+            });
+
+
+            result.Add(new MyMenuItem()
+            {
+                Icon = "ic_viewb",
+                PageName = nameof(IndexWorkEnviromentPage),
+                Title = "Entorno de Trabajo",
+            });*/
+
+            result.Add(new MyMenuItem()
+            {
+                Icon = "ic_viewb",
+                PageName = nameof(IndexSettingsPage),
+                Title = "Configuración",
+            });
+
+            result.Add(new MyMenuItem()
+            {
+                Icon = "ic_viewb",
+                PageName = nameof(LoginPage),
+                Title = "Salir",
+                ExitAplication = true
+            });
+
+            return result;
         }
     }
 }

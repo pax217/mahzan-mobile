@@ -21,7 +21,7 @@ public class LoginPageViewModel : BindableBase, INavigationAware
 
         private readonly IUserService _userService;
         
-        private readonly IRepository<User> _repository;
+        private readonly IRepository<User> _userRepository;
 
         public string UserName { get; set; }
 
@@ -32,14 +32,14 @@ public class LoginPageViewModel : BindableBase, INavigationAware
         public LoginPageViewModel(
             INavigationService navigationService,
             IUserService userService,
-            IRepository<User> repository)
+            IRepository<User> userRepository)
         {
 
             //Services
             _userService = userService;
             
             //Repositories
-            _repository = repository;
+            _userRepository = userRepository;
 
             //Navigation
             _navigationService = navigationService;
@@ -83,11 +83,12 @@ public class LoginPageViewModel : BindableBase, INavigationAware
 
         private async Task SaveOnSqlite(LogInResponse logInResponse)
         {
-            await _repository.DeleteAll();
-            await _repository.Insert(new User()
+            await _userRepository.DeleteAll();
+            await _userRepository.Insert(new User()
             {
                 Token = logInResponse.Token,
-                Role = logInResponse.Role
+                Role = logInResponse.Role,
+                UserName = logInResponse.UserName
             }); 
         }
 
