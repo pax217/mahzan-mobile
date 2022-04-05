@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Mahzan.Mobile.Views.MainPage"
+             xmlns:prism="http://prismlibrary.com"    
+             prism:ViewModelLocator.AutowireViewModel="True"
+             xmlns:b="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
+             Title="{Binding Title}">
+
+    <MasterDetailPage.Master>
+
+        <NavigationPage Title="Menu" 
+                        Icon="ic_hamburger.png">
+            <x:Arguments>
+                <ContentPage Title="Mahzan">
+                    <StackLayout>
+                        <Grid Padding="70,10,0,10">
+                            <Grid.RowDefinitions>
+                                <RowDefinition  Height="25"/>
+                                <RowDefinition  Height="25"/>
+                                <RowDefinition  Height="20"/>
+                                <RowDefinition  Height="20"/>
+                            </Grid.RowDefinitions>
+                            <Label Grid.Row="0"
+                                   Text="{Binding Role, Mode=TwoWay}"
+                                   FontSize="18"
+                                   FontAttributes="Bold">
+                            </Label>
+                            <Label Grid.Row="1"
+                                   Text="{Binding UserName, Mode=TwoWay}"
+                                   FontSize="18">
+                            </Label>
+                            <Label Grid.Row="2"
+                                   Text="{Binding StoreName, Mode=TwoWay}"
+                                   FontSize="18">
+                            </Label>
+                            <Label Grid.Row="3"
+                                   Text="{Binding PontOfSale, Mode=TwoWay}"
+                                   FontSize="18">
+                            </Label>
+                        </Grid>
+                        <ListView ItemsSource="{Binding MenuItems}"
+                              SelectedItem="{Binding SelectedMenuItem}"
+                              SeparatorColor="LightGray"
+                              RowHeight="60"
+                              SeparatorVisibility="Default"
+                              BackgroundColor="#e8e8e8">
+
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+
+                                        <!-- Main design for our menu items -->
+                                        <StackLayout VerticalOptions="FillAndExpand"
+                                                 Orientation="Horizontal"
+                                                 Padding="20,10,0,10"
+                                                 Spacing="20">
+
+                                            <Image Source="{Binding Icon}"
+                                               WidthRequest="35"
+                                               HeightRequest="35"
+                                               VerticalOptions="Center" />
+
+                                            <Label Text="{Binding Title}"
+                                               FontSize="Medium"
+                                               VerticalOptions="Center"
+                                               TextColor="Black"/>
+                                        </StackLayout>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+
+                            <ListView.Behaviors>
+                                <b:EventToCommandBehavior EventName="ItemTapped" 
+                                                      Command="{Binding NavigateCommand}" />
+                            </ListView.Behaviors>
+
+                        </ListView>
+                    </StackLayout>
+                </ContentPage>
+            </x:Arguments>
+        </NavigationPage>
+    </MasterDetailPage.Master></MasterDetailPage>

@@ -46,12 +46,14 @@
         <Reference Include="System.Xml" />
     </ItemGroup>
     <ItemGroup>
+        <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
         <PackageReference Include="Xamarin.Forms" Version="5.0.0.2012" />
     </ItemGroup>
     <ItemGroup>
         <Compile Include="MainActivity.cs" />
         <Compile Include="Resources\Resource.Designer.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
+        <Compile Include="SQliteClient.cs" />
     </ItemGroup>
     <ItemGroup>
         <None Include="Resources\AboutResources.txt" />
@@ -59,7 +61,103 @@
         <None Include="Properties\AndroidManifest.xml" />
     </ItemGroup>
     <ItemGroup>
+        <AndroidResource Include="Resources\drawable\add_product_background.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </AndroidResource>
+        <AndroidResource Include="Resources\drawable\background_bluetooth.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </AndroidResource>
+        <AndroidResource Include="Resources\drawable\background_categories.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </AndroidResource>
+        <AndroidResource Include="Resources\drawable\background_charge_ticket.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </AndroidResource>
+        <AndroidResource Include="Resources\drawable\background_client.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </AndroidResource>
+        <AndroidResource Include="Resources\drawable\background_end_sale.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </AndroidResource>
+        <AndroidResource Include="Resources\drawable\background_pointsofsales.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </AndroidResource>
+        <AndroidResource Include="Resources\drawable\background_settings.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </AndroidResource>
+        <AndroidResource Include="Resources\drawable\background_taxes.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </AndroidResource>
+        <AndroidResource Include="Resources\drawable\background_ticket.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </AndroidResource>
+        <AndroidResource Include="Resources\drawable\background_units.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </AndroidResource>
+        <AndroidResource Include="Resources\drawable\error.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </AndroidResource>
+        <AndroidResource Include="Resources\drawable\icon_add.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </AndroidResource>
+        <AndroidResource Include="Resources\drawable\icon_add_client.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </AndroidResource>
+        <AndroidResource Include="Resources\drawable\icon_back.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </AndroidResource>
+        <AndroidResource Include="Resources\drawable\icon_barcode.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </AndroidResource>
+        <AndroidResource Include="Resources\drawable\icon_camera.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </AndroidResource>
+        <AndroidResource Include="Resources\drawable\icon_delete.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </AndroidResource>
+        <AndroidResource Include="Resources\drawable\icon_mahzan.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </AndroidResource>
+        <AndroidResource Include="Resources\drawable\icon_save.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </AndroidResource>
+        <AndroidResource Include="Resources\drawable\icon_shopingCar.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </AndroidResource>
+        <AndroidResource Include="Resources\drawable\icon_ticket.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </AndroidResource>
+        <AndroidResource Include="Resources\drawable\image_no_available.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </AndroidResource>
+        <AndroidResource Include="Resources\drawable\inventory_background.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </AndroidResource>
         <AndroidResource Include="Resources\drawable\mahzan_logo.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </AndroidResource>
+        <AndroidResource Include="Resources\drawable\products_background.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </AndroidResource>
+        <AndroidResource Include="Resources\drawable\sales_background.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </AndroidResource>
+        <AndroidResource Include="Resources\drawable\splashscreen.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </AndroidResource>
+        <AndroidResource Include="Resources\drawable\stores_background.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </AndroidResource>
+        <AndroidResource Include="Resources\drawable\stores_inventory_background.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </AndroidResource>
+        <AndroidResource Include="Resources\drawable\store_background.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </AndroidResource>
+        <AndroidResource Include="Resources\drawable\success.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </AndroidResource>
+        <AndroidResource Include="Resources\drawable\work_enviroment_background.png">
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </AndroidResource>
         <AndroidResource Include="Resources\layout\Tabbar.axml" />

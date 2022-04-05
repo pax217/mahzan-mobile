@@ -1,8 +1,12 @@
 ﻿using System;
 using Mahzan.Mobile.Services.SHA1;
 using Mahzan.Mobile.Services.User;
+using Mahzan.Mobile.SqLite._Base;
+using Mahzan.Mobile.SqLite.Entities;
 using Mahzan.Mobile.ViewModels;
+using Mahzan.Mobile.ViewModels.Administrator;
 using Mahzan.Mobile.Views;
+using Mahzan.Mobile.Views.Administrator;
 using Prism;
 using Prism.Ioc;
 using Xamarin.Forms;
@@ -43,12 +47,19 @@ namespace Mahzan.Mobile
 
         protected void RegisterNavigation(IContainerRegistry containerRegistry)
         {
+            //Repository
+            containerRegistry.Register<IRepository<User>, Repository<User>>();
+            
             //Services
             containerRegistry.Register<IUserService, UserService>();
             containerRegistry.Register<ISHA1, SHA1>();
             
             //Navigation
+            containerRegistry.RegisterForNavigation<NavigationPage>();
+            containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
             containerRegistry.RegisterForNavigation<LoginPage, LoginPageViewModel>();
+            
+            containerRegistry.RegisterForNavigation<AdministratorDashboardPage, AdministratorDashboardPageViewModel>();
         }
     }
 }

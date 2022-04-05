@@ -3,19 +3,25 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Mahzan.Mobile.Models.Response;
 using Mahzan.Mobile.Models.User;
-using Mahzan.Mobile.Services.SHA1;
 using Mahzan.Mobile.Services.User;
+using Mahzan.Mobile.SqLite._Base;
+using Mahzan.Mobile.SqLite.Entities;
+using Mahzan.Mobile.Views;
+using Mahzan.Mobile.Views.Administrator;
 using Newtonsoft.Json;
+using Prism.Mvvm;
 using Prism.Navigation;
 using Xamarin.Forms;
 
 namespace Mahzan.Mobile.ViewModels
 {
-public class LoginPageViewModel : ViewModelBase
+public class LoginPageViewModel : BindableBase, INavigationAware
     {
         private readonly INavigationService _navigationService;
 
         private readonly IUserService _userService;
+        
+        private readonly IRepository<User> _repository;
 
         public string UserName { get; set; }
 
@@ -25,13 +31,15 @@ public class LoginPageViewModel : ViewModelBase
 
         public LoginPageViewModel(
             INavigationService navigationService,
-            IUserService userService)
-            : base(navigationService)
+            IUserService userService,
+            IRepository<User> repository)
         {
-            Title = "Inicio de Sesión";
-            
+
             //Services
             _userService = userService;
+            
+            //Repositories
+            _repository = repository;
 
             //Navigation
             _navigationService = navigationService;
@@ -47,7 +55,7 @@ public class LoginPageViewModel : ViewModelBase
             
             var respuesta = await httpResponseMessage.Content.ReadAsStringAsync();
 
-            if (httpResponseMessage.StatusCode != HttpStatusCode.NoContent)
+            if (httpResponseMessage.StatusCode != HttpStatusCode.OK)
             {
                 var errorApi = JsonConvert.DeserializeObject<ApiResponse>(respuesta);
                 await Application.Current.MainPage.DisplayAlert(
@@ -56,8 +64,41 @@ public class LoginPageViewModel : ViewModelBase
                 return;
             }
             
-            await NavigationService.NavigateAsync("SelectStorePage");
-            
+            var logInResponse = JsonConvert.DeserializeObject<LogInResponse>(respuesta);
+
+            if (logInResponse != null)
+            {
+                await SaveOnSqlite(logInResponse);
+
+                switch (@logInResponse.Role)
+                {
+                    case "Administrator":
+                        await _navigationService.NavigateAsync(nameof(MainPage) + "/" + nameof(NavigationPage) + "/" + nameof(AdministratorDashboardPage));
+                        break;
+                    case "Cashier":
+                        break;
+                }
+            }
+        }
+
+        private async Task SaveOnSqlite(LogInResponse logInResponse)
+        {
+            await _repository.DeleteAll();
+            await _repository.Insert(new User()
+            {
+                Token = logInResponse.Token,
+                Role = logInResponse.Role
+            }); 
+        }
+
+        public void OnNavigatedFrom(INavigationParameters parameters)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void OnNavigatedTo(INavigationParameters parameters)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
