@@ -12,7 +12,7 @@ using ZXing.Mobile;
 
 namespace Mahzan.Mobile.Droid
 {
-    [Activity(Label = "Mahzan.Mobile", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true,
+    [Activity(Label = "Mahzan.Mobile", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = false,
         ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
