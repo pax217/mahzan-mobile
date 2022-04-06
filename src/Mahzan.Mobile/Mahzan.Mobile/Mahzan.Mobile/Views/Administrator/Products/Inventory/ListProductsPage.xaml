@@ -63,13 +63,19 @@
                                                     </Grid.RowDefinitions>
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="70"></ColumnDefinition>
-                                                        <ColumnDefinition Width="180"></ColumnDefinition>
                                                         <ColumnDefinition Width="Auto"></ColumnDefinition>
-                                                        <ColumnDefinition Width="50"></ColumnDefinition>
+                                                        <ColumnDefinition Width="60"></ColumnDefinition>
                                                     </Grid.ColumnDefinitions>
-                                                    <Image Grid.Row="0"
-                                                           Grid.Column="0"
-                                                           Source="{Binding ImageSource}"/>
+                                                    
+                                                    <forms:CachedImage
+                                                        Grid.Row="0"
+                                                        Source="{Binding ImageSource}"
+                                                        HorizontalOptions="Center"
+                                                        VerticalOptions="Center"
+                                                        CacheType="Memory"
+                                                        Aspect="AspectFill"
+                                                    >
+                                                    </forms:CachedImage>
                                                     <Label Grid.Row="0"
                                                            Grid.Column="1"
                                                            Text="{Binding Description}"
@@ -79,13 +85,6 @@
                                                            FontSize="14"/>
                                                     <Label Grid.Row="0"
                                                            Grid.Column="2"
-                                                           Text="$"
-                                                            VerticalOptions="Center"
-                                                           HorizontalOptions="Center"
-                                                           FontSize="20"
-                                                           FontAttributes="Bold"/>
-                                                    <Label Grid.Row="0"
-                                                           Grid.Column="3"
                                                            Text="{Binding Price}"
                                                            VerticalOptions="Center"
                                                            HorizontalOptions="Center"

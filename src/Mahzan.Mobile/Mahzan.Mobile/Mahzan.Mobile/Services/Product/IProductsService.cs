@@ -7,5 +7,8 @@ namespace Mahzan.Mobile.Services.Product
     public interface IProductsService
     {
         Task<HttpResponseMessage> Create(CreateProductCommand command);
+
+        Task<HttpResponseMessage> Get(GetProductsCommand command);
+
     }
 }

@@ -2,8 +2,15 @@ using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
+using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Mahzan.Mobile.Commands.Product;
+using Mahzan.Mobile.Models.Product;
+using Mahzan.Mobile.Models.Response;
+using Mahzan.Mobile.QrScanning;
+using Mahzan.Mobile.Services.Product;
+using Newtonsoft.Json;
 using Prism.Navigation;
 using Xamarin.Forms;
 
@@ -13,7 +20,7 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Products.Inventory
     {
         private readonly INavigationService _navigationService;
 
-        //private readonly IProductsService _productsService;
+        private readonly IProductsService _productsService;
 
         private ObservableCollection<ListViewProducts> _listViewProducts { get; set; }
         public ObservableCollection<ListViewProducts> ListViewProducts
@@ -55,14 +62,14 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Products.Inventory
         }
 
         public ListProductsPageViewModel(
-            INavigationService navigationService/*,
-            IProductsService productsService*/)
+            INavigationService navigationService,
+            IProductsService productsService)
             :base(navigationService)
         {
             //
             _navigationService = navigationService;
 
-            //_productsService = productsService;
+            _productsService = productsService;
 
             //Services
             Task.Run(() => GetProducts());
@@ -82,82 +89,86 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Products.Inventory
 
         private async Task GetProducts()
         {
-           /* GetProductsResult getProductsResult = await _productsService
-                                                        .Get(new GetProductsFilter
-                                                        {
-                                                        });
 
-            if (getProductsResult.IsValid)
+            var httpResponseMessage = await _productsService.Get(new GetProductsCommand());
+            
+            var respuesta = await httpResponseMessage.Content.ReadAsStringAsync();
+            
+            if (httpResponseMessage.StatusCode != HttpStatusCode.OK)
             {
-                ListViewProducts = new ObservableCollection<ListViewProducts>();
+                var errorApi = JsonConvert.DeserializeObject<ApiResponse>(respuesta);
+                await Application.Current.MainPage.DisplayAlert(
+                    "Inicio de Sesión", errorApi.Message, "ok");
 
-                foreach (var product in getProductsResult.Products)
-                {
-                    ImageSource imageSource = null;
-
-                    if (product.ProductsPhotos != null)
-                    {
-                        var bytes = Convert.FromBase64String(product.ProductsPhotos.Base64);
-                        imageSource = ImageSource.FromStream(() => new MemoryStream(bytes));
-                    }
-
-                    ListViewProducts.Add(new ListViewProducts
-                    {
-                        ProductsId = product.ProductsId,
-                        Description = product.Description,
-                        ImageSource = imageSource,
-                        Price = product.Price
-                    });
-
-                }
+                return;
             }
-            */
+            
+            var getProductsResponse = JsonConvert.DeserializeObject<GetProductsResponse>(respuesta);
+
+            if (getProductsResponse!=null)
+            {
+                await FillProducts(getProductsResponse);
+            }
+            
         }
 
         private async Task OnScannCommand()
         {
-
-            /*var scanner = DependencyService.Get<IQrScanningService>();
-            var result = await scanner.ScanAsync();
-
-            GetProductsResult getProductsResult = await _productsService
-                                                        .Get(new GetProductsFilter
-                                                        {
-                                                            Barcode = result
-                                                        });
-
-            if (getProductsResult.IsValid)
+            var scanner = DependencyService.Get<IQrScanningService>();
+            var barCode = await scanner.ScanAsync();
+        
+            var httpResponseMessage = await _productsService.Get(new GetProductsCommand
+            {
+                BarCode = barCode
+            });
+            
+            var respuesta = await httpResponseMessage.Content.ReadAsStringAsync();
+            
+            if (httpResponseMessage.StatusCode == HttpStatusCode.NotFound)
+            {
+                ListViewProducts.Clear();
+                await Application.Current.MainPage.DisplayAlert("Producto No Encontrado",
+                    string.Format("El producto con código de barras {0} no ha sido encontrado.", barCode),
+                    "ok");
+                return;
+            }
+            
+            var getProductsResponse = JsonConvert.DeserializeObject<GetProductsResponse>(respuesta);
+            if (getProductsResponse != null)
             {
                 ListViewProducts.Clear();
                 ListViewProducts = new ObservableCollection<ListViewProducts>();
 
-                foreach (var product in getProductsResult.Products)
+                await FillProducts(getProductsResponse);
+            }
+
+        }
+
+        private async Task FillProducts(GetProductsResponse getProductsResponse)
+        {
+            if (getProductsResponse!= null)
+            {
+                ListViewProducts = new ObservableCollection<ListViewProducts>();
+
+                foreach (var product in getProductsResponse.Data)
                 {
                     ImageSource imageSource = null;
-
-                    if (product.ProductsPhotos != null)
+ 
+                    if (product.Image != null)
                     {
-                        var bytes = Convert.FromBase64String(product.ProductsPhotos.Base64);
+                        var bytes = Convert.FromBase64String(product.Image);
                         imageSource = ImageSource.FromStream(() => new MemoryStream(bytes));
                     }
-
+ 
                     ListViewProducts.Add(new ListViewProducts
                     {
-                        ProductsId = product.ProductsId,
+                        ProductsId = product.ProductId,
                         Description = product.Description,
                         ImageSource = imageSource,
                         Price = product.Price
                     });
-
                 }
             }
-            else
-            {
-                ListViewProducts.Clear();
-                await Application.Current.MainPage.DisplayAlert("Producto No Encontrado",
-                                                                string.Format("El producto con código de barras {0} no ha sido encontrado.", result),
-                                                                "ok");
-            }*/
         }
     }
 
@@ -166,6 +177,8 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Products.Inventory
         public Guid ProductsId { get; set; }
         public string Description { get; set; }
         public ImageSource ImageSource { get; set; }
+        
+        public decimal Cost { get; set; }
         public decimal Price { get; set; }
     }
 }

@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using ImTools;
 using Mahzan.Mobile.Commands.Product;
 using Mahzan.Mobile.Services._Base;
@@ -40,6 +41,41 @@ namespace Mahzan.Mobile.Services.Product
                 throw;
             }
             
+            return httpResponseMessage;
+        }
+
+        public async Task<HttpResponseMessage> Get(GetProductsCommand command)
+        {
+            HttpResponseMessage httpResponseMessage;
+            UriBuilder uriBuilder = new UriBuilder(UrlApi + "/v1/Product/Get");
+            try
+            {
+                var query = HttpUtility.ParseQueryString(uriBuilder.Query);
+                query["pageNumber"] = "1";
+                query["pageSize"] = "10";
+
+                if (command.ProductId!=null)
+                {
+                    query["productId"] = command.ProductId;
+                }
+                
+                if (command.BarCode!=null)
+                {
+                    query["barCode"] = command.BarCode;
+                }
+                
+                uriBuilder.Query = query.ToString();
+
+                HttpClient httpClient = new HttpClient();
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
+                httpResponseMessage = await httpClient.GetAsync(uriBuilder.ToString());
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+
             return httpResponseMessage;
         }
     }
