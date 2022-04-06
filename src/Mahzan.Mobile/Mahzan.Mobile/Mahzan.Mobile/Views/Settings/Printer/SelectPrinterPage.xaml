@@ -3,6 +3,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="http://prismlibrary.com"
+             xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="Mahzan.Mobile.Views.Settings.Printer.SelectPrinterPage"
              Title="Impersora Bluetooth">
@@ -13,14 +14,17 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
-                    <Image Source="background_bluetooth.png"
-                           Grid.Row="0"
-                           Aspect="AspectFill"
-                           HorizontalOptions="FillAndExpand"
-                           VerticalOptions="StartAndExpand">
-                    </Image>
+                    <forms:CachedImage
+                        Grid.Row="0"
+                        Source="background_bluetooth.png"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="StartAndExpand"
+                        CacheType="Memory"
+                        Aspect="AspectFill"
+                    >
+                    </forms:CachedImage>
                     <Frame CornerRadius="10" 
                            BackgroundColor="White" 
                            Grid.RowSpan="2" 
@@ -29,6 +33,7 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"></RowDefinition>
                                 <RowDefinition Height="100"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
                             </Grid.RowDefinitions>
                             <Label Grid.Row="0"
                                    Text="Bluetooth"

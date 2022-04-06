@@ -3,6 +3,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="http://prismlibrary.com"
+             xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="Mahzan.Mobile.Views.Administrator.Products.Inventory.ListProductsPage"
              Title="Inventario">
@@ -24,12 +25,15 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <Image Source="inventory_background.png"
-                           Grid.Row="0"
-                           Aspect="AspectFill"
-                           HorizontalOptions="FillAndExpand"
-                           VerticalOptions="StartAndExpand">
-                    </Image>
+                    <forms:CachedImage
+                        Grid.Row="0"
+                        Source="inventory_background.png"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="StartAndExpand"
+                        CacheType="Memory"
+                        Aspect="AspectFill"
+                    >
+                    </forms:CachedImage>
                     <Frame CornerRadius="10" 
                            BackgroundColor="White" 
                            Grid.RowSpan="2" 
