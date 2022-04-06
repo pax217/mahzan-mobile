@@ -3,49 +3,163 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="http://prismlibrary.com"
+             xmlns:local="clr-namespace:Mahzan.Mobile.Behaviors"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="Mahzan.Mobile.Views.LoginPage">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="70"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="20"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+        <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:BooleanToObjectConverter x:Key="boolToStyleImage"
+                                              x:TypeArguments="Style">
+                <local:BooleanToObjectConverter.FalseObject>
+                    <Style TargetType="Image">
+                        <Setter Property="HeightRequest" Value="20" />
+                        <Setter Property="Source" Value="{local:ImageResource Mahzan.Mobile.Images.error.png}" />
+                        
 
-        <Image Grid.Row="1" 
-               Source="mahzan_logo.png"
-               WidthRequest="150"
-               HeightRequest="150"
-               Margin="0,50,0,30">
-        </Image>
+                    </Style>
+                </local:BooleanToObjectConverter.FalseObject>
 
-        <StackLayout Grid.Row="2" Padding="30,20">
-            <Entry Placeholder="Usuario"
-                   Text="{Binding UserName}">
-            </Entry>
-            <Entry Grid.Row="3"
-                   x:Name="entryUserName" 
-                   Placeholder="Contraseña"
-                   IsPassword="True"
-                   Text="{Binding Password}">
-            </Entry>
-            <Button Grid.Row="4"
-                    x:Name="entryPassword"
-                    Text="Inciar Sesión"
-                    BackgroundColor="SteelBlue"
-                    BorderRadius="20"
-                    TextColor="White"
-                    FontAttributes="Bold"
-                    Command="{Binding LoginCommand}">
-            </Button>
-            <Label Grid.Row="5"></Label>
-            <StackLayout Grid.Row="6"
-                         Orientation="Horizontal">
-                <Label Text="¿Olvidaste tu Contraseña?"></Label>
-            </StackLayout>
+                <local:BooleanToObjectConverter.TrueObject>
+                    <Style TargetType="Image">
+                        <Setter Property="HeightRequest" Value="20" />
+                        <Setter Property="Source" Value="{local:ImageResource Mahzan.Mobile.Images.success.png}" />
+                    </Style>
+                </local:BooleanToObjectConverter.TrueObject>
+            </local:BooleanToObjectConverter>
+
+            <Style x:Key="baseStyle"
+             TargetType="Label">
+                <Setter Property="XAlign" Value="Start" />
+                <Setter Property="YAlign" Value="Center" />
+                <Setter Property="FontSize" Value="Micro" />
+                <Setter Property="FontAttributes" Value="Italic" />
+            </Style>
+            
+
+            <!--UserName-->
+            <local:BooleanToObjectConverter x:Key="boolToStyleUserName"
+                                           x:TypeArguments="Style">
+                <local:BooleanToObjectConverter.FalseObject>
+                    <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+                        <Setter Property="TextColor" Value="#F44336" />
+                        <Setter Property="Text" Value="* requerido" />
+                        <Setter Property="FontSize" Value="9" />
+                    </Style>
+                </local:BooleanToObjectConverter.FalseObject>
+
+                <local:BooleanToObjectConverter.TrueObject>
+                    <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+                        <Setter Property="TextColor" Value="#4CAF50" />
+                        <Setter Property="Text" Value="Correcto" />
+                    </Style>
+                </local:BooleanToObjectConverter.TrueObject>
+            </local:BooleanToObjectConverter>
+            <!--/UserName-->
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout>
+            <ScrollView>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                
+                        <Image Grid.Row="0" 
+                               Source="mahzan_logo.png"
+                               WidthRequest="150"
+                               HeightRequest="150"
+                               Margin="0,50,0,30">
+                        </Image>
+                        
+                        <Frame CornerRadius="10" 
+                               BackgroundColor="White" 
+                               Grid.Row="2" 
+                               Margin="20,150,20,20">
+                            <Grid RowSpacing="10">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                </Grid.RowDefinitions>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="20" />
+                                </Grid.ColumnDefinitions>
+                                
+                                <!--UserName-->
+                                <Entry Grid.Row="0" 
+                                       Grid.Column="1" Placeholder="Usuario"
+                                       Text="{Binding UserName}">
+                                    <Entry.Behaviors>
+                                        <local:NotEmptyValidatorBehavior x:Name="userNameValidator"/>
+                                    </Entry.Behaviors>
+                                </Entry>
+                                <Image Grid.Row="0" 
+                                       Grid.Column="2" 
+                                       x:Name="UserNameSuccessErrorImage"
+                                       Style="{Binding Source={x:Reference userNameValidator}, 
+                                   Path=IsValid, 
+                                   Converter={StaticResource boolToStyleImage}}"/>
+                                <Label Grid.Row="1" 
+                                       Grid.Column="1" 
+                                       Style="{Binding Source={x:Reference userNameValidator}, 
+                                   Path=IsValid, 
+                                   Converter={StaticResource boolToStyleUserName}}" 
+                                       FontSize="16"/>
+                                <!--/UserName-->
+                                
+                                <!--/Password-->
+                                <Entry Grid.Row="2"
+                                       Grid.Column="1"
+                                       x:Name="entryUserName"
+                                       Placeholder="Contraseña"
+                                       IsPassword="True"
+                                       Text="{Binding Password}">
+                                    <Entry.Behaviors>
+                                        <local:NotEmptyValidatorBehavior x:Name="passwordValidator"/>
+                                    </Entry.Behaviors>
+                                </Entry>
+                                <Image Grid.Row="2" 
+                                       Grid.Column="2" 
+                                       x:Name="PasswordSuccessErrorImage"
+                                       Style="{Binding Source={x:Reference passwordValidator}, 
+                                   Path=IsValid, 
+                                   Converter={StaticResource boolToStyleImage}}"/>
+                                <Label Grid.Row="3" 
+                                       Grid.Column="1" 
+                                       Style="{Binding Source={x:Reference passwordValidator}, 
+                                   Path=IsValid, 
+                                   Converter={StaticResource boolToStyleUserName}}" 
+                                       FontSize="16"/>
+                                <!--/Password-->
+                                <Button Grid.Row="4"
+                                        Grid.Column="1"
+                                        x:Name="entryPassword"
+                                        Text="Inciar Sesión"
+                                        BackgroundColor="SteelBlue"
+                                        BorderRadius="20"
+                                        TextColor="White"
+                                        FontAttributes="Bold"
+                                        Command="{Binding LoginCommand}"
+                                        IsEnabled="{Binding LoginAllowedCommand}">
+                                </Button>
+                                    <Label Grid.Row="5" Grid.Column="1" Text="Registro"></Label>
+                                    <Label Grid.Row="6" Grid.Column="1" Text="¿Olvidaste tu Contraseña?"></Label>
+                            </Grid>
+                        </Frame>
+                    </Grid>
+            </ScrollView>
         </StackLayout>
-    </Grid>
+    </ContentPage.Content>
+
 </ContentPage>

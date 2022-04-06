@@ -23,9 +23,13 @@ namespace Mahzan.Mobile.Droid
 
             base.OnCreate(savedInstanceState);
             
+            FFImageLoading.Forms.Platform.CachedImageRenderer.Init(true);
+            
             Platform.Init(this, savedInstanceState);
 
             Xamarin.Forms.Forms.Init(this, savedInstanceState);
+            
+            Android.Glide.Forms.Init(this);
 
             LoadApplication(new App());
             

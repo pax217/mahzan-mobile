@@ -28,6 +28,7 @@ public class LoginPageViewModel : BindableBase, INavigationAware
         public string Password { get; set; }
 
         public ICommand LoginCommand { get; set; }
+        
 
         public LoginPageViewModel(
             INavigationService navigationService,
@@ -46,6 +47,7 @@ public class LoginPageViewModel : BindableBase, INavigationAware
 
             //Commands
             LoginCommand = new Command(async () => await LogIn());
+            
         }
 
 

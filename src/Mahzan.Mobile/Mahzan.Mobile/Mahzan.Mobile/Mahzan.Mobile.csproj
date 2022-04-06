@@ -20,4 +20,15 @@
         <PackageReference Include="ZXing.Net.Mobile" Version="3.1.0-beta2" />
         <PackageReference Include="ZXing.Net.Mobile.Forms" Version="3.1.0-beta2" />
     </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Images\error.png" />
+      <EmbeddedResource Include="Images\error.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+      <None Remove="Images\success.png" />
+      <EmbeddedResource Include="Images\success.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+    </ItemGroup>
 </Project>

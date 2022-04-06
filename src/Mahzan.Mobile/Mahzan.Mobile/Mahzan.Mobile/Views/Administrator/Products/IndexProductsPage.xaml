@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="http://prismlibrary.com"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="Mahzan.Mobile.Views.Administrator.Products.IndexProductsPage"
+             Title="Productos">
+    <ContentPage.Content>
+        <StackLayout>
+            <ScrollView>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Image Source="products_background.png"
+                           Grid.Row="0"
+                           Aspect="AspectFill"
+                           HorizontalOptions="FillAndExpand"
+                           VerticalOptions="StartAndExpand">
+                    </Image>
+                    <Frame CornerRadius="10" 
+                           BackgroundColor="White" 
+                           Grid.RowSpan="2" 
+                           Margin="20,150,20,20">
+                        <Grid RowSpacing="20">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="200"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Label Grid.Row="0"
+                                   Text="Opciónes"
+                                   HorizontalTextAlignment="Center"
+                                   FontSize="18">
+                            </Label>
+                            <ListView Grid.Row="1"
+                                      ItemsSource="{Binding ListProductsOptionsItems}"
+                                      SelectedItem="{Binding SelectedProductOptions}">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextCell Detail="{Binding OptionDetail}" 
+                                                  Text="{Binding Option}">
+                                        </TextCell>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </Grid>
+                    </Frame>
+                </Grid>
+            </ScrollView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

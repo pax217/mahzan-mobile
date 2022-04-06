@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="http://prismlibrary.com" 
+             xmlns:local="clr-namespace:Mahzan.Mobile.Behaviors"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="Mahzan.Mobile.Views.Administrator.Products.Inventory.AddProductPage"
+             Title="Producto">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:BooleanToObjectConverter x:Key="boolToStyleImage"
+                                              x:TypeArguments="Style">
+                <local:BooleanToObjectConverter.FalseObject>
+                    <Style TargetType="Image">
+                        <Setter Property="HeightRequest" Value="20" />
+                        <Setter Property="Source" Value="{local:ImageResource Mahzan.Mobile.Images.error.png}" />
+                    </Style>
+                </local:BooleanToObjectConverter.FalseObject>
+
+                <local:BooleanToObjectConverter.TrueObject>
+                    <Style TargetType="Image">
+                        <Setter Property="HeightRequest" Value="20" />
+                        <Setter Property="Source" Value="{local:ImageResource Mahzan.Mobile.Images.success.png}" />
+                    </Style>
+                </local:BooleanToObjectConverter.TrueObject>
+            </local:BooleanToObjectConverter>
+
+            <Style x:Key="baseStyle"
+             TargetType="Label">
+                <Setter Property="XAlign" Value="Start" />
+                <Setter Property="YAlign" Value="Center" />
+                <Setter Property="FontSize" Value="Micro" />
+                <Setter Property="FontAttributes" Value="Italic" />
+            </Style>
+
+            <!--SKU-->
+            <!--/SKU-->
+
+            <!--Barcode-->
+            <!--/Barcode-->
+
+            <!--Description-->
+            <local:BooleanToObjectConverter x:Key="boolToStyleDescription"
+                                           x:TypeArguments="Style">
+                <local:BooleanToObjectConverter.FalseObject>
+                    <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+                        <Setter Property="TextColor" Value="#F44336" />
+                        <Setter Property="Text" Value="Ingresa una descripción válida" />
+                    </Style>
+                </local:BooleanToObjectConverter.FalseObject>
+
+                <local:BooleanToObjectConverter.TrueObject>
+                    <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+                        <Setter Property="TextColor" Value="#4CAF50" />
+                        <Setter Property="Text" Value="Correcto" />
+                    </Style>
+                </local:BooleanToObjectConverter.TrueObject>
+            </local:BooleanToObjectConverter>
+            <!--/Description-->
+
+            <!--Price-->
+            <local:BooleanToObjectConverter x:Key="boolToStylePrice"
+                                           x:TypeArguments="Style">
+                <local:BooleanToObjectConverter.FalseObject>
+                    <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+                        <Setter Property="TextColor" Value="#F44336" />
+                        <Setter Property="Text" Value="Ingresa un precio valido" />
+                    </Style>
+                </local:BooleanToObjectConverter.FalseObject>
+
+                <local:BooleanToObjectConverter.TrueObject>
+                    <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+                        <Setter Property="TextColor" Value="#4CAF50" />
+                        <Setter Property="Text" Value="Correcto" />
+                    </Style>
+                </local:BooleanToObjectConverter.TrueObject>
+            </local:BooleanToObjectConverter>
+            <!--/Price-->
+
+            <!--Cost-->
+            <local:BooleanToObjectConverter x:Key="boolToStyleCost"
+                                           x:TypeArguments="Style">
+                <local:BooleanToObjectConverter.FalseObject>
+                    <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+                        <Setter Property="TextColor" Value="#F44336" />
+                        <Setter Property="Text" Value="Ingresa un costo valido" />
+                    </Style>
+                </local:BooleanToObjectConverter.FalseObject>
+
+                <local:BooleanToObjectConverter.TrueObject>
+                    <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+                        <Setter Property="TextColor" Value="#4CAF50" />
+                        <Setter Property="Text" Value="Correcto" />
+                    </Style>
+                </local:BooleanToObjectConverter.TrueObject>
+            </local:BooleanToObjectConverter>
+            <!--/Cost-->
+
+            
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="toolbarItemBarCode"
+                     IconImageSource="icon_barcode.png"
+                     Command="{Binding OpenBarCodeCommand}">
+        </ToolbarItem>
+        <ToolbarItem x:Name="toolbarItemAddProduct"
+                     IconImageSource="icon_camera.png"
+                     Command="{Binding OpenCameraCommand}">
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout>
+            <ScrollView>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Image Source="add_product_background.png"
+                           Grid.Row="0"
+                           Aspect="AspectFill"
+                           HorizontalOptions="FillAndExpand"
+                           VerticalOptions="StartAndExpand">
+                    </Image>
+                    <Frame CornerRadius="10" 
+                           BackgroundColor="White" 
+                           Grid.RowSpan="2" 
+                           Margin="20,150,20,20">
+                        <Grid RowSpacing="10">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="100"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="20" />
+                            </Grid.ColumnDefinitions>
+
+                            <Label Grid.Row="0"
+                                   Grid.ColumnSpan="3"
+                                   Text="Detalle de Producto"
+                                   HorizontalTextAlignment="Center"
+                                   FontSize="18">
+                            </Label>
+                            <Image Grid.Row="1"
+                                   Grid.ColumnSpan="3"
+                                   Source="{Binding ProductImageSource, Mode=TwoWay}"
+                                   Aspect="AspectFill"
+                                   HorizontalOptions="FillAndExpand"
+                                   VerticalOptions="StartAndExpand"
+                                   HeightRequest="300"
+                                   WidthRequest="150">
+                            </Image>
+                            <!--SKU-->
+                            <Entry Grid.Row="2"
+                                   Grid.Column="1"
+                                   Placeholder="SKU"
+                                   Text="{Binding SKU, Mode=TwoWay}">
+                            </Entry>
+                            <!--/SKU-->
+
+                            <!--Barcode-->
+                            <Entry Grid.Row="3"
+                                   Grid.Column="1"
+                                   Placeholder="Código de Barras"
+                                   Text="{Binding BarCode, Mode=TwoWay}"
+                                   MaxLength="13">
+                            </Entry>
+                            <!--/Barcode-->
+
+                            <!--Description-->
+                            <Entry Grid.Row="4"
+                                   Grid.Column="1" 
+                                   Placeholder="Descripción"
+                                   Text="{Binding Description, Mode=TwoWay}"
+                                   Keyboard="Text">
+                                <Entry.Behaviors>
+                                    <local:AlphaNumericValidatorBehavior x:Name="descriptionValidator"/>
+                                </Entry.Behaviors>
+                            </Entry>
+                            <Image Grid.Row="4" 
+                                   Grid.Column="2" 
+                                   x:Name="descriptionSuccessErrorImage"
+                                   Style="{Binding Source={x:Reference descriptionValidator}, 
+                                   Path=IsValid, 
+                                   Converter={StaticResource boolToStyleImage}}"/>
+                            <Label Grid.Row="5" 
+                                   Grid.Column="1" 
+                                   Style="{Binding Source={x:Reference descriptionValidator}, 
+                                   Path=IsValid, 
+                                   Converter={StaticResource boolToStyleDescription}}" 
+                                   FontSize="16"/>
+                            <!--/Description-->
+
+                            <!--Categories-->
+                            <Picker Grid.Row="6"
+                                    Grid.ColumnSpan="3" 
+                                    Title="- Categorías -" 
+                                    ItemsSource="{Binding ProductCategories, Mode=TwoWay}" 
+                                    ItemDisplayBinding="{Binding Description, Mode=TwoWay}"
+                                    SelectedItem="{Binding SelectedProductCategory , Mode=TwoWay}"/>
+                            <!--/Categories-->
+
+                            <!--ProductUnits-->
+                            <Picker Grid.Row="7"
+                                    Grid.ColumnSpan="3"
+                                    Title="- Unidades -" 
+                                    ItemsSource="{Binding ProductUnits, Mode=TwoWay}" 
+                                    ItemDisplayBinding="{Binding Description, Mode=TwoWay}"
+                                    SelectedItem="{Binding SelectedProductUnit, Mode=TwoWay}"/>
+                            <!--/ProductUnits-->
+
+                            <!--Price-->
+                            <Entry Grid.Row="8"
+                                   Grid.Column="1" 
+                                   Keyboard="Numeric"
+                                   Placeholder="Precio"
+                                   Text="{Binding Price, Mode=TwoWay}">
+                                <Entry.Behaviors>
+                                    <local:DecimalValidatorBehavior x:Name="priceValidator"/>
+                                </Entry.Behaviors>
+                            </Entry>
+                            <Image Grid.Row="8" 
+                                   Grid.Column="2" 
+                                   x:Name="priceSuccessErrorImage"
+                                   Style="{Binding Source={x:Reference priceValidator}, 
+                                   Path=IsValid, 
+                                   Converter={StaticResource boolToStyleImage}}"/>
+                            <Label Grid.Row="9" 
+                                   Grid.Column="1" 
+                                   Style="{Binding Source={x:Reference priceValidator}, 
+                                   Path=IsValid, 
+                                   Converter={StaticResource boolToStylePrice}}" 
+                                   FontSize="16"/>
+                            <!--/Price-->
+
+                            <!--Cost-->
+                            <Entry  Grid.Row="10"
+                                    Grid.Column="1"
+                                    Keyboard="Numeric"
+                                    Placeholder="Costo"
+                                    MaxLength="10"
+                                    Text="{Binding Cost, Mode=TwoWay}">
+                                <Entry.Behaviors>
+                                    <local:DecimalValidatorBehavior x:Name="costValidator"/>
+                                </Entry.Behaviors>
+                            </Entry>
+                            <Image Grid.Row="10" 
+                                   Grid.Column="2" 
+                                   x:Name="costSuccessErrorImage"
+                                   Style="{Binding Source={x:Reference costValidator}, 
+                                   Path=IsValid, 
+                                   Converter={StaticResource boolToStyleImage}}"/>
+                            <Label Grid.Row="11" 
+                                   Grid.Column="1" 
+                                   Style="{Binding Source={x:Reference costValidator}, 
+                                   Path=IsValid, 
+                                   Converter={StaticResource boolToStyleCost}}" 
+                                   FontSize="16"/>
+                            <!--/Cost-->
+                            
+                            <!--Taxes-->
+                            <Label Grid.Row="12"
+                                   Grid.ColumnSpan="3"
+                                   Text="Impuestos"
+                                   FontSize="20"
+                                   FontAttributes="Bold"></Label>
+                            <ListView Grid.Row="13"
+                                      Grid.ColumnSpan="3"
+                                      ItemsSource="{Binding Taxes, Mode=TwoWay}"
+                                      SelectionMode="None">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <ViewCell>
+                                            <Grid Margin="0,0,0,1">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="50" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+                                                    <Label Grid.Column="1"
+                                                           Text="{Binding Name, StringFormat='{0:F0}%'}"
+                                                           HorizontalOptions="CenterAndExpand"/>
+                                                    <Entry Grid.Column="2"
+                                                           Text="{Binding TaxRatePercentage}"
+                                                           Keyboard="Numeric"
+                                                           HorizontalOptions="CenterAndExpand"/>
+                                                    <Switch Grid.Column="3"
+                                                        IsToggled="{Binding Active}"  />
+                                            </Grid>
+                                        </ViewCell>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                            <!--/Taxes-->
+
+                            <Label Grid.Row="14"
+                                   Grid.ColumnSpan="3"
+                                   Text="Inventario"
+                                   FontSize="20"
+                                   FontAttributes="Bold">
+                            </Label>
+                            
+                            <!--/FollowInventory-->
+                            <Label Grid.Row="15"
+                                   Grid.Column="1"
+                                   Text="Seguir en inventario"
+                                   FontSize="16"
+                                   >
+                            </Label>
+                            <Switch Grid.Row="15"
+                                    Grid.Column="1"
+                                    IsToggled="{Binding SwitchFollowInventory}">
+                            </Switch>
+                            <!--/FollowInventory-->
+                            
+                            <Button Grid.Row="16"
+                                    Grid.ColumnSpan="3"
+                                    Text="Agregar"
+                                    BackgroundColor="#146AB0"
+                                    CornerRadius="3"
+                                    TextColor="White"
+                                    Command="{Binding CreateProductCommand}">
+                            </Button>
+                        </Grid>
+                    </Frame>
+                </Grid>
+            </ScrollView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

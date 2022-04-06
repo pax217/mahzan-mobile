@@ -7,6 +7,7 @@ using Mahzan.Mobile.Models.Menu;
 using Mahzan.Mobile.SqLite._Base;
 using Mahzan.Mobile.SqLite.Entities;
 using Mahzan.Mobile.Views;
+using Mahzan.Mobile.Views.Administrator.Products;
 using Mahzan.Mobile.Views.Settings;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -135,13 +136,6 @@ namespace Mahzan.Mobile.ViewModels
                 Title = "Ventas",
             });
 
-            result.Add(new MyMenuItem()
-            {
-                Icon = "ic_viewb",
-                PageName = nameof(IndexProductsPage),
-                Title = "Productos",
-            });
-
 
             result.Add(new MyMenuItem()
             {
@@ -149,6 +143,13 @@ namespace Mahzan.Mobile.ViewModels
                 PageName = nameof(IndexWorkEnviromentPage),
                 Title = "Entorno de Trabajo",
             });*/
+            
+            result.Add(new MyMenuItem()
+            {
+                Icon = "ic_viewb",
+                PageName = nameof(IndexProductsPage),
+                Title = "Productos",
+            });
 
             result.Add(new MyMenuItem()
             {
