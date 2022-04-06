@@ -5,6 +5,7 @@ using System.Web;
 using Mahzan.Mobile.Models.User;
 using Mahzan.Mobile.Services._Base;
 using Mahzan.Mobile.Services.SHA1;
+using Mahzan.Mobile.SqLite._Base;
 
 namespace Mahzan.Mobile.Services.User
 {
@@ -12,7 +13,10 @@ namespace Mahzan.Mobile.Services.User
     {
         private readonly ISHA1 _sha1;
         
-        public UserService(ISHA1 sha1)
+        public UserService(
+            IRepository<SqLite.Entities.User> userRepository,
+            ISHA1 sha1
+        ) : base(userRepository)
         {
             _sha1 = sha1;
         }

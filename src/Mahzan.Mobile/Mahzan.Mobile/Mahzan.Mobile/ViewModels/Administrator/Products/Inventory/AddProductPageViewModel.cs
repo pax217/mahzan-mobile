@@ -6,10 +6,20 @@ using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Mahzan.Mobile.Commands.Category;
+using Mahzan.Mobile.Commands.Department;
 using Mahzan.Mobile.Commands.Product;
+using Mahzan.Mobile.Commands.SubCategory;
+using Mahzan.Mobile.Models.Category;
+using Mahzan.Mobile.Models.Department;
+using Mahzan.Mobile.Models.Pagination;
 using Mahzan.Mobile.Models.Response;
+using Mahzan.Mobile.Models.SubCategory;
 using Mahzan.Mobile.QrScanning;
+using Mahzan.Mobile.Services.Category;
+using Mahzan.Mobile.Services.Department;
 using Mahzan.Mobile.Services.Product;
+using Mahzan.Mobile.Services.SubCategory;
 using Mahzan.Mobile.Utils.Images;
 using Newtonsoft.Json;
 using Plugin.Media;
@@ -30,6 +40,12 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Products.Inventory
         private readonly IPageDialogService _pageDialogService;
 
         private readonly IProductsService _productsService;
+
+        private readonly IDepartmentService _departmentService;
+
+        private readonly ICategoryService _categoryService;
+
+        private readonly ISubCategoryService _subCategoryService;
 
         /*private readonly IProductCategoriesService _productCategoriesService;
 
@@ -104,22 +120,77 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Products.Inventory
             get => _cost;
             set => SetProperty(ref _cost, value);
         }
+        
+        // Departments
+        private ObservableCollection<Department> _departments;
+        public ObservableCollection<Department> Departments
+        {
+            get => _departments;
+            set => SetProperty(ref _departments, value);
+        }
+        
+        private Department _selectedDepartment;
+        public Department SelectedDepartment
+        {
+            get => _selectedDepartment;
+            set
+            {
+                if (_selectedDepartment != value)
+                {
+                    _selectedDepartment = value;
+                    Task.Run(() => GetCategories());
+                }
+            }
+        }
 
-        // //Categories
-        // private ObservableCollection<ProductCategories> _productCategories;
-        // public ObservableCollection<ProductCategories> ProductCategories
-        // {
-        //     get => _productCategories;
-        //     set => SetProperty(ref _productCategories, value);
-        // }
-        //
-        // //Product Units
-        // private ObservableCollection<ProductUnits> _productUnits;
-        // public ObservableCollection<ProductUnits> ProductUnits
-        // {
-        //     get => _productUnits;
-        //     set => SetProperty(ref _productUnits, value);
-        // }
+        //Categories
+        private ObservableCollection<Category> _categories;
+        public ObservableCollection<Category> Categories
+        {
+            get => _categories;
+            set => SetProperty(ref _categories, value);
+        }
+        private Category _selectedCategory;
+        public Category SelectedCategory
+        {
+            get => _selectedCategory;
+            set
+            {
+                if (_selectedCategory != value)
+                {
+                    _selectedCategory = value;
+                    Task.Run(() => GetSubCategories());
+                }
+            }
+        }
+        
+        //Sub Categories
+        private ObservableCollection<SubCategory> _subCategories;
+        public ObservableCollection<SubCategory> SubCategories
+        {
+            get => _subCategories;
+            set => SetProperty(ref _subCategories, value);
+        }
+        private SubCategory _selectedSubCategory;
+        public SubCategory SelectedSubCategory
+        {
+            get => _selectedSubCategory;
+            set
+            {
+                if (_selectedSubCategory != value)
+                {
+                    _selectedSubCategory = value;
+                }
+            }
+        }
+        
+        //Product Units
+        private ObservableCollection<Category> _productUnits;
+        public ObservableCollection<Category> ProductUnits
+        {
+            get => _productUnits;
+            set => SetProperty(ref _productUnits, value);
+        }
         //
         // //Taxes
         // private ObservableCollection<API.Entities.Taxes> _taxes;
@@ -180,7 +251,10 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Products.Inventory
         public AddProductPageViewModel(
             INavigationService navigationService,
             IPageDialogService pageDialogService,
-            IProductsService productsService    
+            IProductsService productsService,
+            IDepartmentService departmentService,
+            ICategoryService categoryService,
+            ISubCategoryService subCategoryService
             /*,
             IProductCategoriesService productCategoriesService,
             IProductUnitsService productUnitsService,
@@ -192,6 +266,9 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Products.Inventory
 
             //Service
             _productsService = productsService;
+            _departmentService = departmentService;
+            _categoryService = categoryService;
+            _subCategoryService = subCategoryService;
             
             /*_productCategoriesService = productCategoriesService;
             _productUnitsService = productUnitsService;
@@ -199,7 +276,8 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Products.Inventory
             _taxesService = taxesService;*/
 
             //Pickers
-            Task.Run(() => GetProductCategories());
+            Task.Run(() => GetDepartments());
+
             Task.Run(() => GetProductUnits());
 
             //List
@@ -435,30 +513,71 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Products.Inventory
             );
         }
 
-        private async Task GetProductCategories()
+        private async Task GetDepartments()
         {
-            // GetProductCategoriesResult getProductCategoriesResult;
-            // getProductCategoriesResult = await _productCategoriesService
-            //                                    .Get(new GetProductCategoriesFilter
-            //                                    {
-            //
-            //                                    });
-            //
-            // if (getProductCategoriesResult.IsValid)
-            // {
-            //     ProductCategories = new ObservableCollection<ProductCategories>(getProductCategoriesResult.ProductCategories);
-            //
-            // }
-            // else
-            // {
-            //     await Application
-            //           .Current
-            //           .MainPage
-            //           .DisplayAlert(getProductCategoriesResult.Title,
-            //                         getProductCategoriesResult.Message,
-            //                         "ok");
-            // }
+            var httpResponseMessage = await _departmentService.Get(new GetDepartmentsCommand());
+            
+            var respuesta = await httpResponseMessage.Content.ReadAsStringAsync();
+            
+            if (httpResponseMessage.StatusCode != HttpStatusCode.OK)
+            {
+                var errorApi = JsonConvert.DeserializeObject<ApiResponse>(respuesta);
+                await Application.Current.MainPage.DisplayAlert(
+                    "Inicio de Sesión", errorApi.Message, "ok");
+
+                return;
+            }
+            
+            var getDepartmentsResponse = JsonConvert.DeserializeObject<GetDepartmantsResponse>(respuesta);
+            if (getDepartmentsResponse != null)
+                Departments = new ObservableCollection<Department>(getDepartmentsResponse.Data);
         }
+
+        private async Task GetCategories()
+        {
+           var httpResponseMessage= await _categoryService.Get(new GetCategoriesCommand
+            {
+                DepartmentId = _selectedDepartment.DepartmentId
+            });
+           
+           var respuesta = await httpResponseMessage.Content.ReadAsStringAsync();
+            
+           if (httpResponseMessage.StatusCode != HttpStatusCode.OK)
+           {
+               var errorApi = JsonConvert.DeserializeObject<ApiResponse>(respuesta);
+               await Application.Current.MainPage.DisplayAlert(
+                   "Inicio de Sesión", errorApi.Message, "ok");
+               
+           }
+           
+           var getCategoriesResponse = JsonConvert.DeserializeObject<GetCategoriesResponse>(respuesta);
+           if (getCategoriesResponse != null)
+               Categories = new ObservableCollection<Category>(getCategoriesResponse.Data);
+
+        }
+        
+        private async Task GetSubCategories()
+        {
+            var httpResponseMessage = await _subCategoryService.Get(new GetSubCategoriesCommand
+            {
+                CategoryId = _selectedCategory.CategoryId
+            });
+            
+            var respuesta = await httpResponseMessage.Content.ReadAsStringAsync();
+            
+            if (httpResponseMessage.StatusCode != HttpStatusCode.OK)
+            {
+                var errorApi = JsonConvert.DeserializeObject<ApiResponse>(respuesta);
+                await Application.Current.MainPage.DisplayAlert(
+                    "Inicio de Sesión", errorApi.Message, "ok");
+               
+            }
+            
+            var getSubCategoriesResponse = JsonConvert.DeserializeObject<GetSubCategoriesResponse>(respuesta);
+            if (getSubCategoriesResponse != null)
+                SubCategories = new ObservableCollection<SubCategory>(getSubCategoriesResponse.Data);
+        }
+        
         
         public async void OnNavigatedFrom(INavigationParameters parameters)
         {

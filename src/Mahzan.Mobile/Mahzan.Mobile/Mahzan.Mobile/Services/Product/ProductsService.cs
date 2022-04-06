@@ -6,12 +6,20 @@ using System.Threading.Tasks;
 using ImTools;
 using Mahzan.Mobile.Commands.Product;
 using Mahzan.Mobile.Services._Base;
+using Mahzan.Mobile.SqLite._Base;
 using Newtonsoft.Json;
 
 namespace Mahzan.Mobile.Services.Product
 {
     public class ProductsService :BaseService,IProductsService
     {
+        public ProductsService(
+            IRepository<SqLite.Entities.User> userRepository)
+        :base(userRepository)
+        {
+            
+        }
+
         public async Task<HttpResponseMessage> Create(CreateProductCommand command)
         {
             HttpResponseMessage httpResponseMessage;

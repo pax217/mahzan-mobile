@@ -1,6 +1,9 @@
 ﻿using System;
+using Mahzan.Mobile.Services.Category;
+using Mahzan.Mobile.Services.Department;
 using Mahzan.Mobile.Services.Product;
 using Mahzan.Mobile.Services.SHA1;
+using Mahzan.Mobile.Services.SubCategory;
 using Mahzan.Mobile.Services.User;
 using Mahzan.Mobile.SqLite._Base;
 using Mahzan.Mobile.SqLite.Entities;
@@ -74,6 +77,9 @@ namespace Mahzan.Mobile
             containerRegistry.Register<ISHA1, SHA1>();
             containerRegistry.Register<IUserService, UserService>();
             containerRegistry.Register<IProductsService, ProductsService>();
+            containerRegistry.Register<IDepartmentService, DepartmentService>();
+            containerRegistry.Register<ICategoryService, CategoryService>();
+            containerRegistry.Register<ISubCategoryService, SubCategoryService>();
         }
         
         protected void RegisterNavigationDependencies(IContainerRegistry containerRegistry)

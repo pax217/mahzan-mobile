@@ -148,10 +148,6 @@
                                 <RowDefinition Height="Auto"></RowDefinition>
                                 <RowDefinition Height="Auto"></RowDefinition>
                                 <RowDefinition Height="Auto"></RowDefinition>
-                                <RowDefinition Height="100"></RowDefinition>
-                                <RowDefinition Height="Auto"></RowDefinition>
-                                <RowDefinition Height="Auto"></RowDefinition>
-                                <RowDefinition Height="Auto"></RowDefinition>
                             </Grid.RowDefinitions>
 
                             <Grid.ColumnDefinitions>
@@ -215,27 +211,44 @@
                                    Converter={StaticResource boolToStyleDescription}}" 
                                    FontSize="16"/>
                             <!--/Description-->
-
-                            <!--Categories-->
+                            <!--Departments-->
                             <Picker Grid.Row="6"
                                     Grid.ColumnSpan="3" 
-                                    Title="- Categorías -" 
-                                    ItemsSource="{Binding ProductCategories, Mode=TwoWay}" 
-                                    ItemDisplayBinding="{Binding Description, Mode=TwoWay}"
-                                    SelectedItem="{Binding SelectedProductCategory , Mode=TwoWay}"/>
+                                    Title="- Departamento -" 
+                                    ItemsSource="{Binding Departments, Mode=TwoWay}" 
+                                    ItemDisplayBinding="{Binding Name, Mode=TwoWay}"
+                                    SelectedItem="{Binding SelectedDepartment , Mode=TwoWay}"/>
+                            <!--/Departments-->
+
+                            <!--Categories-->
+                            <Picker Grid.Row="7"
+                                    Grid.ColumnSpan="3"
+                                    Title="- Categoría -"
+                                    ItemsSource="{Binding Categories, Mode=TwoWay}"
+                                    ItemDisplayBinding="{Binding Name, Mode=TwoWay}"
+                                    SelectedItem="{Binding SelectedCategory , Mode=TwoWay}"/>
+                            <!--/Categories-->
+                            
+                            <!--Sub Categories-->
+                            <Picker Grid.Row="8"
+                                    Grid.ColumnSpan="3"
+                                    Title="- Sub Categoría -"
+                                    ItemsSource="{Binding SubCategories, Mode=TwoWay}"
+                                    ItemDisplayBinding="{Binding Name, Mode=TwoWay}"
+                                    SelectedItem="{Binding SelectedSubCategory , Mode=TwoWay}"/>
                             <!--/Categories-->
 
                             <!--ProductUnits-->
-                            <Picker Grid.Row="7"
-                                    Grid.ColumnSpan="3"
-                                    Title="- Unidades -" 
-                                    ItemsSource="{Binding ProductUnits, Mode=TwoWay}" 
-                                    ItemDisplayBinding="{Binding Description, Mode=TwoWay}"
-                                    SelectedItem="{Binding SelectedProductUnit, Mode=TwoWay}"/>
+                            <!-- <Picker Grid.Row="7" -->
+                            <!--         Grid.ColumnSpan="3" -->
+                            <!--         Title="- Unidades -"  -->
+                            <!--         ItemsSource="{Binding ProductUnits, Mode=TwoWay}"  -->
+                            <!--         ItemDisplayBinding="{Binding Description, Mode=TwoWay}" -->
+                            <!--         SelectedItem="{Binding SelectedProductUnit, Mode=TwoWay}"/> -->
                             <!--/ProductUnits-->
 
                             <!--Price-->
-                            <Entry Grid.Row="8"
+                            <Entry Grid.Row="9"
                                    Grid.Column="1" 
                                    Keyboard="Numeric"
                                    Placeholder="Precio"
@@ -244,13 +257,13 @@
                                     <local:DecimalValidatorBehavior x:Name="priceValidator"/>
                                 </Entry.Behaviors>
                             </Entry>
-                            <Image Grid.Row="8" 
+                            <Image Grid.Row="9" 
                                    Grid.Column="2" 
                                    x:Name="priceSuccessErrorImage"
                                    Style="{Binding Source={x:Reference priceValidator}, 
                                    Path=IsValid, 
                                    Converter={StaticResource boolToStyleImage}}"/>
-                            <Label Grid.Row="9" 
+                            <Label Grid.Row="10" 
                                    Grid.Column="1" 
                                    Style="{Binding Source={x:Reference priceValidator}, 
                                    Path=IsValid, 
@@ -259,7 +272,7 @@
                             <!--/Price-->
 
                             <!--Cost-->
-                            <Entry  Grid.Row="10"
+                            <Entry  Grid.Row="11"
                                     Grid.Column="1"
                                     Keyboard="Numeric"
                                     Placeholder="Costo"
@@ -269,13 +282,13 @@
                                     <local:DecimalValidatorBehavior x:Name="costValidator"/>
                                 </Entry.Behaviors>
                             </Entry>
-                            <Image Grid.Row="10" 
+                            <Image Grid.Row="11" 
                                    Grid.Column="2" 
                                    x:Name="costSuccessErrorImage"
                                    Style="{Binding Source={x:Reference costValidator}, 
                                    Path=IsValid, 
                                    Converter={StaticResource boolToStyleImage}}"/>
-                            <Label Grid.Row="11" 
+                            <Label Grid.Row="12" 
                                    Grid.Column="1" 
                                    Style="{Binding Source={x:Reference costValidator}, 
                                    Path=IsValid, 
@@ -284,38 +297,38 @@
                             <!--/Cost-->
                             
                             <!--Taxes-->
-                            <Label Grid.Row="12"
-                                   Grid.ColumnSpan="3"
-                                   Text="Impuestos"
-                                   FontSize="20"
-                                   FontAttributes="Bold"></Label>
-                            <ListView Grid.Row="13"
-                                      Grid.ColumnSpan="3"
-                                      ItemsSource="{Binding Taxes, Mode=TwoWay}"
-                                      SelectionMode="None">
-                                <ListView.ItemTemplate>
-                                    <DataTemplate>
-                                        <ViewCell>
-                                            <Grid Margin="0,0,0,1">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="Auto" />
-                                                    <ColumnDefinition Width="50" />
-                                                    <ColumnDefinition Width="Auto" />
-                                                </Grid.ColumnDefinitions>
-                                                    <Label Grid.Column="1"
-                                                           Text="{Binding Name, StringFormat='{0:F0}%'}"
-                                                           HorizontalOptions="CenterAndExpand"/>
-                                                    <Entry Grid.Column="2"
-                                                           Text="{Binding TaxRatePercentage}"
-                                                           Keyboard="Numeric"
-                                                           HorizontalOptions="CenterAndExpand"/>
-                                                    <Switch Grid.Column="3"
-                                                        IsToggled="{Binding Active}"  />
-                                            </Grid>
-                                        </ViewCell>
-                                    </DataTemplate>
-                                </ListView.ItemTemplate>
-                            </ListView>
+                            <!-- <Label Grid.Row="13" -->
+                            <!--        Grid.ColumnSpan="3" -->
+                            <!--        Text="Impuestos" -->
+                            <!--        FontSize="20" -->
+                            <!--        FontAttributes="Bold"></Label> -->
+                            <!-- <ListView Grid.Row="14" -->
+                            <!--           Grid.ColumnSpan="3" -->
+                            <!--           ItemsSource="{Binding Taxes, Mode=TwoWay}" -->
+                            <!--           SelectionMode="None"> -->
+                            <!--     <ListView.ItemTemplate> -->
+                            <!--         <DataTemplate> -->
+                            <!--             <ViewCell> -->
+                            <!--                 <Grid Margin="0,0,0,1"> -->
+                            <!--                     <Grid.ColumnDefinitions> -->
+                            <!--                         <ColumnDefinition Width="Auto" /> -->
+                            <!--                         <ColumnDefinition Width="50" /> -->
+                            <!--                         <ColumnDefinition Width="Auto" /> -->
+                            <!--                     </Grid.ColumnDefinitions> -->
+                            <!--                         <Label Grid.Column="1" -->
+                            <!--                                Text="{Binding Name, StringFormat='{0:F0}%'}" -->
+                            <!--                                HorizontalOptions="CenterAndExpand"/> -->
+                            <!--                         <Entry Grid.Column="2" -->
+                            <!--                                Text="{Binding TaxRatePercentage}" -->
+                            <!--                                Keyboard="Numeric" -->
+                            <!--                                HorizontalOptions="CenterAndExpand"/> -->
+                            <!--                         <Switch Grid.Column="3" -->
+                            <!--                             IsToggled="{Binding Active}"  /> -->
+                            <!--                 </Grid> -->
+                            <!--             </ViewCell> -->
+                            <!--         </DataTemplate> -->
+                            <!--     </ListView.ItemTemplate> -->
+                            <!-- </ListView> -->
                             <!--/Taxes-->
 
                             <Label Grid.Row="14"
@@ -326,19 +339,19 @@
                             </Label>
                             
                             <!--/FollowInventory-->
-                            <Label Grid.Row="15"
-                                   Grid.Column="1"
-                                   Text="Seguir en inventario"
-                                   FontSize="16"
-                                   >
-                            </Label>
-                            <Switch Grid.Row="15"
-                                    Grid.Column="1"
-                                    IsToggled="{Binding SwitchFollowInventory}">
-                            </Switch>
+                            <!-- <Label Grid.Row="15" -->
+                            <!--        Grid.Column="1" -->
+                            <!--        Text="Seguir en inventario" -->
+                            <!--        FontSize="16" -->
+                            <!--        > -->
+                            <!-- </Label> -->
+                            <!-- <Switch Grid.Row="15" -->
+                            <!--         Grid.Column="1" -->
+                            <!--         IsToggled="{Binding SwitchFollowInventory}"> -->
+                            <!-- </Switch> -->
                             <!--/FollowInventory-->
                             
-                            <Button Grid.Row="16"
+                            <Button Grid.Row="13"
                                     Grid.ColumnSpan="3"
                                     Text="Agregar"
                                     BackgroundColor="#146AB0"
