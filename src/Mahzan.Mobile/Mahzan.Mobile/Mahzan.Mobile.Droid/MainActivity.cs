@@ -26,6 +26,8 @@ namespace Mahzan.Mobile.Droid
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init(true);
             
             Platform.Init(this, savedInstanceState);
+            
+            ZXing.Net.Mobile.Forms.Android.Platform.Init();
 
             Xamarin.Forms.Forms.Init(this, savedInstanceState);
             

@@ -24,7 +24,7 @@ namespace Mahzan.Mobile.Services.Product
                 StringContent stringContent = new StringContent(jsonData, UnicodeEncoding.UTF8, "application/json");
 
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
-                httpResponseMessage = await httpClient.GetAsync(uriBuilder.ToString());
+                httpResponseMessage = await httpClient.PostAsync(uriBuilder.ToString(), stringContent);
             }
             catch (Exception e)
             {

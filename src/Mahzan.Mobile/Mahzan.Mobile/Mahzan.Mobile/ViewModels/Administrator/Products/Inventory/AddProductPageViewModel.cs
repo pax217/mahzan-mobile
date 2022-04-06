@@ -3,10 +3,15 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
+using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Mahzan.Mobile.Commands.Product;
+using Mahzan.Mobile.Models.Response;
+using Mahzan.Mobile.QrScanning;
+using Mahzan.Mobile.Services.Product;
 using Mahzan.Mobile.Utils.Images;
+using Newtonsoft.Json;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
 using Prism.Mvvm;
@@ -23,6 +28,8 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Products.Inventory
         private readonly INavigationService _navigationService;
 
         private readonly IPageDialogService _pageDialogService;
+
+        private readonly IProductsService _productsService;
 
         /*private readonly IProductCategoriesService _productCategoriesService;
 
@@ -64,11 +71,11 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Products.Inventory
         }
 
         //SKU
-        private string _sku;
-        public string SKU
+        private string _alternativeKey;
+        public string AlternativeKey
         {
-            get => _sku;
-            set => SetProperty(ref _sku, value);
+            get => _alternativeKey;
+            set => SetProperty(ref _alternativeKey, value);
         }
 
 
@@ -172,7 +179,9 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Products.Inventory
 
         public AddProductPageViewModel(
             INavigationService navigationService,
-            IPageDialogService pageDialogService/*,
+            IPageDialogService pageDialogService,
+            IProductsService productsService    
+            /*,
             IProductCategoriesService productCategoriesService,
             IProductUnitsService productUnitsService,
             IProductsService productsService, 
@@ -182,6 +191,8 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Products.Inventory
             _pageDialogService = pageDialogService;
 
             //Service
+            _productsService = productsService;
+            
             /*_productCategoriesService = productCategoriesService;
             _productUnitsService = productUnitsService;
             _productsService = productsService;
@@ -219,7 +230,8 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Products.Inventory
         #region Private Methods
         private async Task OnCreateProductCommand()
         {
-            CreateProductCommand command = new CreateProductCommand
+            
+            var httpResponseMessage =await _productsService.Create(new CreateProductCommand
             {
                 Photo = new CreateProductPhotoCommand
                 {
@@ -230,17 +242,30 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Products.Inventory
                 Detail = new CreateProductDetailCommand
                 {
                     BarCode = BarCode,
-                    AlternativeKey = String.Empty,
+                    AlternativeKey = AlternativeKey,
                     Description = Description,
                     Price = Price,
                     Cost = Cost,
-                    FollowInventory = SwitchFollowInventory
+                    FollowInventory = SwitchFollowInventory,
+                    ProductSaleUnitId = "a6013276-7df0-44ed-9685-81ac3489af81"
                 },
                 Organization = new CreateProductOrganizationCommand
                 {
-                    
+                    DepartmentId = "6bbec42b-9471-4b58-9188-10e80c8b6d48",
+                    CategoryId = "d241c704-6fe3-4019-83a9-8af13deaed2d",
+                    SubCategoryId = "4ec243d1-4550-4936-9169-621cf720b5b9",
                 }
-            };
+            });
+            
+
+            if (httpResponseMessage.StatusCode != HttpStatusCode.OK)
+            {
+                var respuesta = await httpResponseMessage.Content.ReadAsStringAsync();
+                var errorApi = JsonConvert.DeserializeObject<ApiResponse>(respuesta);
+                await Application.Current.MainPage.DisplayAlert(
+                    "Inicio de Sesión", errorApi.Message, "ok");
+            }
+            
 
             // CreateProductCommand command = new CreateProductCommand
             // {
@@ -364,13 +389,13 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Products.Inventory
 
         private async Task OnOpenBarCodeCommand()
         {
-            // var scanner = Xamarin.Forms.DependencyService.Get<IQrScanningService>();
-            // var result = await scanner.ScanAsync();
-            //
-            // if (result != null)
-            // {
-            //     BarCode = result;
-            // }
+            var scanner = Xamarin.Forms.DependencyService.Get<IQrScanningService>();
+            var result = await scanner.ScanAsync();
+            
+            if (result != null)
+            {
+                BarCode = result;
+            }
         }
 
         private async Task OnOpenCameraCommand()

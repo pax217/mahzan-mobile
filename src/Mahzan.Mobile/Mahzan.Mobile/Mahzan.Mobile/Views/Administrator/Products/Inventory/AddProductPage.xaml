@@ -175,22 +175,22 @@
                                    HeightRequest="300"
                                    WidthRequest="150">
                             </Image>
-                            <!--SKU-->
-                            <Entry Grid.Row="2"
-                                   Grid.Column="1"
-                                   Placeholder="SKU"
-                                   Text="{Binding SKU, Mode=TwoWay}">
-                            </Entry>
-                            <!--/SKU-->
-
                             <!--Barcode-->
-                            <Entry Grid.Row="3"
+                            <Entry Grid.Row="2"
                                    Grid.Column="1"
                                    Placeholder="Código de Barras"
                                    Text="{Binding BarCode, Mode=TwoWay}"
                                    MaxLength="13">
                             </Entry>
                             <!--/Barcode-->
+                            
+                            <!--AlternativeKey-->
+                            <Entry Grid.Row="3"
+                                   Grid.Column="1"
+                                   Placeholder="Alternative Key"
+                                   Text="{Binding AlternativeKey, Mode=TwoWay}">
+                            </Entry>
+                            <!--/AlternativeKey-->
 
                             <!--Description-->
                             <Entry Grid.Row="4"
