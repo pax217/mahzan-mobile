@@ -151,7 +151,6 @@
                                 <RowDefinition Height="Auto"></RowDefinition>
                                 <RowDefinition Height="Auto"></RowDefinition>
                                 <RowDefinition Height="Auto"></RowDefinition>
-                                <RowDefinition Height="Auto"></RowDefinition>
                             </Grid.RowDefinitions>
 
                             <Grid.ColumnDefinitions>
@@ -357,20 +356,13 @@
                             
                             <Button Grid.Row="15"
                                     Grid.ColumnSpan="3"
-                                    Text="Agregar"
+                                    Text="Guardar"
                                     BackgroundColor="#146AB0"
                                     CornerRadius="3"
                                     TextColor="White"
                                     Command="{Binding CreateProductCommand}">
                             </Button>
-                            <Button Grid.Row="16"
-                                    Grid.ColumnSpan="3"
-                                    Text="Agregar"
-                                    BackgroundColor="#146AB0"
-                                    CornerRadius="3"
-                                    TextColor="White"
-                                    Command="{Binding ShowSnackCommand}">
-                            </Button>
+
                         </Grid>
                     </Frame>
                 </Grid>

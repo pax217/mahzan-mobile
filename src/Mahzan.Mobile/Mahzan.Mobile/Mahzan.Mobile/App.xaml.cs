@@ -3,6 +3,7 @@ using Mahzan.Mobile.Services.Category;
 using Mahzan.Mobile.Services.Department;
 using Mahzan.Mobile.Services.Product;
 using Mahzan.Mobile.Services.SHA1;
+using Mahzan.Mobile.Services.Store;
 using Mahzan.Mobile.Services.SubCategory;
 using Mahzan.Mobile.Services.User;
 using Mahzan.Mobile.SqLite._Base;
@@ -11,12 +12,16 @@ using Mahzan.Mobile.ViewModels;
 using Mahzan.Mobile.ViewModels.Administrator;
 using Mahzan.Mobile.ViewModels.Administrator.Products;
 using Mahzan.Mobile.ViewModels.Administrator.Products.Inventory;
+using Mahzan.Mobile.ViewModels.Administrator.WorkEnviroment;
+using Mahzan.Mobile.ViewModels.Administrator.WorkEnviroment.Stores;
 using Mahzan.Mobile.ViewModels.Settings;
 using Mahzan.Mobile.ViewModels.Settings.Printer;
 using Mahzan.Mobile.Views;
 using Mahzan.Mobile.Views.Administrator;
 using Mahzan.Mobile.Views.Administrator.Products;
 using Mahzan.Mobile.Views.Administrator.Products.Inventory;
+using Mahzan.Mobile.Views.Administrator.WorkEnviroment;
+using Mahzan.Mobile.Views.Administrator.WorkEnviroment.Stores;
 using Mahzan.Mobile.Views.Settings;
 using Mahzan.Mobile.Views.Settings.Printer;
 using Plugin.Toasts;
@@ -82,6 +87,7 @@ namespace Mahzan.Mobile
             containerRegistry.Register<IDepartmentService, DepartmentService>();
             containerRegistry.Register<ICategoryService, CategoryService>();
             containerRegistry.Register<ISubCategoryService, SubCategoryService>();
+            containerRegistry.Register<IStoreService, StoreService>();
         }
         
         protected void RegisterNavigationDependencies(IContainerRegistry containerRegistry)
@@ -102,6 +108,11 @@ namespace Mahzan.Mobile
             containerRegistry.RegisterForNavigation<IndexProductsPage, IndexProductsPageViewModel>();
             containerRegistry.RegisterForNavigation<ListProductsPage, ListProductsPageViewModel>();
             containerRegistry.RegisterForNavigation<AddProductPage, AddProductPageViewModel>();
+            
+            // Work Enviroment
+            containerRegistry.RegisterForNavigation<IndexWorkEnviromentPage, IndexWorkEnviromentPageViewModel>();
+            containerRegistry.RegisterForNavigation<ListStoresPage, ListStoresPageViewModel>();
+            
         }
     }
 }

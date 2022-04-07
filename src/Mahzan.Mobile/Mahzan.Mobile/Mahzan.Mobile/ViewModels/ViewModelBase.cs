@@ -18,6 +18,7 @@ namespace Mahzan.Mobile.ViewModels
         {
             NavigationService = navigationService;
         }
+        
 
         public virtual void Initialize(INavigationParameters parameters)
         {

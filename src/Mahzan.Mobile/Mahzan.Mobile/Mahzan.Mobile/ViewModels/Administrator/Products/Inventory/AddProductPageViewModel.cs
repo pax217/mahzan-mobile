@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
@@ -12,7 +10,6 @@ using Mahzan.Mobile.Commands.Product;
 using Mahzan.Mobile.Commands.SubCategory;
 using Mahzan.Mobile.Models.Category;
 using Mahzan.Mobile.Models.Department;
-using Mahzan.Mobile.Models.Pagination;
 using Mahzan.Mobile.Models.Response;
 using Mahzan.Mobile.Models.SubCategory;
 using Mahzan.Mobile.QrScanning;
@@ -25,14 +22,13 @@ using Newtonsoft.Json;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
 using Plugin.Toasts;
-using Prism.Mvvm;
 using Prism.Navigation;
 using Prism.Services;
 using Xamarin.Forms;
 
 namespace Mahzan.Mobile.ViewModels.Administrator.Products.Inventory
 {
-    public class AddProductPageViewModel : BindableBase, INavigationAware
+    public class AddProductPageViewModel : ViewModelBase
     {
         #region Attributes
 
@@ -261,7 +257,8 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Products.Inventory
             IProductCategoriesService productCategoriesService,
             IProductUnitsService productUnitsService,
             IProductsService productsService, 
-            ITaxesService taxesService*/)
+            ITaxesService taxesService*/):
+            base(navigationService)
         {
             _navigationService = navigationService;
             _pageDialogService = pageDialogService;
@@ -289,7 +286,6 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Products.Inventory
             OpenCameraCommand = new Command(async () => await OnOpenCameraCommand());
             OpenBarCodeCommand = new Command(async () => await OnOpenBarCodeCommand());
             CreateProductCommand = new Command(async () => await OnCreateProductCommand());
-            ShowSnackCommand = new Command(async () => await OnShowSnackCommand());
 
             //Initialize
             Initialize();
@@ -343,45 +339,18 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Products.Inventory
             {
                 var respuesta = await httpResponseMessage.Content.ReadAsStringAsync();
                 var errorApi = JsonConvert.DeserializeObject<ApiResponse>(respuesta);
-                await Application.Current.MainPage.DisplayAlert(
-                    "Inicio de Sesión", errorApi.Message, "ok");
+
+                await ShowCreateProductToast(Color.Red, "Crea producto",errorApi.Message);
+                return;
             }
-            
+
+            await ShowCreateProductToast(
+                Color.Green, 
+                "Crea producto",
+                string.Format("Se ha creado correctamente el producto {0}",Description));
             
         }
-
-        private async Task OnShowSnackCommand()
-        {
-            try
-            {
-                var notificator = DependencyService.Get<IToastNotificator>();
-                
-                var options = new NotificationOptions()
-                {
-                    Title = "My Title",
-                    Description = "My Description",
-                    IsClickable = true, //make it false if you don't want the notification to be clickable
-                    AndroidOptions = new AndroidOptions()
-                    {
-                        HexColor = "#F99D1C",
-                        ForceOpenAppOnNotificationTap = true
-                    },
-                    // DelayUntil = DateTime.Now.AddSeconds(1)
-                };
-                var result = await notificator.Notify(options);
-
-                if(result.Action == NotificationAction.Clicked)
-                {
-                    await App.Current.MainPage.DisplayAlert("Alert", "Grab ID and tile and desc : " + result.Id + " " + options.Title, "Ok");
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
-
-        }
+        
 
         private async Task GetProductUnits()
         {
@@ -572,6 +541,36 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Products.Inventory
             //     Price = product.Price;
             //     Cost = product.Cost;
             // }
+        }
+        
+        
+        //Notifications
+        public async Task ShowCreateProductToast(Color color,string title, string description)
+        {
+            var notificator = DependencyService.Get<IToastNotificator>();
+                
+            var options = new NotificationOptions()
+            {
+                Title = title,
+                Description = description,
+                IsClickable = true, //make it false if you don't want the notification to be clickable
+                AndroidOptions = new AndroidOptions()
+                {
+                    HexColor = color.ToHex(),
+                    ForceOpenAppOnNotificationTap = true
+                },
+                // DelayUntil = DateTime.Now.AddSeconds(1)
+            };
+            
+            await notificator.Notify(options);
+            
+            //var result = await notificator.Notify(options);
+
+            // if(result.Action == NotificationAction.Clicked)
+            // {
+            //     await App.Current.MainPage.DisplayAlert("Alert", "Grab ID and tile and desc : " + result.Id + " " + options.Title, "Ok");
+            // }
+            //
         }
 
         #endregion
