@@ -24,6 +24,7 @@ using Mahzan.Mobile.Utils.Images;
 using Newtonsoft.Json;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
+using Plugin.Toasts;
 using Prism.Mvvm;
 using Prism.Navigation;
 using Prism.Services;
@@ -245,6 +246,7 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Products.Inventory
         public ICommand OpenBarCodeCommand { get; set; }
         public ICommand CreateProductCommand { get; set; }
 
+        public ICommand ShowSnackCommand { get; set; }
 
         #endregion
 
@@ -287,6 +289,7 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Products.Inventory
             OpenCameraCommand = new Command(async () => await OnOpenCameraCommand());
             OpenBarCodeCommand = new Command(async () => await OnOpenBarCodeCommand());
             CreateProductCommand = new Command(async () => await OnCreateProductCommand());
+            ShowSnackCommand = new Command(async () => await OnShowSnackCommand());
 
             //Initialize
             Initialize();
@@ -344,90 +347,39 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Products.Inventory
                     "Inicio de Sesión", errorApi.Message, "ok");
             }
             
+            
+        }
 
-            // CreateProductCommand command = new CreateProductCommand
-            // {
-            //     CreateProductDetailCommand = new CreateProductDetailCommand
-            //     {
-            //         ProductCategoriesId = _selectedProductCategory.ProductCategoriesId,
-            //         ProductUnitsId = _selectedProductUnit.ProductUnitsId,
-            //         SKU = SKU,
-            //         Barcode = BarCode,
-            //         Description = Description,
-            //         Price = Price.Value,
-            //         Cost = Cost,
-            //         FollowInventory = SwitchFollowInventory
-            //     },
-            //     CreateProductPhotoCommand = new CreateProductPhotoCommand
-            //     {
-            //         Title = Path.GetFileNameWithoutExtension(PathImageProduct).Replace("_", ""),
-            //         MIMEType = ImagesUtil.GetMIMEType(Path.GetExtension(PathImageProduct)),
-            //         Base64 = ImagesUtil.ConvertImageBase64(PathImageProduct)
-            //     },
-            // };
-            //
-            // //Taxes
-            // if (Taxes.Where(x=> x.Active).ToList().Count>0)
-            // {
-            //     command.CreateProductTaxesCommand = new List<CreateProductTaxesCommand>(); 
-            //
-            //     foreach (var tax in Taxes.Where(x => x.Active))
-            //     {
-            //         command
-            //             .CreateProductTaxesCommand
-            //             .Add(new CreateProductTaxesCommand
-            //             {
-            //             TaxRate = tax.TaxRatePercentage,
-            //             TaxesId = tax.TaxesId
-            //             });
-            //     }
-            // }
-            //
-            // if (ProductsId == Guid.Empty)
-            // {
-            //     //Insert
-            //     CreateProductResult createProductResult;
-            //     createProductResult = await _productsService
-            //                                .CreateProduct(command);
-            //
-            //     if (createProductResult.IsValid)
-            //     {
-            //         //Si el producto se sigue en el inventario
-            //         if (SwitchFollowInventory)
-            //         {
-            //             var navigationParams = new NavigationParameters();
-            //             navigationParams.Add("productsId", createProductResult.ProductsId);
-            //             await _navigationService.NavigateAsync("AddProductInventoryPage", navigationParams);
-            //
-            //         }
-            //         else 
-            //         {
-            //             await _pageDialogService
-            //                 .DisplayAlertAsync(
-            //                 createProductResult.Title,
-            //                 createProductResult.Message,
-            //                 "Ok");
-            //         }
-            //     }
-            //     else
-            //     {
-            //         await _pageDialogService
-            //             .DisplayAlertAsync(
-            //             createProductResult.Title,
-            //             createProductResult.Message,
-            //             "Ok");
-            //     }
-            // }
-            // else 
-            // {
-            //     var navigationParams = new NavigationParameters();
-            //     navigationParams.Add("productsId", ProductsId.Value);
-            //
-            //     await _navigationService.NavigateAsync("AddProductInventoryPage", navigationParams);
-            // }
+        private async Task OnShowSnackCommand()
+        {
+            try
+            {
+                var notificator = DependencyService.Get<IToastNotificator>();
+                
+                var options = new NotificationOptions()
+                {
+                    Title = "My Title",
+                    Description = "My Description",
+                    IsClickable = true, //make it false if you don't want the notification to be clickable
+                    AndroidOptions = new AndroidOptions()
+                    {
+                        HexColor = "#F99D1C",
+                        ForceOpenAppOnNotificationTap = true
+                    },
+                    // DelayUntil = DateTime.Now.AddSeconds(1)
+                };
+                var result = await notificator.Notify(options);
 
-
-
+                if(result.Action == NotificationAction.Clicked)
+                {
+                    await App.Current.MainPage.DisplayAlert("Alert", "Grab ID and tile and desc : " + result.Id + " " + options.Title, "Ok");
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
 
         }
 

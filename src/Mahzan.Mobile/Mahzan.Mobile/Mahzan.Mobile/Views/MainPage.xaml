@@ -9,7 +9,6 @@
              Title="{Binding Title}">
 
     <MasterDetailPage.Master>
-
         <NavigationPage Title="Menu" 
                         Icon="ic_hamburger.png">
             <x:Arguments>

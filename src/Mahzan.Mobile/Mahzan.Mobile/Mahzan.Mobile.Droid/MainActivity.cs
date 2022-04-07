@@ -7,7 +7,9 @@ using Android.Widget;
 using Android.OS;
 using AndroidX.Core.Content;
 using Plugin.Media;
+using Plugin.Toasts;
 using Xamarin.Essentials;
+using Xamarin.Forms;
 using ZXing.Mobile;
 
 namespace Mahzan.Mobile.Droid
@@ -22,6 +24,9 @@ namespace Mahzan.Mobile.Droid
             ToolbarResource = Resource.Layout.Toolbar;
 
             base.OnCreate(savedInstanceState);
+            
+            DependencyService.Register<ToastNotification>();
+            ToastNotification.Init(this);
             
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init(true);
             

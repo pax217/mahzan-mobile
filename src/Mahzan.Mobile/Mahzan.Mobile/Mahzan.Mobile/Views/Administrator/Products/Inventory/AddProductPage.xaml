@@ -3,7 +3,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="http://prismlibrary.com" 
-             xmlns:local="clr-namespace:Mahzan.Mobile.Behaviors"
+             xmlns:local="clr-namespace:Mahzan.Mobile.Behaviors;"
              xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="Mahzan.Mobile.Views.Administrator.Products.Inventory.AddProductPage"
@@ -135,6 +135,10 @@
                            Margin="20,150,20,20">
                         <Grid RowSpacing="10">
                             <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
                                 <RowDefinition Height="Auto"></RowDefinition>
                                 <RowDefinition Height="Auto"></RowDefinition>
                                 <RowDefinition Height="Auto"></RowDefinition>
@@ -351,7 +355,7 @@
                             <!-- </Switch> -->
                             <!--/FollowInventory-->
                             
-                            <Button Grid.Row="13"
+                            <Button Grid.Row="15"
                                     Grid.ColumnSpan="3"
                                     Text="Agregar"
                                     BackgroundColor="#146AB0"
@@ -359,10 +363,19 @@
                                     TextColor="White"
                                     Command="{Binding CreateProductCommand}">
                             </Button>
+                            <Button Grid.Row="16"
+                                    Grid.ColumnSpan="3"
+                                    Text="Agregar"
+                                    BackgroundColor="#146AB0"
+                                    CornerRadius="3"
+                                    TextColor="White"
+                                    Command="{Binding ShowSnackCommand}">
+                            </Button>
                         </Grid>
                     </Frame>
                 </Grid>
             </ScrollView>
         </StackLayout>
+
     </ContentPage.Content>
 </ContentPage>

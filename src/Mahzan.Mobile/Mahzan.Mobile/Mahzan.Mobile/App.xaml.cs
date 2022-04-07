@@ -19,6 +19,7 @@ using Mahzan.Mobile.Views.Administrator.Products;
 using Mahzan.Mobile.Views.Administrator.Products.Inventory;
 using Mahzan.Mobile.Views.Settings;
 using Mahzan.Mobile.Views.Settings.Printer;
+using Plugin.Toasts;
 using Prism;
 using Prism.Ioc;
 using Xamarin.Forms;
@@ -37,7 +38,7 @@ namespace Mahzan.Mobile
          */
         public App() : this(null)
         {
-
+            
         }
 
         public App(IPlatformInitializer initializer) : base(initializer)
@@ -75,6 +76,7 @@ namespace Mahzan.Mobile
         {
             //Services
             containerRegistry.Register<ISHA1, SHA1>();
+            
             containerRegistry.Register<IUserService, UserService>();
             containerRegistry.Register<IProductsService, ProductsService>();
             containerRegistry.Register<IDepartmentService, DepartmentService>();
