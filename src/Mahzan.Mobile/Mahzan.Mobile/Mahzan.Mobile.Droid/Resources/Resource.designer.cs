@@ -22257,7 +22257,7 @@ namespace Mahzan.Mobile.Droid
 			public const int icon_save = 2131165315;
 			
 			// aapt resource value: 0x7F070084
-			public const int icon_shopingcar = 2131165316;
+			public const int icon_shopingCar = 2131165316;
 			
 			// aapt resource value: 0x7F070085
 			public const int icon_ticket = 2131165317;

@@ -206,5 +206,69 @@
             <Name>Mahzan.Mobile</Name>
         </ProjectReference>
     </ItemGroup>
+    <ItemGroup>
+      <AndroidAsset Include="Assets\drawable\add_product_background.png" />
+      <AndroidAsset Include="Assets\drawable\background_bluetooth.png" />
+      <AndroidAsset Include="Assets\drawable\background_categories.png" />
+      <AndroidAsset Include="Assets\drawable\background_charge_ticket.png" />
+      <AndroidAsset Include="Assets\drawable\background_client.png" />
+      <AndroidAsset Include="Assets\drawable\background_end_sale.png" />
+      <AndroidAsset Include="Assets\drawable\background_pointsofsales.png" />
+      <AndroidAsset Include="Assets\drawable\background_settings.png" />
+      <AndroidAsset Include="Assets\drawable\background_taxes.png" />
+      <AndroidAsset Include="Assets\drawable\background_ticket.png" />
+      <AndroidAsset Include="Assets\drawable\background_units.png" />
+      <AndroidAsset Include="Assets\drawable\error.png" />
+      <AndroidAsset Include="Assets\drawable\icon_add.png" />
+      <AndroidAsset Include="Assets\drawable\icon_add_client.png" />
+      <AndroidAsset Include="Assets\drawable\icon_back.png" />
+      <AndroidAsset Include="Assets\drawable\icon_barcode.png" />
+      <AndroidAsset Include="Assets\drawable\icon_camera.png" />
+      <AndroidAsset Include="Assets\drawable\icon_delete.png" />
+      <AndroidAsset Include="Assets\drawable\icon_mahzan.png" />
+      <AndroidAsset Include="Assets\drawable\icon_save.png" />
+      <AndroidAsset Include="Assets\drawable\icon_shopingCar.png" />
+      <AndroidAsset Include="Assets\drawable\icon_ticket.png" />
+      <AndroidAsset Include="Assets\drawable\image_no_available.png" />
+      <AndroidAsset Include="Assets\drawable\inventory_background.png" />
+      <AndroidAsset Include="Assets\drawable\mahzan_logo.png" />
+      <AndroidAsset Include="Assets\drawable\products_background.png" />
+      <AndroidAsset Include="Assets\drawable\sales_background.png" />
+      <AndroidAsset Include="Assets\drawable\splashscreen.png" />
+      <AndroidAsset Include="Assets\drawable\stores_background.png" />
+      <AndroidAsset Include="Assets\drawable\stores_inventory_background.png" />
+      <AndroidAsset Include="Assets\drawable\store_background.png" />
+      <AndroidAsset Include="Assets\drawable\success.png" />
+      <AndroidAsset Include="Assets\drawable\work_enviroment_background.png" />
+      <AndroidAsset Include="Assets\layout\Main.axml" />
+      <AndroidAsset Include="Assets\layout\Tabbar.axml" />
+      <AndroidAsset Include="Assets\layout\Tabbar.xml" />
+      <AndroidAsset Include="Assets\layout\Toolbar.axml" />
+      <AndroidAsset Include="Assets\layout\Toolbar.xml" />
+      <AndroidAsset Include="Assets\mipmap-anydpi-v26\icon.xml" />
+      <AndroidAsset Include="Assets\mipmap-anydpi-v26\icon_round.xml" />
+      <AndroidAsset Include="Assets\mipmap-hdpi\icon.png" />
+      <AndroidAsset Include="Assets\mipmap-hdpi\icon_20200403.png" />
+      <AndroidAsset Include="Assets\mipmap-hdpi\ic_launcher.png" />
+      <AndroidAsset Include="Assets\mipmap-hdpi\launcher_foreground.png" />
+      <AndroidAsset Include="Assets\mipmap-ldpi\ic_launcher.png" />
+      <AndroidAsset Include="Assets\mipmap-mdpi\icon.png" />
+      <AndroidAsset Include="Assets\mipmap-mdpi\icon_20200403.png" />
+      <AndroidAsset Include="Assets\mipmap-mdpi\ic_launcher.png" />
+      <AndroidAsset Include="Assets\mipmap-mdpi\launcher_foreground.png" />
+      <AndroidAsset Include="Assets\mipmap-xhdpi\icon.png" />
+      <AndroidAsset Include="Assets\mipmap-xhdpi\ic_launcher.png" />
+      <AndroidAsset Include="Assets\mipmap-xhdpi\launcher_foreground.png" />
+      <AndroidAsset Include="Assets\mipmap-xxhdpi\icon.png" />
+      <AndroidAsset Include="Assets\mipmap-xxhdpi\ic_launcher.png" />
+      <AndroidAsset Include="Assets\mipmap-xxhdpi\launcher_foreground.png" />
+      <AndroidAsset Include="Assets\mipmap-xxxhdpi\icon.png" />
+      <AndroidAsset Include="Assets\mipmap-xxxhdpi\ic_launcher.png" />
+      <AndroidAsset Include="Assets\mipmap-xxxhdpi\launcher_foreground.png" />
+      <AndroidAsset Include="Assets\values\colors.xml" />
+      <AndroidAsset Include="Assets\values\Strings.xml" />
+      <AndroidAsset Include="Assets\values\styles.xml" />
+      <AndroidAsset Include="Assets\xml\file_paths.xml" />
+    </ItemGroup>
     <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>
