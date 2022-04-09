@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="http://prismlibrary.com"
+             xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="Mahzan.Mobile.Views.Administrator.WorkEnviroment.Tpvs.AdminTpvsPage">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Eliminar"
+                     Command="{Binding DeleteCommand}">
+        </ToolbarItem>
+        <ToolbarItem Text="Guardar"
+                     Command="{Binding SaveCommand}">
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout>
+            <ScrollView>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <forms:CachedImage
+                        Grid.Row="0"
+                        Source="background_pointsofsales.png"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="StartAndExpand"
+                        CacheType="Memory"
+                        Aspect="AspectFill"
+                    >
+                    </forms:CachedImage>
+                    <Frame CornerRadius="10" 
+                           BackgroundColor="White" 
+                           Grid.RowSpan="2" 
+                           Margin="20,150,20,20">
+                        <Grid RowSpacing="5">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Label Grid.Row="0"
+                                   Text="Detalle Punto de Venta"
+                                   HorizontalTextAlignment="Center"
+                                   FontSize="18">
+                            </Label>
+                            <Picker Grid.Row="1" 
+                                    Title="- Tiendas -" 
+                                    ItemsSource="{Binding ListViewStores, Mode=TwoWay}" 
+                                    ItemDisplayBinding="{Binding Name , Mode=TwoWay}"
+                                    SelectedItem="{Binding SelectedStore, Mode=TwoWay}"
+                                    FontSize="16"/>
+                            <Entry Grid.Row="2"
+                                   Placeholder="Código"
+                                   Text="{Binding Code, Mode=TwoWay}">
+                            </Entry>
+                            <Entry Grid.Row="3"
+                                   Placeholder="Nombre"
+                                   Text="{Binding Name, Mode=TwoWay}">
+                            </Entry>
+
+                        </Grid>
+                    </Frame>
+                </Grid>
+            </ScrollView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,5 +1,6 @@
 ﻿using System;
 using Mahzan.Mobile.Services.Category;
+using Mahzan.Mobile.Services.Company;
 using Mahzan.Mobile.Services.Department;
 using Mahzan.Mobile.Services.Product;
 using Mahzan.Mobile.Services.SHA1;
@@ -14,6 +15,7 @@ using Mahzan.Mobile.ViewModels.Administrator.Products;
 using Mahzan.Mobile.ViewModels.Administrator.Products.Inventory;
 using Mahzan.Mobile.ViewModels.Administrator.WorkEnviroment;
 using Mahzan.Mobile.ViewModels.Administrator.WorkEnviroment.Stores;
+using Mahzan.Mobile.ViewModels.Administrator.WorkEnviroment.Tpvs;
 using Mahzan.Mobile.ViewModels.Settings;
 using Mahzan.Mobile.ViewModels.Settings.Printer;
 using Mahzan.Mobile.Views;
@@ -22,6 +24,7 @@ using Mahzan.Mobile.Views.Administrator.Products;
 using Mahzan.Mobile.Views.Administrator.Products.Inventory;
 using Mahzan.Mobile.Views.Administrator.WorkEnviroment;
 using Mahzan.Mobile.Views.Administrator.WorkEnviroment.Stores;
+using Mahzan.Mobile.Views.Administrator.WorkEnviroment.Tpvs;
 using Mahzan.Mobile.Views.Settings;
 using Mahzan.Mobile.Views.Settings.Printer;
 using Plugin.Toasts;
@@ -88,6 +91,8 @@ namespace Mahzan.Mobile
             containerRegistry.Register<ICategoryService, CategoryService>();
             containerRegistry.Register<ISubCategoryService, SubCategoryService>();
             containerRegistry.Register<IStoreService, StoreService>();
+            containerRegistry.Register<ICompanyService, CompanyService>();
+            
         }
         
         protected void RegisterNavigationDependencies(IContainerRegistry containerRegistry)
@@ -111,7 +116,13 @@ namespace Mahzan.Mobile
             
             // Work Enviroment
             containerRegistry.RegisterForNavigation<IndexWorkEnviromentPage, IndexWorkEnviromentPageViewModel>();
+            
             containerRegistry.RegisterForNavigation<ListStoresPage, ListStoresPageViewModel>();
+            containerRegistry.RegisterForNavigation<AdminStorePage, AdminStorePageViewModel>();
+            
+            containerRegistry.RegisterForNavigation<ListTpvsPage, ListTpvsPageViewModel>();
+            containerRegistry.RegisterForNavigation<AdminTpvsPage, AdminTpvsPageViewModel>();
+
             
         }
     }

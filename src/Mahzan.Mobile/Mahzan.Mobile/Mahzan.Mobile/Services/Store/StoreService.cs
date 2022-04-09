@@ -1,11 +1,14 @@
 using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using Mahzan.Mobile.Commands.Store;
+using Mahzan.Mobile.Models.Store;
 using Mahzan.Mobile.Services._Base;
 using Mahzan.Mobile.SqLite._Base;
+using Newtonsoft.Json;
 
 namespace Mahzan.Mobile.Services.Store
 {
@@ -47,6 +50,29 @@ namespace Mahzan.Mobile.Services.Store
                 throw;
             }
 
+            return httpResponseMessage;
+        }
+
+        public async Task<HttpResponseMessage> Create(CreateStoreCommand command)
+        {
+            HttpResponseMessage httpResponseMessage;
+            UriBuilder uriBuilder = new UriBuilder(UrlApi + "/v1/Store/Create");
+            try
+            {
+                HttpClient httpClient = new HttpClient();
+
+                string jsonData = JsonConvert.SerializeObject(command);
+                StringContent stringContent = new StringContent(jsonData, UnicodeEncoding.UTF8, "application/json");
+
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
+                httpResponseMessage = await httpClient.PostAsync(uriBuilder.ToString(), stringContent);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            
             return httpResponseMessage;
         }
     }

@@ -7,7 +7,7 @@ namespace Mahzan.Mobile.ViewModels.Administrator
     {
         public AdministratorDashboardPageViewModel(INavigationService navigationService) : base(navigationService)
         {
-            Debug.WriteLine("entra");
+
         }
     }
 }

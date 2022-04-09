@@ -80,10 +80,7 @@ namespace Mahzan.Mobile.ViewModels.Administrator.WorkEnviroment.Stores
         }
         private async Task GetStores()
         {
-            var httpResponseMessage = await _storeService.Get(new GetStoreCommand()
-            {
-
-            });
+            var httpResponseMessage = await _storeService.Get(new GetStoreCommand());
             
             var respuesta = await httpResponseMessage.Content.ReadAsStringAsync();
             
@@ -106,7 +103,7 @@ namespace Mahzan.Mobile.ViewModels.Administrator.WorkEnviroment.Stores
 
         public async void OnNavigatedTo(INavigationParameters parameters)
         {
-            await GetStores();
+
         }
         
         //Notifications

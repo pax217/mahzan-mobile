@@ -49,7 +49,7 @@ namespace Mahzan.Mobile.ViewModels.Administrator.WorkEnviroment
                     _navigationService.NavigateAsync("ListStoresPage");
                     break;
                 case "TPVs":
-                    _navigationService.NavigateAsync("ListPointsOfSalesPage");
+                    _navigationService.NavigateAsync("ListTpvsPage");
                     break;
                 default:
                     break;

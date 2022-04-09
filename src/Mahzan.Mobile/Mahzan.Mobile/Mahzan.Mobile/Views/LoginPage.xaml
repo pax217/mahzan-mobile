@@ -124,6 +124,7 @@
                                        x:Name="entryUserName"
                                        Placeholder="Contraseña"
                                        IsPassword="True"
+                                       
                                        Text="{Binding Password}">
                                     <Entry.Behaviors>
                                         <local:NotEmptyValidatorBehavior x:Name="passwordValidator"/>
