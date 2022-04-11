@@ -7,5 +7,7 @@ namespace Mahzan.Mobile.Services.Company
     public interface ICompanyService
     {
         Task<HttpResponseMessage> Get(GetCompaniesCommand command);
+        
+        Task<HttpResponseMessage> Create(CreateCompanyCommand command);
     }
 }

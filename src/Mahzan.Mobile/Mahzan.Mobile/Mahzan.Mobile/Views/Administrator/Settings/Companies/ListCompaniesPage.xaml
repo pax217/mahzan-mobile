@@ -2,11 +2,14 @@
 
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:prism="http://prismlibrary.com"
              xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
-             prism:ViewModelLocator.AutowireViewModel="True"
-             x:Class="Mahzan.Mobile.Views.Settings.Printer.SelectPrinterPage"
-             Title="Impersora Bluetooth">
+             x:Class="Mahzan.Mobile.Views.Administrator.Settings.Companies.ListCompaniesPage">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="toolbarItemAddProduct"
+                     IconImageSource="icon_add.png"
+                     Command="{Binding AddCompanyCommand}">
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <StackLayout>
             <ScrollView>
@@ -14,11 +17,10 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
-                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <forms:CachedImage
                         Grid.Row="0"
-                        Source="background_bluetooth.png"
+                        Source="background_companies.png"
                         HorizontalOptions="FillAndExpand"
                         VerticalOptions="StartAndExpand"
                         CacheType="Memory"
@@ -32,30 +34,27 @@
                         <Grid RowSpacing="11">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"></RowDefinition>
-                                <RowDefinition Height="100"></RowDefinition>
-                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="350"></RowDefinition>
                             </Grid.RowDefinitions>
                             <Label Grid.Row="0"
-                                   Text="Bluetooth"
+                                   Text="Mis Compañias"
                                    HorizontalTextAlignment="Center"
                                    FontSize="18">
                             </Label>
-                            <Picker Grid.Row="1"
-                                    ItemsSource="{Binding DeviceList}"
-                                    Title="Dispositivos Bluetooth"
-                                    ItemDisplayBinding="{Binding .}"
-                                    SelectedItem="{Binding SelectedDevice}" />
-                            <!--<Entry Text="{Binding PrintMessage}"
-                                       Placeholder="Message"/>-->
-                            <Button Grid.Row="2"
-                                    Text="Asignar/Imprimir Prueba"
-                                    Command="{Binding PrintCommand}"/>
+                            <ListView Grid.Row="1"
+                                      ItemsSource="{Binding ListViewCompanies}"
+                                      SelectedItem="{Binding SelectedCompanies}">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextCell Text="{Binding CompanyName}">
+                                        </TextCell>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
                         </Grid>
                     </Frame>
                 </Grid>
             </ScrollView>
         </StackLayout>
     </ContentPage.Content>
-
-
 </ContentPage>

@@ -33,4 +33,8 @@
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </EmbeddedResource>
     </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="ViewModels\Administrator\Settings\Employees" />
+    </ItemGroup>
 </Project>

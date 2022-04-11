@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace Mahzan.Mobile.Views.Settings
+namespace Mahzan.Mobile.Views.Administrator.Settings.Companies
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class IndexSettingsPage : ContentPage
+    public partial class AdminCompanyPage : ContentPage
     {
-        public IndexSettingsPage()
+        public AdminCompanyPage()
         {
             InitializeComponent();
         }

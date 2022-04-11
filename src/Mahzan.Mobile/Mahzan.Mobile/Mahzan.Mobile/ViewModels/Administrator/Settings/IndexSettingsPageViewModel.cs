@@ -3,7 +3,7 @@ using Mahzan.Mobile.Models.Settings;
 using Prism.Mvvm;
 using Prism.Navigation;
 
-namespace Mahzan.Mobile.ViewModels.Settings
+namespace Mahzan.Mobile.ViewModels.Administrator.Settings
 {
     public class IndexSettingsPageViewModel : BindableBase
     {
@@ -33,6 +33,9 @@ namespace Mahzan.Mobile.ViewModels.Settings
         {
             switch (_selectedSettingOption.Option)
             {
+                case "Compañias":
+                    _navigationService.NavigateAsync("ListCompaniesPage");
+                    break;
                 case "Impresora":
                     _navigationService.NavigateAsync("SelectPrinterPage");
                     break;
@@ -48,8 +51,10 @@ namespace Mahzan.Mobile.ViewModels.Settings
 
             ListSettingsOptionsItem = new ObservableCollection<SettingsOptions>()
             {
+                new SettingsOptions(){ Option ="Compañias",OptionDetail="Administra los tados de tus compañias."},
                 new SettingsOptions(){ Option ="Impresora",OptionDetail="Selecciona tu impresora bluetooth."},
             };
         }
     }
+
 }

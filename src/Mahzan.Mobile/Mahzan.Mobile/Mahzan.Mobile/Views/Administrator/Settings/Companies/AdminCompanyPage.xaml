@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             x:Class="Mahzan.Mobile.Views.Administrator.Settings.Companies.AdminCompanyPage">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Eliminar"
+                     Command="{Binding DeleteCompanyCommand}">
+        </ToolbarItem>
+        <ToolbarItem Text="Guardar"
+                     Command="{Binding SaveCompanyCommand}">
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout>
+            <ScrollView>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <forms:CachedImage
+                        Grid.Row="0"
+                        Source="background_company.png"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="StartAndExpand"
+                        CacheType="Memory"
+                        Aspect="AspectFill"
+                    >
+                    </forms:CachedImage>
+                    <Frame CornerRadius="10" 
+                           BackgroundColor="White" 
+                           Grid.RowSpan="2" 
+                           Margin="20,150,20,20">
+                        <Grid RowSpacing="5">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="20" />
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Row="0"
+                                   Grid.Column="1"
+                                   Text="Compañia"
+                                   HorizontalTextAlignment="Center"
+                                   VerticalTextAlignment="Center"
+                                   FontSize="18">
+                            </Label>
+                            <Picker Grid.Row="1" 
+                                    Grid.Column="1"
+                                    Title="- Giro Comercial -" 
+                                    ItemsSource="{Binding CommercialBusiness, Mode=TwoWay}" 
+                                    ItemDisplayBinding="{Binding Description, Mode=TwoWay}"
+                                    SelectedItem="{Binding SelectedCommercialBusiness, Mode=TwoWay}"/>
+                            <Entry Grid.Row="2"
+                                   Grid.Column="1"
+                                   Placeholder="Nombre"
+                                   Keyboard="Text"
+                                   Text="{Binding Name, Mode=TwoWay}">
+                            </Entry>
+                            <Entry Grid.Row="3"
+                                   Grid.Column="1"
+                                   Placeholder="RFC"
+                                   Keyboard="Text"
+                                   Text="{Binding Rfc, Mode=TwoWay}">
+                            </Entry>
+                            <Entry Grid.Row="4"
+                                   Grid.Column="1"
+                                   Placeholder="Calle"
+                                   Keyboard="Text"
+                                   Text="{Binding Street, Mode=TwoWay}">
+                            </Entry>
+                            <Entry Grid.Row="5"
+                                   Grid.Column="1"
+                                   Placeholder="Número"
+                                   Keyboard="Text"
+                                   Text="{Binding Number, Mode=TwoWay}">
+                            </Entry>
+                            <Entry Grid.Row="6"
+                                   Grid.Column="1"
+                                   Keyboard="Text"
+                                   Placeholder="Número Interno"
+                                   Text="{Binding InternalNumber, Mode=TwoWay}">
+                            </Entry>
+                            <Entry Grid.Row="7"
+                                   Grid.Column="1"
+                                   Placeholder="Código Postal"
+                                   Keyboard="Numeric"
+                                   MaxLength="5"
+                                   Text="{Binding PostalCode, Mode=TwoWay}">
+                            </Entry>
+                            <Entry Grid.Row="8"
+                                   Grid.Column="1"
+                                   Keyboard="Text"
+                                   Placeholder="Nombre de Contacto"
+                                   Text="{Binding ContactName, Mode=TwoWay}">
+                            </Entry>
+                            <Entry Grid.Row="9"
+                                   Grid.Column="1"
+                                   Keyboard="Email"
+                                   Placeholder="Email"
+                                   Text="{Binding Email, Mode=TwoWay}">
+                            </Entry>
+                            <Entry Grid.Row="10"
+                                   Grid.Column="1"
+                                   Placeholder="Teléfono"
+                                   Keyboard="Numeric"
+                                   Text="{Binding Phone, Mode=TwoWay}">
+                            </Entry>
+                            <Entry Grid.Row="11"
+                                   Grid.Column="1"
+                                   Placeholder="Sitio Web"
+                                   Keyboard="Text"
+                                   Text="{Binding WebSite, Mode=TwoWay}">
+                            </Entry>
+                        </Grid>
+                    </Frame>
+                </Grid>
+            </ScrollView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,5 +1,6 @@
 ﻿using System;
 using Mahzan.Mobile.Services.Category;
+using Mahzan.Mobile.Services.CommercialBusiness;
 using Mahzan.Mobile.Services.Company;
 using Mahzan.Mobile.Services.Department;
 using Mahzan.Mobile.Services.Product;
@@ -13,20 +14,24 @@ using Mahzan.Mobile.ViewModels;
 using Mahzan.Mobile.ViewModels.Administrator;
 using Mahzan.Mobile.ViewModels.Administrator.Products;
 using Mahzan.Mobile.ViewModels.Administrator.Products.Inventory;
+using Mahzan.Mobile.ViewModels.Administrator.Settings;
+using Mahzan.Mobile.ViewModels.Administrator.Settings.Companies;
+using Mahzan.Mobile.ViewModels.Administrator.Settings.Printers;
+using Mahzan.Mobile.ViewModels.Administrator.Settings.Tickets;
 using Mahzan.Mobile.ViewModels.Administrator.WorkEnviroment;
 using Mahzan.Mobile.ViewModels.Administrator.WorkEnviroment.Stores;
 using Mahzan.Mobile.ViewModels.Administrator.WorkEnviroment.Tpvs;
-using Mahzan.Mobile.ViewModels.Settings;
-using Mahzan.Mobile.ViewModels.Settings.Printer;
 using Mahzan.Mobile.Views;
 using Mahzan.Mobile.Views.Administrator;
 using Mahzan.Mobile.Views.Administrator.Products;
 using Mahzan.Mobile.Views.Administrator.Products.Inventory;
+using Mahzan.Mobile.Views.Administrator.Settings;
+using Mahzan.Mobile.Views.Administrator.Settings.Companies;
+using Mahzan.Mobile.Views.Administrator.Settings.Printers;
+using Mahzan.Mobile.Views.Administrator.Settings.Tickets;
 using Mahzan.Mobile.Views.Administrator.WorkEnviroment;
 using Mahzan.Mobile.Views.Administrator.WorkEnviroment.Stores;
 using Mahzan.Mobile.Views.Administrator.WorkEnviroment.Tpvs;
-using Mahzan.Mobile.Views.Settings;
-using Mahzan.Mobile.Views.Settings.Printer;
 using Plugin.Toasts;
 using Prism;
 using Prism.Ioc;
@@ -92,7 +97,8 @@ namespace Mahzan.Mobile
             containerRegistry.Register<ISubCategoryService, SubCategoryService>();
             containerRegistry.Register<IStoreService, StoreService>();
             containerRegistry.Register<ICompanyService, CompanyService>();
-            
+            containerRegistry.Register<ICompanyService, CompanyService>();
+            containerRegistry.Register<ICommercialBusinessService, CommercialBusinessService>();
         }
         
         protected void RegisterNavigationDependencies(IContainerRegistry containerRegistry)
@@ -103,12 +109,8 @@ namespace Mahzan.Mobile
             containerRegistry.RegisterForNavigation<LoginPage, LoginPageViewModel>();
             
             //Administrator
-            containerRegistry.RegisterForNavigation<AdministratorDashboardPage, AdministratorDashboardPageViewModel>();
-            
-            // Settings
-            containerRegistry.RegisterForNavigation<IndexSettingsPage, IndexSettingsPageViewModel>();
-            containerRegistry.RegisterForNavigation<SelectPrinterPage, SelectPrinterPageViewModel>();
-            
+            RegisterAdministratorSettingsNavigation(containerRegistry);
+                
             // Products
             containerRegistry.RegisterForNavigation<IndexProductsPage, IndexProductsPageViewModel>();
             containerRegistry.RegisterForNavigation<ListProductsPage, ListProductsPageViewModel>();
@@ -122,8 +124,30 @@ namespace Mahzan.Mobile
             
             containerRegistry.RegisterForNavigation<ListTpvsPage, ListTpvsPageViewModel>();
             containerRegistry.RegisterForNavigation<AdminTpvsPage, AdminTpvsPageViewModel>();
+        }
 
+        protected void RegisterAdministratorSettingsNavigation(IContainerRegistry containerRegistry)
+        {
+            // Administrator
+            containerRegistry.RegisterForNavigation<AdministratorDashboardPage, AdministratorDashboardPageViewModel>();
             
+            // Settings
+            containerRegistry.RegisterForNavigation<IndexSettingsPage, IndexSettingsPageViewModel>();
+            
+            // Companies
+            RegisterAdministratorSettingsCompaniesNavigation(containerRegistry);
+            
+            
+            containerRegistry.RegisterForNavigation<SelectPrinterPage, SelectPrinterPageViewModel>();
+            
+            // Tickets
+            containerRegistry.RegisterForNavigation<IndexTicketsPage, IndexTicketsPageViewModel>();
+        }
+
+        protected void RegisterAdministratorSettingsCompaniesNavigation(IContainerRegistry containerRegistry)
+        {
+            containerRegistry.RegisterForNavigation<ListCompaniesPage, ListCompaniesPageViewModel>();
+            containerRegistry.RegisterForNavigation<AdminCompanyPage, AdminCompanyPageViewModel>();
         }
     }
 }

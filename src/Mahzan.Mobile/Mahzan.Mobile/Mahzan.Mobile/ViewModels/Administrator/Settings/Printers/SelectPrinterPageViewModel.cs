@@ -12,9 +12,8 @@ using Prism.Mvvm;
 using Prism.Navigation;
 using Prism.Services;
 using Xamarin.Forms;
-using Xamarin.Essentials;
 
-namespace Mahzan.Mobile.ViewModels.Settings.Printer
+namespace Mahzan.Mobile.ViewModels.Administrator.Settings.Printers
 {
     public class SelectPrinterPageViewModel : BindableBase
     {
@@ -149,4 +148,5 @@ namespace Mahzan.Mobile.ViewModels.Settings.Printer
 
 
     }
+
 }

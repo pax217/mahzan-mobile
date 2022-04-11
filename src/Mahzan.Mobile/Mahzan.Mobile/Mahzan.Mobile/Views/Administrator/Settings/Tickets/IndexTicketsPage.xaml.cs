@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace Mahzan.Mobile.Views.Settings.Printer
+namespace Mahzan.Mobile.Views.Administrator.Settings.Tickets
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class SelectPrinterPage : ContentPage
+    public partial class IndexTicketsPage : ContentPage
     {
-        public SelectPrinterPage()
+        public IndexTicketsPage()
         {
             InitializeComponent();
         }

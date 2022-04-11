@@ -89,6 +89,8 @@
         <AndroidResource Include="Resources\drawable\background_client.png">
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </AndroidResource>
+        <AndroidResource Include="Resources\drawable\background_companies.png" />
+        <AndroidResource Include="Resources\drawable\background_company.png" />
         <AndroidResource Include="Resources\drawable\background_end_sale.png">
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </AndroidResource>
