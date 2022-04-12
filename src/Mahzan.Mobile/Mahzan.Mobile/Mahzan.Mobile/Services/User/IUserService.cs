@@ -11,5 +11,7 @@ namespace Mahzan.Mobile.Services.User
         Task<HttpResponseMessage> LogIn(string userName,string password);
 
         Task<HttpResponseMessage> Create(CreateUserCommand command);
+
+        Task<HttpResponseMessage> ResetPassword(ResetPasswordCommand command);
     }
 }

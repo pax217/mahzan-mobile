@@ -52,6 +52,7 @@ public class LoginPageViewModel : BindableBase, INavigationAware
             //Commands
             LoginCommand = new Command(async () => await OnLogIn());
             SignUpCommand = new Command(async () => await OnSignUp());
+            ForgotPasswordCommand = new Command(async () => await OnForgotPasswordCommand());
         }
 
 
@@ -90,6 +91,11 @@ public class LoginPageViewModel : BindableBase, INavigationAware
         public async Task OnSignUp()
         {
             await _navigationService.NavigateAsync("SignUpPage");
+        }
+
+        public async Task OnForgotPasswordCommand()
+        {
+            await _navigationService.NavigateAsync("ResetPasswordPage");
         }
 
         private async Task SaveOnSqlite(LogInResponse logInResponse)

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -56,6 +57,30 @@ namespace Mahzan.Mobile.Services.User
                 HttpClient httpClient = new HttpClient();
 
                 command.PasswordEncrypted = await EncryptPassword(command.Password);
+
+                string jsonData = JsonConvert.SerializeObject(command);
+                StringContent stringContent = new StringContent(jsonData, UnicodeEncoding.UTF8, "application/json");
+
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
+                httpResponseMessage = await httpClient.PostAsync(uriBuilder.ToString(), stringContent);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            
+            return httpResponseMessage;
+        }
+
+        public async Task<HttpResponseMessage> ResetPassword(ResetPasswordCommand command)
+        {
+            HttpResponseMessage httpResponseMessage;
+            UriBuilder uriBuilder = new UriBuilder(UrlApi + "/v1/User/ResetPassword");
+            try
+            {
+                HttpClient httpClient = new HttpClient();
+                
 
                 string jsonData = JsonConvert.SerializeObject(command);
                 StringContent stringContent = new StringContent(jsonData, UnicodeEncoding.UTF8, "application/json");

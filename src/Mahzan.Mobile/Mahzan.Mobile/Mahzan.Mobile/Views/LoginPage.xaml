@@ -93,8 +93,7 @@
                                                   TextColor="Blue"
                                                   TextDecorations="Underline">
                                                 <Span.GestureRecognizers>
-                                                    <TapGestureRecognizer Command="{Binding ClickCommand}"
-                                                                          CommandParameter="https://xamarin.com" />
+                                                    <TapGestureRecognizer Command="{Binding ForgotPasswordCommand}" />
                                                 </Span.GestureRecognizers>
                                             </Span>
                                         </FormattedString>
