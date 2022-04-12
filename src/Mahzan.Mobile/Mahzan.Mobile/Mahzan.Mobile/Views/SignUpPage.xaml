@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             x:Class="Mahzan.Mobile.Views.SignUpPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <ScrollView>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        
+                        <forms:CachedImage
+                            Grid.Row="0"
+                            Source="mahzan_logo.png"
+                            WidthRequest="150"
+                            HeightRequest="150"
+                            Margin="0,50,0,30"
+                        >
+                        </forms:CachedImage>
+                        <Frame CornerRadius="10" 
+                               BackgroundColor="White" 
+                               Grid.RowSpan="2" 
+                               Margin="20,150,20,20">
+                            <Grid RowSpacing="10">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                </Grid.RowDefinitions>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="20" />
+                                </Grid.ColumnDefinitions>
+                                
+                                <Label Grid.Row="0" 
+                                    Grid.Column="1"
+                                    Text="Registro de Usuario"
+                                    HorizontalTextAlignment="Center"
+                                    VerticalTextAlignment="Center">
+                                    
+                                </Label>
+                                
+                                <!--CompanyName-->
+                                <Entry Grid.Row="1" 
+                                       Grid.Column="1" 
+                                       Keyboard="Text"
+                                       Placeholder="Nombre de Compañia"
+                                       Text="{Binding CompanyName}">
+                                </Entry>
+                                <!--/CompanyName-->
+                                
+                                <!--/ContactName-->
+                                <Entry Grid.Row="2"
+                                       Grid.Column="1"
+                                       Keyboard="Text"
+                                       Placeholder="Nombre de Contacto"
+                                       Text="{Binding ContactName}">
+                                </Entry>
+                                <!--/ContactName-->
+                                
+                                <!--/WhatsappPhone-->
+                                <Entry Grid.Row="3"
+                                       Grid.Column="1"
+                                       Keyboard="Numeric"
+                                       Placeholder="Telefono Whatsapp"
+                                       Text="{Binding WhatsappPhone}">
+                                </Entry>
+                                <!--/WhatsappPhone-->
+                                
+                                <!--/Email-->
+                                <Entry Grid.Row="4"
+                                       Grid.Column="1"
+                                       Keyboard="Email"
+                                       Placeholder="Email"
+                                       Text="{Binding Email}"
+                                       >
+                                </Entry>
+                                <!--/Email-->
+                                
+                                <!--/UserName-->
+                                <Entry Grid.Row="5"
+                                       Grid.Column="1"
+                                       Placeholder="Usuario"
+                                       Keyboard="Text"
+                                       Text="{Binding UserName}"
+                                >
+                                </Entry>
+                                <!--/UserName-->
+                                
+                                <!--/Password-->
+                                <Entry Grid.Row="6"
+                                       Grid.Column="1"
+                                       Placeholder="Password"
+                                       Keyboard="Text"
+                                       IsPassword="True"
+                                       Text="{Binding Password}"
+                                >
+                                </Entry>
+                                <!--/Password-->
+                                <Button Grid.Row="7"
+                                        Grid.Column="1"
+                                        Text="Registrarme"
+                                        BackgroundColor="SteelBlue"
+                                        BorderRadius="20"
+                                        TextColor="White"
+                                        FontAttributes="Bold"
+                                        Command="{Binding SignUpCommand}">
+                                </Button>
+                                
+                                <Button Grid.Row="8"
+                                        Grid.Column="1"
+                                        Text="Regresar"
+                                        BackgroundColor="SteelBlue"
+                                        BorderRadius="20"
+                                        TextColor="White"
+                                        FontAttributes="Bold"
+                                        Command="{Binding ReturnLogInCommand}">
+                                </Button>
+                            </Grid>
+                        </Frame>
+                    </Grid>
+            </ScrollView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

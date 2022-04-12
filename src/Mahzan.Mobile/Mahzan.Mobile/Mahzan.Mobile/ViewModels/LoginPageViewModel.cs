@@ -29,6 +29,10 @@ public class LoginPageViewModel : BindableBase, INavigationAware
 
         public ICommand LoginCommand { get; set; }
         
+        public ICommand SignUpCommand { get; set; }
+        
+        public ICommand ForgotPasswordCommand { get; set; }
+        
 
         public LoginPageViewModel(
             INavigationService navigationService,
@@ -46,12 +50,12 @@ public class LoginPageViewModel : BindableBase, INavigationAware
             _navigationService = navigationService;
 
             //Commands
-            LoginCommand = new Command(async () => await LogIn());
-            
+            LoginCommand = new Command(async () => await OnLogIn());
+            SignUpCommand = new Command(async () => await OnSignUp());
         }
 
 
-        public async Task LogIn()
+        public async Task OnLogIn()
         {
             var httpResponseMessage= await _userService.LogIn("mahzan", "Mahzan22%&");
             
@@ -81,6 +85,11 @@ public class LoginPageViewModel : BindableBase, INavigationAware
                         break;
                 }
             }
+        }
+
+        public async Task OnSignUp()
+        {
+            await _navigationService.NavigateAsync("SignUpPage");
         }
 
         private async Task SaveOnSqlite(LogInResponse logInResponse)

@@ -130,6 +130,9 @@
         <AndroidResource Include="Resources\drawable\icon_delete.png">
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </AndroidResource>
+        <AndroidResource Include="Resources\drawable\icon_mahzan.bmp">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </AndroidResource>
         <AndroidResource Include="Resources\drawable\icon_mahzan.png">
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </AndroidResource>

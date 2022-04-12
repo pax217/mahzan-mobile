@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace Mahzan.Mobile.Views.Administrator.Settings.Tickets
+namespace Mahzan.Mobile.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class IndexTicketsPage : ContentPage
+    public partial class SignUpPage : ContentPage
     {
-        public IndexTicketsPage()
+        public SignUpPage()
         {
             InitializeComponent();
         }

@@ -6,6 +6,6 @@ namespace Mahzan.Mobile.Services.BlueTooth
     public interface IBlueToothService
     {
         IList<string> GetDeviceList();
-        Task Print(string deviceName, string text);
+        Task Print(string deviceName, byte[] buffer);
     }
 }

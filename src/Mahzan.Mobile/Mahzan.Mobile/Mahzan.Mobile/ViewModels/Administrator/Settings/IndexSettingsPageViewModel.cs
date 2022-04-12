@@ -36,6 +36,9 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings
                 case "Compañias":
                     _navigationService.NavigateAsync("ListCompaniesPage");
                     break;
+                case "Tickets":
+                    _navigationService.NavigateAsync("TicketsSettingsPage");
+                    break;
                 case "Impresora":
                     _navigationService.NavigateAsync("SelectPrinterPage");
                     break;
@@ -52,6 +55,7 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings
             ListSettingsOptionsItem = new ObservableCollection<SettingsOptions>()
             {
                 new SettingsOptions(){ Option ="Compañias",OptionDetail="Administra los tados de tus compañias."},
+                new SettingsOptions(){ Option ="Tickets",OptionDetail="Configura la forma en que se imprimirán tus tickets."},
                 new SettingsOptions(){ Option ="Impresora",OptionDetail="Selecciona tu impresora bluetooth."},
             };
         }

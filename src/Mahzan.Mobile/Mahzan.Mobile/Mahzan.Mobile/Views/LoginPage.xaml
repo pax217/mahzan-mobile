@@ -3,60 +3,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="http://prismlibrary.com"
-             xmlns:local="clr-namespace:Mahzan.Mobile.Behaviors"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="Mahzan.Mobile.Views.LoginPage">
-        <ContentPage.Resources>
-        <ResourceDictionary>
-            <local:BooleanToObjectConverter x:Key="boolToStyleImage"
-                                              x:TypeArguments="Style">
-                <local:BooleanToObjectConverter.FalseObject>
-                    <Style TargetType="Image">
-                        <Setter Property="HeightRequest" Value="20" />
-                        <Setter Property="Source" Value="{local:ImageResource Mahzan.Mobile.Images.error.png}" />
-                        
-
-                    </Style>
-                </local:BooleanToObjectConverter.FalseObject>
-
-                <local:BooleanToObjectConverter.TrueObject>
-                    <Style TargetType="Image">
-                        <Setter Property="HeightRequest" Value="20" />
-                        <Setter Property="Source" Value="{local:ImageResource Mahzan.Mobile.Images.success.png}" />
-                    </Style>
-                </local:BooleanToObjectConverter.TrueObject>
-            </local:BooleanToObjectConverter>
-
-            <Style x:Key="baseStyle"
-             TargetType="Label">
-                <Setter Property="XAlign" Value="Start" />
-                <Setter Property="YAlign" Value="Center" />
-                <Setter Property="FontSize" Value="Micro" />
-                <Setter Property="FontAttributes" Value="Italic" />
-            </Style>
-            
-
-            <!--UserName-->
-            <local:BooleanToObjectConverter x:Key="boolToStyleUserName"
-                                           x:TypeArguments="Style">
-                <local:BooleanToObjectConverter.FalseObject>
-                    <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
-                        <Setter Property="TextColor" Value="#F44336" />
-                        <Setter Property="Text" Value="* requerido" />
-                        <Setter Property="FontSize" Value="9" />
-                    </Style>
-                </local:BooleanToObjectConverter.FalseObject>
-
-                <local:BooleanToObjectConverter.TrueObject>
-                    <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
-                        <Setter Property="TextColor" Value="#4CAF50" />
-                        <Setter Property="Text" Value="Correcto" />
-                    </Style>
-                </local:BooleanToObjectConverter.TrueObject>
-            </local:BooleanToObjectConverter>
-            <!--/UserName-->
-        </ResourceDictionary>
-    </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout>
             <ScrollView>
@@ -100,22 +48,7 @@
                                 <Entry Grid.Row="0" 
                                        Grid.Column="1" Placeholder="Usuario"
                                        Text="{Binding UserName}">
-                                    <Entry.Behaviors>
-                                        <local:NotEmptyValidatorBehavior x:Name="userNameValidator"/>
-                                    </Entry.Behaviors>
                                 </Entry>
-                                <Image Grid.Row="0" 
-                                       Grid.Column="2" 
-                                       x:Name="UserNameSuccessErrorImage"
-                                       Style="{Binding Source={x:Reference userNameValidator}, 
-                                   Path=IsValid, 
-                                   Converter={StaticResource boolToStyleImage}}"/>
-                                <Label Grid.Row="1" 
-                                       Grid.Column="1" 
-                                       Style="{Binding Source={x:Reference userNameValidator}, 
-                                   Path=IsValid, 
-                                   Converter={StaticResource boolToStyleUserName}}" 
-                                       FontSize="16"/>
                                 <!--/UserName-->
                                 
                                 <!--/Password-->
@@ -124,24 +57,8 @@
                                        x:Name="entryUserName"
                                        Placeholder="Contraseña"
                                        IsPassword="True"
-                                       
                                        Text="{Binding Password}">
-                                    <Entry.Behaviors>
-                                        <local:NotEmptyValidatorBehavior x:Name="passwordValidator"/>
-                                    </Entry.Behaviors>
                                 </Entry>
-                                <Image Grid.Row="2" 
-                                       Grid.Column="2" 
-                                       x:Name="PasswordSuccessErrorImage"
-                                       Style="{Binding Source={x:Reference passwordValidator}, 
-                                   Path=IsValid, 
-                                   Converter={StaticResource boolToStyleImage}}"/>
-                                <Label Grid.Row="3" 
-                                       Grid.Column="1" 
-                                       Style="{Binding Source={x:Reference passwordValidator}, 
-                                   Path=IsValid, 
-                                   Converter={StaticResource boolToStyleUserName}}" 
-                                       FontSize="16"/>
                                 <!--/Password-->
                                 <Button Grid.Row="4"
                                         Grid.Column="1"
@@ -154,13 +71,39 @@
                                         Command="{Binding LoginCommand}"
                                         IsEnabled="{Binding LoginAllowedCommand}">
                                 </Button>
-                                    <Label Grid.Row="5" Grid.Column="1" Text="Registro"></Label>
-                                    <Label Grid.Row="6" Grid.Column="1" Text="¿Olvidaste tu Contraseña?"></Label>
+                                <Label Grid.Row="6"
+                                       Grid.Column="1">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="¿Aún no tienes cuenta?"
+                                                  TextColor="Blue"
+                                                  TextDecorations="Underline">
+                                                <Span.GestureRecognizers>
+                                                    <TapGestureRecognizer Command="{Binding SignUpCommand}" />
+                                                </Span.GestureRecognizers>
+                                            </Span>
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                                <Label Grid.Row="7"
+                                       Grid.Column="1">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="¿Olvidaste tu contraseña?"
+                                                  TextColor="Blue"
+                                                  TextDecorations="Underline">
+                                                <Span.GestureRecognizers>
+                                                    <TapGestureRecognizer Command="{Binding ClickCommand}"
+                                                                          CommandParameter="https://xamarin.com" />
+                                                </Span.GestureRecognizers>
+                                            </Span>
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
                             </Grid>
                         </Frame>
                     </Grid>
             </ScrollView>
         </StackLayout>
     </ContentPage.Content>
-
 </ContentPage>

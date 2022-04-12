@@ -32,4 +32,6 @@ namespace Mahzan.Mobile.Utils.Images
             return resultado;
         }
     }
+    
+
 }

@@ -118,7 +118,7 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings.Printers
             }
             else 
             {
-                await _blueToothService.Print(SelectedDevice, stringBuilder.ToString());
+                //await _blueToothService.Print(SelectedDevice, stringBuilder.ToString());
             }
 
 

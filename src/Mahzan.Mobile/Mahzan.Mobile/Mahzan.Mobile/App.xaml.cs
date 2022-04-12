@@ -107,7 +107,8 @@ namespace Mahzan.Mobile
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
             containerRegistry.RegisterForNavigation<LoginPage, LoginPageViewModel>();
-            
+            containerRegistry.RegisterForNavigation<SignUpPage, SignUpPageViewModel>();
+
             //Administrator
             RegisterAdministratorSettingsNavigation(containerRegistry);
                 
@@ -141,7 +142,7 @@ namespace Mahzan.Mobile
             containerRegistry.RegisterForNavigation<SelectPrinterPage, SelectPrinterPageViewModel>();
             
             // Tickets
-            containerRegistry.RegisterForNavigation<IndexTicketsPage, IndexTicketsPageViewModel>();
+            containerRegistry.RegisterForNavigation<TicketsSettingsPage, TicketsSettingsPageViewModel>();
         }
 
         protected void RegisterAdministratorSettingsCompaniesNavigation(IContainerRegistry containerRegistry)
