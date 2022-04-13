@@ -17,6 +17,7 @@ using Mahzan.Mobile.ViewModels.Administrator.Products.Inventory;
 using Mahzan.Mobile.ViewModels.Administrator.Settings;
 using Mahzan.Mobile.ViewModels.Administrator.Settings.Companies;
 using Mahzan.Mobile.ViewModels.Administrator.Settings.Printers;
+using Mahzan.Mobile.ViewModels.Administrator.Settings.Profile;
 using Mahzan.Mobile.ViewModels.Administrator.Settings.Tickets;
 using Mahzan.Mobile.ViewModels.Administrator.WorkEnviroment;
 using Mahzan.Mobile.ViewModels.Administrator.WorkEnviroment.Stores;
@@ -28,6 +29,7 @@ using Mahzan.Mobile.Views.Administrator.Products.Inventory;
 using Mahzan.Mobile.Views.Administrator.Settings;
 using Mahzan.Mobile.Views.Administrator.Settings.Companies;
 using Mahzan.Mobile.Views.Administrator.Settings.Printers;
+using Mahzan.Mobile.Views.Administrator.Settings.Profile;
 using Mahzan.Mobile.Views.Administrator.Settings.Tickets;
 using Mahzan.Mobile.Views.Administrator.WorkEnviroment;
 using Mahzan.Mobile.Views.Administrator.WorkEnviroment.Stores;
@@ -138,6 +140,9 @@ namespace Mahzan.Mobile
             
             // Companies
             RegisterAdministratorSettingsCompaniesNavigation(containerRegistry);
+            
+            //Profile
+            containerRegistry.RegisterForNavigation<AdminProfilePage, AdminProfilePageViewModel>();
             
             
             containerRegistry.RegisterForNavigation<SelectPrinterPage, SelectPrinterPageViewModel>();

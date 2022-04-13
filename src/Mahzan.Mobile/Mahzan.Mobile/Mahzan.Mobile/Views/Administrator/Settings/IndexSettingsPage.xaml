@@ -30,10 +30,10 @@
                         <Grid RowSpacing="11">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"></RowDefinition>
-                                <RowDefinition Height="100"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
                             </Grid.RowDefinitions>
                             <Label Grid.Row="0"
-                                   Text="Opciones"
+                                   Text="Menú de Configuracion"
                                    HorizontalTextAlignment="Center"
                                    FontSize="18">
                             </Label>

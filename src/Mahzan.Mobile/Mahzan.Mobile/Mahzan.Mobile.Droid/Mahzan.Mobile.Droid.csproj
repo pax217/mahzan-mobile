@@ -97,6 +97,9 @@
         <AndroidResource Include="Resources\drawable\background_pointsofsales.png">
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </AndroidResource>
+        <AndroidResource Include="Resources\drawable\background_profile.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </AndroidResource>
         <AndroidResource Include="Resources\drawable\background_settings.png">
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </AndroidResource>

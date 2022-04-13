@@ -97,6 +97,31 @@ namespace Mahzan.Mobile.Services.User
             return httpResponseMessage;
         }
 
+        public async Task<HttpResponseMessage> ChangePassword(ChangePasswordCommand command)
+        {
+            HttpResponseMessage httpResponseMessage;
+            UriBuilder uriBuilder = new UriBuilder(UrlApi + "/v1/User/ChangePassword");
+            try
+            {
+                HttpClient httpClient = new HttpClient();
+
+                command.NewPasswordEncrypted = await EncryptPassword(command.NewPasswordDecrypted);
+                
+                string jsonData = JsonConvert.SerializeObject(command);
+                StringContent stringContent = new StringContent(jsonData, UnicodeEncoding.UTF8, "application/json");
+
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
+                httpResponseMessage = await httpClient.PutAsync(uriBuilder.ToString(), stringContent);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            
+            return httpResponseMessage;
+        }
+
         private async Task<string> EncryptPassword(string password)
         {
             return await _sha1.EncryptString(password,"E546C8DF278XZ5931069B522E695D4A2");
