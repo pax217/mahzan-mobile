@@ -7,7 +7,7 @@
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="Mahzan.Mobile.Views.Administrator.WorkEnviroment.Stores.ListStoresPage">
     <ContentPage.ToolbarItems>
-        <ToolbarItem x:Name="toolbarItemAddProduct"
+        <ToolbarItem x:Name="toolbarItemAddStore"
                      IconImageSource="icon_add.png"
                      Command="{Binding AddStoreCommand}">
         </ToolbarItem>

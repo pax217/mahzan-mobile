@@ -69,5 +69,33 @@ namespace Mahzan.Mobile.Services.Company
             
             return httpResponseMessage;
         }
+
+        public async Task<HttpResponseMessage> Update(UpdateCompanyCommand command)
+        {
+            HttpResponseMessage httpResponseMessage;
+            UriBuilder uriBuilder = new UriBuilder(UrlApi + "/v1/Company/Update");
+            try
+            {
+                HttpClient httpClient = new HttpClient();
+
+                string jsonData = JsonConvert.SerializeObject(command);
+                StringContent stringContent = new StringContent(jsonData, UnicodeEncoding.UTF8, "application/json");
+
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
+                httpResponseMessage = await httpClient.PutAsync(uriBuilder.ToString(), stringContent);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            
+            return httpResponseMessage;
+        }
+
+        public async Task<HttpResponseMessage> Delete(string companyId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

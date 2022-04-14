@@ -137,6 +137,14 @@ namespace Mahzan.Mobile.ViewModels
                 Title = "Ventas",
             });*/
             
+            /*
+             * Operaciones
+             * Procesos
+             * Consultas
+             * Reportes
+             * Configuración
+             */
+            
             
             result.Add(new MyMenuItem()
             {

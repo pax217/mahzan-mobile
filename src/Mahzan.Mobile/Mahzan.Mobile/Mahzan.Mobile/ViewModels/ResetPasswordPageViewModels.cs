@@ -1,6 +1,8 @@
+using System.ComponentModel;
 using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Mahzan.Mobile.Behaviors;
 using Mahzan.Mobile.Commands.User;
 using Mahzan.Mobile.Models.Response;
 using Mahzan.Mobile.Services.User;
@@ -21,19 +23,36 @@ namespace Mahzan.Mobile.ViewModels
         public string Email
         {
             get { return _email; }
-            set { SetProperty(ref _email, value); }
+            set
+            {
+                _email = value;
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(Email)));
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(PassedValidation)));
+            }
         }
 
         public ICommand ReturnLogInCommand { get; set; }
         
         public ICommand ResetPasswordCommand { get; set; }
+        
+        private EmailValidatorBehavior EmailValidatorBehavior;
+        
+        public bool PassedValidation
+        {
+            get
+            {
+                return EmailValidatorBehavior.IsValid != null;
+            }
+        }
 
         public ResetPasswordPageViewModels(
             INavigationService navigationService,
-            IUserService userService)
+            IUserService userService,
+            EmailValidatorBehavior emailValidatorBehavior)
         {
             _navigationService = navigationService;
             _userService = userService;
+            EmailValidatorBehavior = emailValidatorBehavior;
             
             ReturnLogInCommand = new Command(async () => await OnReturnLogInCommand());
             ResetPasswordCommand = new Command(async () => await OnResetPassword());
@@ -42,6 +61,7 @@ namespace Mahzan.Mobile.ViewModels
         
         private async Task OnResetPassword()
         {
+
             var httpResponseMessage = await _userService.ResetPassword(new ResetPasswordCommand
             {
                 Email = Email
@@ -63,7 +83,7 @@ namespace Mahzan.Mobile.ViewModels
         }
         private async Task OnReturnLogInCommand()
         {
-            await _navigationService.NavigateAsync("LoginPage");
+            await _navigationService.GoBackAsync();
         }
         
         public void OnNavigatedFrom(INavigationParameters parameters)

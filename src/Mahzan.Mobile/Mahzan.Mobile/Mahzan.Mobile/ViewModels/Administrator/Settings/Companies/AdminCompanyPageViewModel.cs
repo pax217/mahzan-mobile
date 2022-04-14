@@ -1,12 +1,15 @@
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Mahzan.Mobile.Commands.CommercialBusiness;
 using Mahzan.Mobile.Commands.Company;
 using Mahzan.Mobile.Models.CommercialBusiness;
+using Mahzan.Mobile.Models.Company;
 using Mahzan.Mobile.Models.Response;
 using Mahzan.Mobile.Services.CommercialBusiness;
 using Mahzan.Mobile.Services.Company;
@@ -162,7 +165,7 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings.Companies
         
         public ICommand DeleteCompanyCommand { get; set; }
         
-
+        
         public AdminCompanyPageViewModel(
             INavigationService navigationService,
             ICommercialBusinessService commercialBusinessService,
@@ -173,10 +176,8 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings.Companies
             _companyService = companyService;
 
             Task.Run(GetCommercialBusiness);
-
-
-            SaveCompanyCommand = new Command(async () => await OnSaveCompanyCommand());
             
+            SaveCompanyCommand = new Command(async () => await OnSaveCompanyCommand());
             DeleteCompanyCommand = new Command(async () => await OnDeleteCompanyCommand()); 
         }
 
@@ -200,60 +201,184 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings.Companies
         {
             if (CompanyId==null)
             {
-                var httpResponseMessage = await _companyService.Create(new CreateCompanyCommand
+                await CreateCompany();
+            }
+            else
+            {
+                await UpdateCompany();
+            }
+        }
+
+        public async Task OnDeleteCompanyCommand()
+        {
+            if (CompanyId==null)
+            {
+                await App.Current.MainPage.DisplayAlert(
+                    "Elimina la compañia", 
+                    $"Debes seleccionar una compañia", 
+                    "Ok");   
+            }
+            else
+            {
+                await DeleteCompany();
+            }
+        }
+
+        private async Task CreateCompany()
+        {
+            var httpResponseMessage = await _companyService.Create(new CreateCompanyCommand
+            {
+                Company = new CompanyCommand
                 {
-                    Company = new CompanyCommand
-                    {
-                        ComercialBusinessId = _selectedCommercialBusiness.CommercialBusinessId,
-                        Name = Name,
-                        RFC = Rfc,
-                    },
-                    Adress = new AdressCommand
-                    {
-                        Street = Street,
-                        Number = Number,
-                        InternalNumber = InternalNumber,
-                        PostalCode = PostalCode,
-                    },
-                    Contact = new ContactCommand
-                    {
-                        ContactName = ContactName,
-                        Email = Email,
-                        Phone = Phone,
-                        WebSite = WebSite  
-                    }
-                });
+                    ComercialBusinessId = _selectedCommercialBusiness.CommercialBusinessId,
+                    Name = Name,
+                    RFC = Rfc,
+                },
+                Adress = new AdressCommand
+                {
+                    Street = Street,
+                    Number = Number,
+                    InternalNumber = InternalNumber,
+                    PostalCode = PostalCode,
+                },
+                Contact = new ContactCommand
+                {
+                    ContactName = ContactName,
+                    Email = Email,
+                    Phone = Phone,
+                    WebSite = WebSite  
+                }
+            });
+                
+            var respuesta = await httpResponseMessage.Content.ReadAsStringAsync();
+            
+            if (httpResponseMessage.StatusCode!=HttpStatusCode.OK)
+            {
+                var errorApi = JsonConvert.DeserializeObject<ApiResponse>(respuesta);
+                await App.Current.MainPage.DisplayAlert("CreateCompany", errorApi.Message, "Ok");
+                    
+            }
+                
+            await App.Current.MainPage.DisplayAlert(
+                "Creación de Compañia", 
+                $"Se ha creado correctamente la compañía {Name}", 
+                "Ok");
+        }
+        private async Task UpdateCompany()
+        {
+            var httpResponseMessage = await _companyService.Update(new UpdateCompanyCommand
+            {
+                Company = new UpdateCompany
+                {
+                    ComercialBusinessId = _selectedCommercialBusiness.CommercialBusinessId,
+                    Name = Name,
+                    RFC = Rfc,
+                },
+                Adress = new UpdateAdress
+                {
+                    Street = Street,
+                    Number = Number,
+                    InternalNumber = InternalNumber,
+                    PostalCode = PostalCode,
+                },
+                Contact = new UpdateContact()
+                {
+                    ContactName = ContactName,
+                    Email = Email,
+                    Phone = Phone,
+                    WebSite = WebSite  
+                }
+            });
+            
+            var respuesta = await httpResponseMessage.Content.ReadAsStringAsync();
+            
+            if (httpResponseMessage.StatusCode!=HttpStatusCode.OK)
+            {
+                var errorApi = JsonConvert.DeserializeObject<ApiResponse>(respuesta);
+                await App.Current.MainPage.DisplayAlert("UpdateCompany", errorApi.Message, "Ok");
+                    
+            }
+                
+            await App.Current.MainPage.DisplayAlert(
+                "Actualización de Compañia", 
+                $"Se ha actualizado correctamente la compañía {Name}", 
+                "Ok");
+        }
+        private async Task DeleteCompany()
+        {
+            var answer = await Application
+                .Current
+                .MainPage
+                .DisplayAlert("Atención!",
+                    "¿Estas seguro de borrar la Compañia?", "Si", "No");
+
+            if (answer)
+            {
+                var httpResponseMessage = await _companyService.Delete(CompanyId.ToString());
                 
                 var respuesta = await httpResponseMessage.Content.ReadAsStringAsync();
             
                 if (httpResponseMessage.StatusCode!=HttpStatusCode.OK)
                 {
                     var errorApi = JsonConvert.DeserializeObject<ApiResponse>(respuesta);
-                    await App.Current.MainPage.DisplayAlert("OnSaveCompanyCommand", errorApi.Message, "Ok");
+                    await App.Current.MainPage.DisplayAlert("DeleteCompany", errorApi.Message, "Ok");
                     
                 }
                 
                 await App.Current.MainPage.DisplayAlert(
                     "Creación de Compañia", 
                     $"Se ha creado correctamente la compañía {Name}", 
-                    "Ok");
+                    "Ok");    
             }
         }
 
-        public async Task OnDeleteCompanyCommand()
+        private async Task GetCompany()
         {
-            
+            var httpResponseMessage= await _companyService.Get(new GetCompaniesCommand
+            {
+                CompanyId = CompanyId.ToString()
+            });
+          
+            var respuesta = await httpResponseMessage.Content.ReadAsStringAsync();
+          
+            if (httpResponseMessage.StatusCode != HttpStatusCode.OK)
+            {
+                var errorApi = JsonConvert.DeserializeObject<ApiResponse>(respuesta);
+                await App.Current.MainPage.DisplayAlert("GetCompanies", errorApi.Message, "Ok");
+            }
+          
+            var getCompaniesResponse = JsonConvert.DeserializeObject<GetCompaniesResponse>(respuesta);
+            if (getCompaniesResponse != null)
+            {
+                var company = getCompaniesResponse.Data.FirstOrDefault();
+                if (company != null)
+                {
+                    Name = company.Name;
+                    Rfc = company.RFC;
+                    Street = company.Street;
+                    Number = company.Number;
+                    InternalNumber = company.InternalNumber;
+                    PostalCode = company.PostalCode;
+                    ContactName = company.ContactName;
+                    Email = company.Email;
+                    Phone = company.Phone;
+                    WebSite = company.WebSite;
+                }
+            }
         }
-
 
         public void OnNavigatedFrom(INavigationParameters parameters)
         {
             throw new System.NotImplementedException();
         }
 
-        public void OnNavigatedTo(INavigationParameters parameters)
+        public async void OnNavigatedTo(INavigationParameters parameters)
         {
-            throw new System.NotImplementedException();
+            CompanyId = parameters.GetValue<Guid?>("companyId");
+            if (CompanyId!=null)
+            {
+                 await GetCompany();
+            }
         }
     }
 }

@@ -99,7 +99,6 @@ namespace Mahzan.Mobile
             containerRegistry.Register<ISubCategoryService, SubCategoryService>();
             containerRegistry.Register<IStoreService, StoreService>();
             containerRegistry.Register<ICompanyService, CompanyService>();
-            containerRegistry.Register<ICompanyService, CompanyService>();
             containerRegistry.Register<ICommercialBusinessService, CommercialBusinessService>();
         }
         

@@ -45,6 +45,7 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings.Companies
                 if (_selectedCompany != value)
                 {
                     _selectedCompany = value;
+                    HandleSelectedCompany();
                 }
             }
         }
@@ -82,20 +83,27 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings.Companies
           if (getCompaniesResponse != null)
               ListViewCompanies = new ObservableCollection<Company>(getCompaniesResponse.Data);
         }
+        
+        private void HandleSelectedCompany()
+        {
+            var navigationParams = new NavigationParameters();
+            navigationParams.Add("companyId", SelectedCompany.CompanyId);
+            _navigationService.NavigateAsync("AdminCompanyPage", navigationParams);
+        }
 
         private async Task OnAddCompanyCommand()
         {
             await _navigationService.NavigateAsync("AdminCompanyPage");
         }
 
-        public void OnNavigatedFrom(INavigationParameters parameters)
+        public async void OnNavigatedFrom(INavigationParameters parameters)
         {
-            throw new System.NotImplementedException();
+
         }
 
-        public void OnNavigatedTo(INavigationParameters parameters)
+        public async void OnNavigatedTo(INavigationParameters parameters)
         {
-            throw new System.NotImplementedException();
+
         }
     }
 }

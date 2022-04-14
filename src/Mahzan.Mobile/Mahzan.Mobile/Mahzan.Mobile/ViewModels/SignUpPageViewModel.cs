@@ -107,7 +107,7 @@ namespace Mahzan.Mobile.ViewModels
 
         private async Task OnReturnLogInCommand()
         {
-            await _navigationService.NavigateAsync("LoginPage");
+            await _navigationService.GoBackAsync();
         }
 
         private async Task OnSignUpCommand()
