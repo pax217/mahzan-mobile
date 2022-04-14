@@ -109,7 +109,7 @@ namespace Mahzan.Mobile
             containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
             containerRegistry.RegisterForNavigation<LoginPage, LoginPageViewModel>();
             containerRegistry.RegisterForNavigation<SignUpPage, SignUpPageViewModel>();
-            containerRegistry.RegisterForNavigation<ResetPasswordPage, ResetPasswordPageViewModels>();
+            containerRegistry.RegisterForNavigation<ResetPasswordPage, ResetPasswordPageViewModel>();
             
             //Administrator
             RegisterAdministratorSettingsNavigation(containerRegistry);

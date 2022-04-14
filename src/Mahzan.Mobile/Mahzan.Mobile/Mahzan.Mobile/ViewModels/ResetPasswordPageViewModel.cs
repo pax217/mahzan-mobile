@@ -13,7 +13,7 @@ using Xamarin.Forms;
 
 namespace Mahzan.Mobile.ViewModels
 {
-    public class ResetPasswordPageViewModels: BindableBase, INavigationAware
+    public class ResetPasswordPageViewModel: BindableBase, INavigationAware
     {
         private readonly INavigationService _navigationService;
 
@@ -45,7 +45,7 @@ namespace Mahzan.Mobile.ViewModels
             }
         }
 
-        public ResetPasswordPageViewModels(
+        public ResetPasswordPageViewModel(
             INavigationService navigationService,
             IUserService userService,
             EmailValidatorBehavior emailValidatorBehavior)

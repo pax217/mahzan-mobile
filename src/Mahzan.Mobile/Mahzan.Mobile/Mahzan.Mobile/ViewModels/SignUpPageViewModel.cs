@@ -2,6 +2,7 @@ using System.ComponentModel;
 using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Mahzan.Mobile.Behaviors;
 using Mahzan.Mobile.Commands.Company;
 using Mahzan.Mobile.Commands.User;
 using Mahzan.Mobile.Models.Response;
@@ -27,7 +28,8 @@ namespace Mahzan.Mobile.ViewModels
             set
             {
                 _companyName = value;
-                OnPropertyChanged(new PropertyChangedEventArgs(nameof(CompanyName))); // Notify that there was a change on this property
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(CompanyName))); 
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(PassedValidations)));
             }
         }
         
@@ -38,7 +40,8 @@ namespace Mahzan.Mobile.ViewModels
             set
             {
                 _conatctName = value;
-                OnPropertyChanged(new PropertyChangedEventArgs(nameof(ContactName))); // Notify that there was a change on this property
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(ContactName))); 
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(PassedValidations)));
             }
         }
         
@@ -49,7 +52,8 @@ namespace Mahzan.Mobile.ViewModels
             set
             {
                 _whatsappPhone = value;
-                OnPropertyChanged(new PropertyChangedEventArgs(nameof(WhatsappPhone))); // Notify that there was a change on this property
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(WhatsappPhone)));                
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(PassedValidations)));
             }
         }
         
@@ -60,7 +64,8 @@ namespace Mahzan.Mobile.ViewModels
             set
             {
                 _email = value;
-                OnPropertyChanged(new PropertyChangedEventArgs(nameof(Email))); // Notify that there was a change on this property
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(Email)));
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(PassedValidations)));
             }
         }
         
@@ -71,7 +76,8 @@ namespace Mahzan.Mobile.ViewModels
             set
             {
                 _userName = value;
-                OnPropertyChanged(new PropertyChangedEventArgs(nameof(UserName))); // Notify that there was a change on this property
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(UserName))); 
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(PassedValidations)));
             }
         }
         
@@ -82,7 +88,8 @@ namespace Mahzan.Mobile.ViewModels
             set
             {
                 _password = value;
-                OnPropertyChanged(new PropertyChangedEventArgs(nameof(Password))); // Notify that there was a change on this property
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(Password))); 
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(PassedValidations)));
             }
         }
         
@@ -90,14 +97,41 @@ namespace Mahzan.Mobile.ViewModels
         
         public ICommand SignUpCommand { get; set; }
         
+        private NotEmptyValidatorBehavior CompanyNameValidator;
+        private NotEmptyValidatorBehavior ContactNameValidator;
+        private EmailValidatorBehavior EmailValidator;
+        private NotEmptyValidatorBehavior UserValidator;
+        private NotEmptyValidatorBehavior PasswordValidator;
+        
+        public bool PassedValidations
+        {
+            get
+            {
+                return (CompanyNameValidator.IsValid != null && 
+                    ContactNameValidator.IsValid != null &&
+                    EmailValidator.IsValid != null &&
+                    UserValidator.IsValid != null &&
+                    PasswordValidator.IsValid != null);
+            }
+        }
         
         public SignUpPageViewModel(
             INavigationService navigationService,
-            IUserService userService)
+            IUserService userService,
+            NotEmptyValidatorBehavior companyNameValidator,
+            NotEmptyValidatorBehavior contactNameValidator,
+            EmailValidatorBehavior emailValidatorBehavior,
+            NotEmptyValidatorBehavior userValidator,
+            NotEmptyValidatorBehavior passwordValidator)
         {
             _navigationService = navigationService;
             _userService = userService;
 
+            CompanyNameValidator = companyNameValidator;
+            ContactNameValidator = contactNameValidator;
+            EmailValidator = emailValidatorBehavior;
+            UserValidator = userValidator;
+            PasswordValidator = passwordValidator;
 
             ReturnLogInCommand = new Command(async () => await OnReturnLogInCommand());
             SignUpCommand = new Command(async () => await OnSignUpCommand());

@@ -4,6 +4,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="http://prismlibrary.com"
              xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:behaviors="clr-namespace:Mahzan.Mobile.Behaviors;assembly=Mahzan.Mobile"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="Mahzan.Mobile.Views.Administrator.Settings.Companies.AdminCompanyPage">
     <ContentPage.ToolbarItems>
@@ -76,7 +77,11 @@
                                    Grid.Column="1"
                                    Placeholder="RFC"
                                    Keyboard="Text"
-                                   Text="{Binding Rfc, Mode=TwoWay}">
+                                   Text="{Binding Rfc, Mode=TwoWay}"
+                                   TextTransform="Uppercase">
+                                <Entry.Behaviors>
+                                    <behaviors:MaskedBehavior Mask="XXXXXXXXXXXXX" />
+                                </Entry.Behaviors>
                             </Entry>
                             <Entry Grid.Row="4"
                                    Grid.Column="1"
@@ -120,6 +125,9 @@
                                    Placeholder="Teléfono"
                                    Keyboard="Numeric"
                                    Text="{Binding Phone, Mode=TwoWay}">
+                                <Entry.Behaviors>
+                                    <behaviors:MaskedBehavior Mask="+52 XX XXXX XXXX" />
+                                </Entry.Behaviors>
                             </Entry>
                             <Entry Grid.Row="11"
                                    Grid.Column="1"

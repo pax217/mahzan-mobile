@@ -18,7 +18,7 @@ namespace Mahzan.Mobile.Views
 
         private readonly IUserService _userService;
         
-        private ResetPasswordPageViewModels viewModel;
+        private readonly ResetPasswordPageViewModel _resetPasswordPageViewModel;
         public ResetPasswordPage(
             INavigationService navigationService,
             IUserService userService)
@@ -29,12 +29,12 @@ namespace Mahzan.Mobile.Views
             InitializeComponent();
 
             
-            viewModel = new ResetPasswordPageViewModels(
+            _resetPasswordPageViewModel = new ResetPasswordPageViewModel(
                 _navigationService, 
                 _userService,
                 emailValidator);
 
-            BindingContext = viewModel;
+            BindingContext = _resetPasswordPageViewModel;
         }
     }
 }

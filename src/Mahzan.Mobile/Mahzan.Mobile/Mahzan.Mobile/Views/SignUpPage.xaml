@@ -2,8 +2,161 @@
 
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="http://prismlibrary.com"
+             xmlns:local="clr-namespace:Mahzan.Mobile.Behaviors"
+             prism:ViewModelLocator.AutowireViewModel="True"
              xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:behaviors="clr-namespace:Mahzan.Mobile.Behaviors;assembly=Mahzan.Mobile"
              x:Class="Mahzan.Mobile.Views.SignUpPage">
+        <ContentPage.Resources>
+        <ResourceDictionary>
+            <behaviors:BooleanToObjectConverter x:Key="boolToStyleImage"
+                                              x:TypeArguments="Style">
+                <behaviors:BooleanToObjectConverter.FalseObject>
+                    <Style TargetType="Image">
+                        <Setter Property="HeightRequest" Value="20" />
+                        <Setter Property="Source" Value="{behaviors:ImageResource Mahzan.Mobile.Images.error.png}" />
+                    </Style>
+                </behaviors:BooleanToObjectConverter.FalseObject>
+
+                <behaviors:BooleanToObjectConverter.TrueObject>
+                    <Style TargetType="Image">
+                        <Setter Property="HeightRequest" Value="20" />
+                        <Setter Property="Source" Value="{behaviors:ImageResource Mahzan.Mobile.Images.success.png}" />
+                    </Style>
+                </behaviors:BooleanToObjectConverter.TrueObject>
+            </behaviors:BooleanToObjectConverter>
+
+            <Style x:Key="baseStyle"
+             TargetType="Label">
+                <Setter Property="XAlign" Value="Start" />
+                <Setter Property="YAlign" Value="Center" />
+                <Setter Property="FontSize" Value="Micro" />
+                <Setter Property="FontAttributes" Value="Italic" />
+            </Style>
+            
+
+            <!--CompanyName-->
+            <behaviors:BooleanToObjectConverter x:Key="boolToStyleCompanyName"
+                                           x:TypeArguments="Style">
+                <behaviors:BooleanToObjectConverter.FalseObject>
+                    <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+                        <Setter Property="TextColor" Value="#F44336" />
+                        <Setter Property="Text" Value="requerido" />
+                        <Setter Property="FontSize" Value="5" />
+                    </Style>
+                </behaviors:BooleanToObjectConverter.FalseObject>
+
+                <behaviors:BooleanToObjectConverter.TrueObject>
+                    <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+                        <Setter Property="TextColor" Value="#4CAF50" />
+                        <Setter Property="Text" Value="correcto" />
+                    </Style>
+                </behaviors:BooleanToObjectConverter.TrueObject>
+            </behaviors:BooleanToObjectConverter>
+            <!--/CompanyName-->
+            
+            <!--ContactName-->
+            <behaviors:BooleanToObjectConverter x:Key="boolToStyleContactName"
+                                                x:TypeArguments="Style">
+                <behaviors:BooleanToObjectConverter.FalseObject>
+                    <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+                        <Setter Property="TextColor" Value="#F44336" />
+                        <Setter Property="Text" Value="requerido" />
+                        <Setter Property="FontSize" Value="5" />
+                    </Style>
+                </behaviors:BooleanToObjectConverter.FalseObject>
+
+                <behaviors:BooleanToObjectConverter.TrueObject>
+                    <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+                        <Setter Property="TextColor" Value="#4CAF50" />
+                        <Setter Property="Text" Value="correcto" />
+                    </Style>
+                </behaviors:BooleanToObjectConverter.TrueObject>
+            </behaviors:BooleanToObjectConverter>
+            <!--/ContactName-->
+            
+            <!--WhatsappPhone-->
+            <behaviors:BooleanToObjectConverter x:Key="boolToStyleWhatsappPhone"
+                                                x:TypeArguments="Style">
+                <behaviors:BooleanToObjectConverter.FalseObject>
+                    <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+                        <Setter Property="TextColor" Value="#F44336" />
+                        <Setter Property="Text" Value="requerido" />
+                        <Setter Property="FontSize" Value="5" />
+                    </Style>
+                </behaviors:BooleanToObjectConverter.FalseObject>
+
+                <behaviors:BooleanToObjectConverter.TrueObject>
+                    <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+                        <Setter Property="TextColor" Value="#4CAF50" />
+                        <Setter Property="Text" Value="correcto" />
+                    </Style>
+                </behaviors:BooleanToObjectConverter.TrueObject>
+            </behaviors:BooleanToObjectConverter>
+            <!--/WhatsappPhone-->
+            
+            <!--Email-->
+            <behaviors:BooleanToObjectConverter x:Key="boolToStyleEmail"
+                                                x:TypeArguments="Style">
+                <behaviors:BooleanToObjectConverter.FalseObject>
+                    <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+                        <Setter Property="TextColor" Value="#F44336" />
+                        <Setter Property="Text" Value="email no valido" />
+                        <Setter Property="FontSize" Value="5" />
+                    </Style>
+                </behaviors:BooleanToObjectConverter.FalseObject>
+
+                <behaviors:BooleanToObjectConverter.TrueObject>
+                    <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+                        <Setter Property="TextColor" Value="#4CAF50" />
+                        <Setter Property="Text" Value="email valido" />
+                    </Style>
+                </behaviors:BooleanToObjectConverter.TrueObject>
+            </behaviors:BooleanToObjectConverter>
+            <!--/Email-->
+            
+            <!--UserName-->
+            <behaviors:BooleanToObjectConverter x:Key="boolToStyleUser"
+                                                x:TypeArguments="Style">
+                <behaviors:BooleanToObjectConverter.FalseObject>
+                    <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+                        <Setter Property="TextColor" Value="#F44336" />
+                        <Setter Property="Text" Value="requerido" />
+                        <Setter Property="FontSize" Value="5" />
+                    </Style>
+                </behaviors:BooleanToObjectConverter.FalseObject>
+
+                <behaviors:BooleanToObjectConverter.TrueObject>
+                    <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+                        <Setter Property="TextColor" Value="#4CAF50" />
+                        <Setter Property="Text" Value="correcto" />
+                    </Style>
+                </behaviors:BooleanToObjectConverter.TrueObject>
+            </behaviors:BooleanToObjectConverter>
+            <!--/UserName-->
+            
+            <!--Password-->
+            <behaviors:BooleanToObjectConverter x:Key="boolToStylePassword"
+                                                x:TypeArguments="Style">
+                <behaviors:BooleanToObjectConverter.FalseObject>
+                    <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+                        <Setter Property="TextColor" Value="#F44336" />
+                        <Setter Property="Text" Value="requerido" />
+                        <Setter Property="FontSize" Value="5" />
+                    </Style>
+                </behaviors:BooleanToObjectConverter.FalseObject>
+
+                <behaviors:BooleanToObjectConverter.TrueObject>
+                    <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+                        <Setter Property="TextColor" Value="#4CAF50" />
+                        <Setter Property="Text" Value="correcto" />
+                    </Style>
+                </behaviors:BooleanToObjectConverter.TrueObject>
+            </behaviors:BooleanToObjectConverter>
+            <!--/Password-->
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout>
             <ScrollView>
@@ -29,6 +182,12 @@
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"></RowDefinition>
                                     <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="16"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="16"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
                                     <RowDefinition Height="Auto"></RowDefinition>
                                     <RowDefinition Height="Auto"></RowDefinition>
                                     <RowDefinition Height="Auto"></RowDefinition>
@@ -47,9 +206,9 @@
                                 <Label Grid.Row="0" 
                                     Grid.Column="1"
                                     Text="Registro de Usuario"
+                                    FontSize="Title"
                                     HorizontalTextAlignment="Center"
                                     VerticalTextAlignment="Center">
-                                    
                                 </Label>
                                 
                                 <!--CompanyName-->
@@ -57,69 +216,165 @@
                                        Grid.Column="1" 
                                        Keyboard="Text"
                                        Placeholder="Nombre de Compañia"
+                                       MaxLength="50"
                                        Text="{Binding CompanyName}">
+                                    <Entry.Behaviors>
+                                        <local:NotEmptyValidatorBehavior x:Name="CompanyNameValidator" />
+                                    </Entry.Behaviors>
                                 </Entry>
+                                <Image Grid.Row="1" 
+                                       Grid.Column="2" 
+                                       x:Name="CompanySuccessErrorImage"
+                                       Style="{Binding Source={x:Reference CompanyNameValidator}, 
+                                   Path=IsValid, 
+                                   Converter={StaticResource boolToStyleImage}}"/>
+                                <Label Grid.Row="2" 
+                                       Grid.Column="1" 
+                                       Style="{Binding Source={x:Reference CompanyNameValidator}, 
+                                   Path=IsValid, 
+                                   Converter={StaticResource boolToStyleCompanyName}}" 
+                                       FontSize="16"/>
                                 <!--/CompanyName-->
                                 
                                 <!--/ContactName-->
-                                <Entry Grid.Row="2"
+                                <Entry Grid.Row="3"
                                        Grid.Column="1"
                                        Keyboard="Text"
+                                       MaxLength="50"
                                        Placeholder="Nombre de Contacto"
                                        Text="{Binding ContactName}">
+                                    <Entry.Behaviors>
+                                        <local:NotEmptyValidatorBehavior x:Name="ContactNameValidator" />
+                                    </Entry.Behaviors>
                                 </Entry>
+                                <Image Grid.Row="3" 
+                                       Grid.Column="2" 
+                                       x:Name="ContactNameSuccessErrorImage"
+                                       Style="{Binding Source={x:Reference ContactNameValidator}, 
+                                   Path=IsValid, 
+                                   Converter={StaticResource boolToStyleImage}}"/>
+                                <Label Grid.Row="4" 
+                                       Grid.Column="1" 
+                                       Style="{Binding Source={x:Reference ContactNameValidator}, 
+                                   Path=IsValid, 
+                                   Converter={StaticResource boolToStyleContactName}}" 
+                                       FontSize="16"/>
                                 <!--/ContactName-->
                                 
                                 <!--/WhatsappPhone-->
-                                <Entry Grid.Row="3"
+                                <Entry Grid.Row="5"
                                        Grid.Column="1"
-                                       Keyboard="Numeric"
+                                       Keyboard="Telephone"
+                                       MaxLength="18"
                                        Placeholder="Telefono Whatsapp"
                                        Text="{Binding WhatsappPhone}">
+                                    <Entry.Behaviors>
+                                        <local:NotEmptyValidatorBehavior x:Name="WhatsappPhoneValidator" />
+                                        <behaviors:MaskedBehavior Mask="+52 XX XXXX XXXX" />
+                                    </Entry.Behaviors>
                                 </Entry>
+                                <Image Grid.Row="5" 
+                                       Grid.Column="2" 
+                                       x:Name="WhatsappPhoneSuccessErrorImage"
+                                       Style="{Binding Source={x:Reference WhatsappPhoneValidator}, 
+                                   Path=IsValid, 
+                                   Converter={StaticResource boolToStyleImage}}"/>
+                                <Label Grid.Row="6" 
+                                       Grid.Column="1" 
+                                       Style="{Binding Source={x:Reference WhatsappPhoneValidator}, 
+                                   Path=IsValid, 
+                                   Converter={StaticResource boolToStyleWhatsappPhone}}" 
+                                       FontSize="16"/>
                                 <!--/WhatsappPhone-->
                                 
                                 <!--/Email-->
-                                <Entry Grid.Row="4"
+                                <Entry Grid.Row="7"
                                        Grid.Column="1"
                                        Keyboard="Email"
+                                       MaxLength="50"
                                        Placeholder="Email"
-                                       Text="{Binding Email}"
-                                       >
+                                       Text="{Binding Email}">
+                                    <Entry.Behaviors>
+                                        <local:EmailValidatorBehavior x:Name="EmailValidator" />
+                                    </Entry.Behaviors>
                                 </Entry>
+                                <Image Grid.Row="7" 
+                                       Grid.Column="2" 
+                                       x:Name="EmailSuccessErrorImage"
+                                       Style="{Binding Source={x:Reference EmailValidator}, 
+                                   Path=IsValid, 
+                                   Converter={StaticResource boolToStyleImage}}"/>
+                                <Label Grid.Row="8" 
+                                       Grid.Column="1" 
+                                       Style="{Binding Source={x:Reference EmailValidator}, 
+                                   Path=IsValid, 
+                                   Converter={StaticResource boolToStyleEmail}}" 
+                                       FontSize="16"/>
                                 <!--/Email-->
                                 
                                 <!--/UserName-->
-                                <Entry Grid.Row="5"
+                                <Entry Grid.Row="9"
                                        Grid.Column="1"
                                        Placeholder="Usuario"
+                                       MaxLength="50"
                                        Keyboard="Text"
-                                       Text="{Binding UserName}"
-                                >
+                                       Text="{Binding UserName}">
+                                    <Entry.Behaviors>
+                                        <local:NotEmptyValidatorBehavior x:Name="UserValidator" />
+                                    </Entry.Behaviors>
                                 </Entry>
+                                <Image Grid.Row="9" 
+                                       Grid.Column="2" 
+                                       x:Name="PasswordSuccessErrorImage"
+                                       Style="{Binding Source={x:Reference UserValidator}, 
+                                   Path=IsValid, 
+                                   Converter={StaticResource boolToStyleImage}}"/>
+                                <Label Grid.Row="10" 
+                                       Grid.Column="1" 
+                                       Style="{Binding Source={x:Reference UserValidator}, 
+                                   Path=IsValid, 
+                                   Converter={StaticResource boolToStyleUser}}" 
+                                       FontSize="16"/>
                                 <!--/UserName-->
                                 
                                 <!--/Password-->
-                                <Entry Grid.Row="6"
+                                <Entry Grid.Row="11"
                                        Grid.Column="1"
                                        Placeholder="Password"
                                        Keyboard="Text"
+                                       MaxLength="50"
                                        IsPassword="True"
-                                       Text="{Binding Password}"
-                                >
+                                       Text="{Binding Password}">
+                                    <Entry.Behaviors>
+                                        <local:NotEmptyValidatorBehavior x:Name="PasswordValidator" />
+                                    </Entry.Behaviors>
                                 </Entry>
+                                <Image Grid.Row="11" 
+                                       Grid.Column="2" 
+                                       x:Name="UserSuccessErrorImage"
+                                       Style="{Binding Source={x:Reference PasswordValidator}, 
+                                   Path=IsValid, 
+                                   Converter={StaticResource boolToStyleImage}}"/>
+                                <Label Grid.Row="12" 
+                                       Grid.Column="1" 
+                                       Style="{Binding Source={x:Reference PasswordValidator}, 
+                                   Path=IsValid, 
+                                   Converter={StaticResource boolToStylePassword}}" 
+                                       FontSize="16"/>
                                 <!--/Password-->
-                                <Button Grid.Row="7"
+                                
+                                <Button Grid.Row="13"
                                         Grid.Column="1"
                                         Text="Registrarme"
                                         BackgroundColor="SteelBlue"
                                         BorderRadius="20"
                                         TextColor="White"
                                         FontAttributes="Bold"
-                                        Command="{Binding SignUpCommand}">
+                                        Command="{Binding SignUpCommand}"
+                                        IsEnabled="{Binding PassedValidations}">
                                 </Button>
                                 
-                                <Button Grid.Row="8"
+                                <Button Grid.Row="14"
                                         Grid.Column="1"
                                         Text="Regresar"
                                         BackgroundColor="SteelBlue"
