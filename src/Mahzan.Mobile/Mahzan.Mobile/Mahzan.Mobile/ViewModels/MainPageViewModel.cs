@@ -150,14 +150,7 @@ namespace Mahzan.Mobile.ViewModels
             {
                 Icon = "ic_viewb",
                 PageName = nameof(IndexProductsPage),
-                Title = "Productos",
-            });
-            
-            result.Add(new MyMenuItem()
-            {
-                Icon = "ic_viewb",
-                PageName = nameof(IndexWorkEnviromentPage),
-                Title = "Entorno de Trabajo",
+                Title = "Operaciones",
             });
 
             result.Add(new MyMenuItem()

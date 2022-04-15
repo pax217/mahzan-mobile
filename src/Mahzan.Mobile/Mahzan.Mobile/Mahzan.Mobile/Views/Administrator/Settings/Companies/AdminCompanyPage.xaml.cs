@@ -10,7 +10,7 @@ using Xamarin.Forms.Xaml;
 namespace Mahzan.Mobile.Views.Administrator.Settings.Companies
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class AdminCompanyPage : ContentPage
+    public partial class AdminCompanyPage : TabbedPage
     {
         public AdminCompanyPage()
         {
