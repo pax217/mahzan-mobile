@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Mahzan.Mobile.Behaviors;
 using Mahzan.Mobile.Commands.CommercialBusiness;
 using Mahzan.Mobile.Commands.Company;
 using Mahzan.Mobile.Models.CommercialBusiness;
@@ -50,7 +51,7 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings.Companies
             }
         }
 
-        public Guid? CompanyId { get; set; }
+        public Guid CompanyId { get; set; }
         
         private string _name;
         public string Name
@@ -59,7 +60,8 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings.Companies
             set
             {
                 _name = value;
-                OnPropertyChanged(new PropertyChangedEventArgs(nameof(Name))); // Notify that there was a change on this property
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(Name)));
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(PassedValidations)));
             }
         }
         
@@ -161,20 +163,40 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings.Companies
                 OnPropertyChanged(new PropertyChangedEventArgs(nameof(WebSite)));
             }
         }
+        
+        
 
         public ICommand SaveCompanyCommand { get; set; }
         
         public ICommand DeleteCompanyCommand { get; set; }
         
+        private NotEmptyValidatorBehavior CompanyNameValidator;
+        
+        private NotEmptyValidatorBehavior RfcValidator;
+        
+        public bool PassedValidations
+        {
+            get
+            {
+                return (CompanyNameValidator.IsValid != null &&
+                        RfcValidator.IsValid != null);
+            }
+        }
+        
         
         public AdminCompanyPageViewModel(
             INavigationService navigationService,
             ICommercialBusinessService commercialBusinessService,
-            ICompanyService companyService)
+            ICompanyService companyService,
+            NotEmptyValidatorBehavior companyNameValidator,
+            NotEmptyValidatorBehavior rfcValidator)
         {
             _navigationService = navigationService;
             _commercialBusinessService = commercialBusinessService;
             _companyService = companyService;
+            
+            CompanyNameValidator = companyNameValidator;
+            RfcValidator = rfcValidator;
 
             Task.Run(GetCommercialBusiness);
             
@@ -200,28 +222,31 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings.Companies
 
         public async Task OnSaveCompanyCommand()
         {
-            if (CompanyId==null)
+            
+            if (!PassedValidations)
             {
-                if (Name==null || Rfc== null)
-                {
-                    await App.Current.MainPage.DisplayAlert(
-                        "Guarda la compañia", 
-                        $"Debes capturar la información, dirección y contacto de la compañia. ", 
-                        "Ok");
-                    return;
-                }
-                
-                await CreateCompany();
+                await App.Current.MainPage.DisplayAlert(
+                    "Guarda la compañia", 
+                    $"Debes capturar los campos * requeridos. ", 
+                    "Ok");
+                return;
             }
             else
             {
-                await UpdateCompany();
+                if (CompanyId==Guid.Empty)
+                {
+                    await CreateCompany();
+                }
+                else
+                {
+                    await UpdateCompany();
+                }   
             }
         }
 
         public async Task OnDeleteCompanyCommand()
         {
-            if (CompanyId==null)
+            if (CompanyId==Guid.Empty)
             {
                 await App.Current.MainPage.DisplayAlert(
                     "Elimina la compañia", 
@@ -266,15 +291,17 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings.Companies
             {
                 var errorApi = JsonConvert.DeserializeObject<ApiResponse>(respuesta);
                 await App.Current.MainPage.DisplayAlert("CreateCompany", errorApi.Message, "Ok");
-                return;
-            }
                 
-            await App.Current.MainPage.DisplayAlert(
-                "Creación de Compañia", 
-                $"Se ha creado correctamente la compañía {Name}", 
-                "Ok");
+            }
+            else
+            {
+                await App.Current.MainPage.DisplayAlert(
+                    "Creación de Compañia", 
+                    $"Se ha creado correctamente la compañía {Name}", 
+                    "Ok");
             
-            await _navigationService.GoBackAsync();
+                await _navigationService.GoBackAsync();   
+            }
         }
         private async Task UpdateCompany()
         {
@@ -282,6 +309,7 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings.Companies
             {
                 Company = new UpdateCompany
                 {
+                    CompanyId = CompanyId,
                     ComercialBusinessId = _selectedCommercialBusiness.CommercialBusinessId,
                     Name = Name,
                     RFC = Rfc,
@@ -308,15 +336,17 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings.Companies
             {
                 var errorApi = JsonConvert.DeserializeObject<ApiResponse>(respuesta);
                 await App.Current.MainPage.DisplayAlert("UpdateCompany", errorApi.Message, "Ok");
-                    
+
             }
-                
-            await App.Current.MainPage.DisplayAlert(
-                "Actualización de Compañia", 
-                $"Se ha actualizado correctamente la compañía {Name}", 
-                "Ok");
+            else
+            {
+                await App.Current.MainPage.DisplayAlert(
+                    "Actualización de Compañia", 
+                    $"Se ha actualizado correctamente la compañía {Name}", 
+                    "Ok");
             
-            await _navigationService.GoBackAsync();
+                await _navigationService.GoBackAsync();    
+            }
         }
         private async Task DeleteCompany()
         {
@@ -336,15 +366,17 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings.Companies
                 {
                     var errorApi = JsonConvert.DeserializeObject<ApiResponse>(respuesta);
                     await App.Current.MainPage.DisplayAlert("DeleteCompany", errorApi.Message, "Ok");
-                    return;
+                   
                 }
-                
-                await App.Current.MainPage.DisplayAlert(
-                    "Elimina Compañia", 
-                    $"Se ha elimindo correctamente la compañía {Name}", 
-                    "Ok");
+                else
+                {
+                    await App.Current.MainPage.DisplayAlert(
+                        "Elimina Compañia", 
+                        $"Se ha elimindo correctamente la compañía {Name}", 
+                        "Ok");
 
-                await _navigationService.GoBackAsync();
+                    await _navigationService.GoBackAsync();
+                }
             }
         }
 
@@ -369,6 +401,10 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings.Companies
                 var company = getCompaniesResponse.Data.FirstOrDefault();
                 if (company != null)
                 {
+                    SelectedCommercialBusiness = CommercialBusiness.FirstOrDefault(
+                        c =>
+                            c.CommercialBusinessId == getCompaniesResponse.Data.FirstOrDefault().CommercialBusinessId);
+                    
                     Name = company.Name;
                     Rfc = company.RFC;
                     Street = company.Street;
@@ -393,7 +429,7 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings.Companies
 
         public async void OnNavigatedTo(INavigationParameters parameters)
         {
-            CompanyId = parameters.GetValue<Guid?>("companyId");
+            CompanyId = parameters.GetValue<Guid>("companyId");
             if (CompanyId!=null)
             {
                  await GetCompany();

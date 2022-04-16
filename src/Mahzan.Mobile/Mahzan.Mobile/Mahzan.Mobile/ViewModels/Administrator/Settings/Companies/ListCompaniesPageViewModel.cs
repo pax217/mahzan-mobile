@@ -114,12 +114,12 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings.Companies
 
         public async void OnNavigatedFrom(INavigationParameters parameters)
         {
-            Debug.Write("OnNavigatedFrom");
+
         }
 
         public async void OnNavigatedTo(INavigationParameters parameters)
         {
-            Debug.Write("OnNavigatedFrom");
+
         }
     }
 }

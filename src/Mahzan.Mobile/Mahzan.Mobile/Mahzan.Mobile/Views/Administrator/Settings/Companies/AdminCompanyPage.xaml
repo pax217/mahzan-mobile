@@ -14,8 +14,7 @@
         <ToolbarItem IconImageSource="icon_delete.png"
                      Command="{Binding DeleteCompanyCommand}">
         </ToolbarItem>
-        <ToolbarItem 
-                     IconImageSource="icon_save.png"
+        <ToolbarItem IconImageSource="icon_save.png"
                      Command="{Binding SaveCompanyCommand}"
                      IsEnabled="{Binding PassedValidations}">
         </ToolbarItem>
@@ -256,7 +255,7 @@
                                   <!--CompanyName-->
                                   <Entry Grid.Row="1"
                                          Grid.Column="1"
-                                         Placeholder="Nombre"
+                                         Placeholder="* Nombre"
                                          Keyboard="Text"
                                          Text="{Binding Name, Mode=TwoWay}">
                                       <Entry.Behaviors>
@@ -280,7 +279,7 @@
                                   <!--Rfc-->
                                   <Entry Grid.Row="3"
                                          Grid.Column="1"
-                                         Placeholder="RFC"
+                                         Placeholder="* RFC"
                                          Keyboard="Text"
                                          Text="{Binding Rfc, Mode=TwoWay}"
                                          TextTransform="Uppercase">
