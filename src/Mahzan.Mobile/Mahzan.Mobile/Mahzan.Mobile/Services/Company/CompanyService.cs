@@ -95,7 +95,26 @@ namespace Mahzan.Mobile.Services.Company
 
         public async Task<HttpResponseMessage> Delete(string companyId)
         {
-            throw new NotImplementedException();
+            HttpResponseMessage httpResponseMessage;
+            UriBuilder uriBuilder = new UriBuilder(UrlApi + "/v1/Company/delete");
+            try
+            {
+                var query = HttpUtility.ParseQueryString(uriBuilder.Query);
+                query["companyId"] = companyId;
+
+                uriBuilder.Query = query.ToString();
+
+                HttpClient httpClient = new HttpClient();
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
+                httpResponseMessage = await httpClient.DeleteAsync(uriBuilder.ToString());
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+
+            return httpResponseMessage;
         }
     }
 }

@@ -16,9 +16,201 @@
         </ToolbarItem>
         <ToolbarItem 
                      IconImageSource="icon_save.png"
-                     Command="{Binding SaveCompanyCommand}">
+                     Command="{Binding SaveCompanyCommand}"
+                     IsEnabled="{Binding PassedValidations}">
         </ToolbarItem>
     </TabbedPage.ToolbarItems>
+    <TabbedPage.Resources>
+                    <behaviors:BooleanToObjectConverter x:Key="boolToStyleImage"
+                                              x:TypeArguments="Style">
+                <behaviors:BooleanToObjectConverter.FalseObject>
+                    <Style TargetType="Image">
+                        <Setter Property="HeightRequest" Value="20" />
+                        <Setter Property="Source" Value="{behaviors:ImageResource Mahzan.Mobile.Images.error.png}" />
+                    </Style>
+                </behaviors:BooleanToObjectConverter.FalseObject>
+
+                <behaviors:BooleanToObjectConverter.TrueObject>
+                    <Style TargetType="Image">
+                        <Setter Property="HeightRequest" Value="20" />
+                        <Setter Property="Source" Value="{behaviors:ImageResource Mahzan.Mobile.Images.success.png}" />
+                    </Style>
+                </behaviors:BooleanToObjectConverter.TrueObject>
+            </behaviors:BooleanToObjectConverter>
+
+            <Style x:Key="baseStyle"
+             TargetType="Label">
+                <Setter Property="XAlign" Value="Start" />
+                <Setter Property="YAlign" Value="Center" />
+                <Setter Property="FontSize" Value="Micro" />
+                <Setter Property="FontAttributes" Value="Italic" />
+            </Style>
+            
+
+            <!--CompanyName-->
+            <behaviors:BooleanToObjectConverter x:Key="boolToStyleCompanyName"
+                                           x:TypeArguments="Style">
+                <behaviors:BooleanToObjectConverter.FalseObject>
+                    <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+                        <Setter Property="TextColor" Value="#F44336" />
+                        <Setter Property="Text" Value="requerido" />
+                        <Setter Property="FontSize" Value="5" />
+                    </Style>
+                </behaviors:BooleanToObjectConverter.FalseObject>
+
+                <behaviors:BooleanToObjectConverter.TrueObject>
+                    <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+                        <Setter Property="TextColor" Value="#4CAF50" />
+                        <Setter Property="Text" Value="correcto" />
+                    </Style>
+                </behaviors:BooleanToObjectConverter.TrueObject>
+            </behaviors:BooleanToObjectConverter>
+            <!--/CompanyName-->
+            
+            <!--Rfc-->
+            <behaviors:BooleanToObjectConverter x:Key="boolToStyleRfc"
+                                                x:TypeArguments="Style">
+                <behaviors:BooleanToObjectConverter.FalseObject>
+                    <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+                        <Setter Property="TextColor" Value="#F44336" />
+                        <Setter Property="Text" Value="requerido" />
+                        <Setter Property="FontSize" Value="5" />
+                    </Style>
+                </behaviors:BooleanToObjectConverter.FalseObject>
+
+                <behaviors:BooleanToObjectConverter.TrueObject>
+                    <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+                        <Setter Property="TextColor" Value="#4CAF50" />
+                        <Setter Property="Text" Value="correcto" />
+                    </Style>
+                </behaviors:BooleanToObjectConverter.TrueObject>
+            </behaviors:BooleanToObjectConverter>
+            <!--/Rfc-->
+            
+            <!--Street-->
+            <behaviors:BooleanToObjectConverter x:Key="boolToStyleStreet"
+                                                x:TypeArguments="Style">
+                <behaviors:BooleanToObjectConverter.FalseObject>
+                    <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+                        <Setter Property="TextColor" Value="#F44336" />
+                        <Setter Property="Text" Value="requerido" />
+                        <Setter Property="FontSize" Value="5" />
+                    </Style>
+                </behaviors:BooleanToObjectConverter.FalseObject>
+
+                <behaviors:BooleanToObjectConverter.TrueObject>
+                    <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+                        <Setter Property="TextColor" Value="#4CAF50" />
+                        <Setter Property="Text" Value="correcto" />
+                    </Style>
+                </behaviors:BooleanToObjectConverter.TrueObject>
+            </behaviors:BooleanToObjectConverter>
+            <!--/Street-->
+            
+            <!--Number-->
+            <behaviors:BooleanToObjectConverter x:Key="boolToStyleNumber"
+                                                x:TypeArguments="Style">
+                <behaviors:BooleanToObjectConverter.FalseObject>
+                    <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+                        <Setter Property="TextColor" Value="#F44336" />
+                        <Setter Property="Text" Value="requerido" />
+                        <Setter Property="FontSize" Value="5" />
+                    </Style>
+                </behaviors:BooleanToObjectConverter.FalseObject>
+
+                <behaviors:BooleanToObjectConverter.TrueObject>
+                    <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+                        <Setter Property="TextColor" Value="#4CAF50" />
+                        <Setter Property="Text" Value="correcto" />
+                    </Style>
+                </behaviors:BooleanToObjectConverter.TrueObject>
+            </behaviors:BooleanToObjectConverter>
+            <!--/Number-->
+            
+            <!--PostalCode-->
+            <behaviors:BooleanToObjectConverter x:Key="boolToStylePostalCode"
+                                                x:TypeArguments="Style">
+                <behaviors:BooleanToObjectConverter.FalseObject>
+                    <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+                        <Setter Property="TextColor" Value="#F44336" />
+                        <Setter Property="Text" Value="requerido" />
+                        <Setter Property="FontSize" Value="5" />
+                    </Style>
+                </behaviors:BooleanToObjectConverter.FalseObject>
+
+                <behaviors:BooleanToObjectConverter.TrueObject>
+                    <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+                        <Setter Property="TextColor" Value="#4CAF50" />
+                        <Setter Property="Text" Value="correcto" />
+                    </Style>
+                </behaviors:BooleanToObjectConverter.TrueObject>
+            </behaviors:BooleanToObjectConverter>
+            <!--/PostalCode-->
+            
+            <!--ContactName-->
+            <behaviors:BooleanToObjectConverter x:Key="boolToStyleContactName"
+                                                x:TypeArguments="Style">
+                <behaviors:BooleanToObjectConverter.FalseObject>
+                    <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+                        <Setter Property="TextColor" Value="#F44336" />
+                        <Setter Property="Text" Value="requerido" />
+                        <Setter Property="FontSize" Value="5" />
+                    </Style>
+                </behaviors:BooleanToObjectConverter.FalseObject>
+
+                <behaviors:BooleanToObjectConverter.TrueObject>
+                    <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+                        <Setter Property="TextColor" Value="#4CAF50" />
+                        <Setter Property="Text" Value="correcto" />
+                    </Style>
+                </behaviors:BooleanToObjectConverter.TrueObject>
+            </behaviors:BooleanToObjectConverter>
+            <!--/ContactName-->
+            
+            <!--Email-->
+            <behaviors:BooleanToObjectConverter x:Key="boolToStyleEmail"
+                                                x:TypeArguments="Style">
+                <behaviors:BooleanToObjectConverter.FalseObject>
+                    <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+                        <Setter Property="TextColor" Value="#F44336" />
+                        <Setter Property="Text" Value="requerido" />
+                        <Setter Property="FontSize" Value="5" />
+                    </Style>
+                </behaviors:BooleanToObjectConverter.FalseObject>
+
+                <behaviors:BooleanToObjectConverter.TrueObject>
+                    <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+                        <Setter Property="TextColor" Value="#4CAF50" />
+                        <Setter Property="Text" Value="correcto" />
+                    </Style>
+                </behaviors:BooleanToObjectConverter.TrueObject>
+            </behaviors:BooleanToObjectConverter>
+            <!--/Email-->
+            
+            <!--Phone-->
+            <behaviors:BooleanToObjectConverter x:Key="boolToStylePhone"
+                                                x:TypeArguments="Style">
+                <behaviors:BooleanToObjectConverter.FalseObject>
+                    <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+                        <Setter Property="TextColor" Value="#F44336" />
+                        <Setter Property="Text" Value="requerido" />
+                        <Setter Property="FontSize" Value="5" />
+                    </Style>
+                </behaviors:BooleanToObjectConverter.FalseObject>
+
+                <behaviors:BooleanToObjectConverter.TrueObject>
+                    <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+                        <Setter Property="TextColor" Value="#4CAF50" />
+                        <Setter Property="Text" Value="correcto" />
+                    </Style>
+                </behaviors:BooleanToObjectConverter.TrueObject>
+            </behaviors:BooleanToObjectConverter>
+            <!--/Phone-->
+            
+            
+            
+    </TabbedPage.Resources>
+    
     <TabbedPage.Children>
         <ContentPage Title="Informacion">
             <ContentPage.Content>
@@ -47,6 +239,7 @@
                                       <RowDefinition Height="Auto"></RowDefinition>
                                       <RowDefinition Height="Auto"></RowDefinition>
                                       <RowDefinition Height="Auto"></RowDefinition>
+                                      <RowDefinition Height="Auto"></RowDefinition>
                                   </Grid.RowDefinitions>
                                   <Grid.ColumnDefinitions>
                                       <ColumnDefinition Width="Auto" />
@@ -59,22 +252,56 @@
                                           ItemsSource="{Binding CommercialBusiness, Mode=TwoWay}" 
                                           ItemDisplayBinding="{Binding Description, Mode=TwoWay}"
                                           SelectedItem="{Binding SelectedCommercialBusiness, Mode=TwoWay}"/>
+                                  
+                                  <!--CompanyName-->
                                   <Entry Grid.Row="1"
                                          Grid.Column="1"
                                          Placeholder="Nombre"
                                          Keyboard="Text"
                                          Text="{Binding Name, Mode=TwoWay}">
+                                      <Entry.Behaviors>
+                                          <behaviors:NotEmptyValidatorBehavior x:Name="CompanyNameValidator" />
+                                      </Entry.Behaviors>
                                   </Entry>
-                                  <Entry Grid.Row="2"
+                                  <Image Grid.Row="1" 
+                                         Grid.Column="2" 
+                                         x:Name="CompanyNameSuccessErrorImage"
+                                         Style="{Binding Source={x:Reference CompanyNameValidator}, 
+                                   Path=IsValid, 
+                                   Converter={StaticResource boolToStyleImage}}"/>
+                                  <Label Grid.Row="2" 
+                                         Grid.Column="1" 
+                                         Style="{Binding Source={x:Reference CompanyNameValidator}, 
+                                   Path=IsValid, 
+                                   Converter={StaticResource boolToStyleCompanyName}}" 
+                                         FontSize="16"/>
+                                  <!--/CompanyName-->
+                                  
+                                  <!--Rfc-->
+                                  <Entry Grid.Row="3"
                                          Grid.Column="1"
                                          Placeholder="RFC"
                                          Keyboard="Text"
                                          Text="{Binding Rfc, Mode=TwoWay}"
                                          TextTransform="Uppercase">
                                       <Entry.Behaviors>
+                                          <behaviors:NotEmptyValidatorBehavior x:Name="RfcValidator" />
                                           <behaviors:MaskedBehavior Mask="XXXXXXXXXXXXX" />
                                       </Entry.Behaviors>
                                   </Entry>
+                                  <Image Grid.Row="3" 
+                                         Grid.Column="2" 
+                                         x:Name="RfcSuccessErrorImage"
+                                         Style="{Binding Source={x:Reference RfcValidator}, 
+                                   Path=IsValid, 
+                                   Converter={StaticResource boolToStyleImage}}"/>
+                                  <Label Grid.Row="4" 
+                                         Grid.Column="1" 
+                                         Style="{Binding Source={x:Reference RfcValidator}, 
+                                   Path=IsValid, 
+                                   Converter={StaticResource boolToStyleRfc}}" 
+                                         FontSize="16"/>
+                                  <!--/Rfc-->
                               </Grid>
                           </Frame>
                       </Grid>
@@ -110,37 +337,96 @@
                                       <RowDefinition Height="Auto"></RowDefinition>
                                       <RowDefinition Height="Auto"></RowDefinition>
                                       <RowDefinition Height="Auto"></RowDefinition>
+                                      <RowDefinition Height="Auto"></RowDefinition>
+                                      <RowDefinition Height="Auto"></RowDefinition>
+                                      <RowDefinition Height="Auto"></RowDefinition>
                                   </Grid.RowDefinitions>
                                   <Grid.ColumnDefinitions>
                                       <ColumnDefinition Width="Auto" />
                                       <ColumnDefinition Width="*" />
                                       <ColumnDefinition Width="20" />
                                   </Grid.ColumnDefinitions>
+                                  <!--Street-->
                                   <Entry Grid.Row="0"
                                          Grid.Column="1"
                                          Placeholder="Calle"
                                          Keyboard="Text"
                                          Text="{Binding Street, Mode=TwoWay}">
+                                      <Entry.Behaviors>
+                                          <behaviors:NotEmptyValidatorBehavior x:Name="StreetValidator" />
+                                      </Entry.Behaviors>
                                   </Entry>
-                                  <Entry Grid.Row="1"
+                                  <Image Grid.Row="0" 
+                                         Grid.Column="2" 
+                                         x:Name="StreetSuccessErrorImage"
+                                         Style="{Binding Source={x:Reference StreetValidator}, 
+                                   Path=IsValid, 
+                                   Converter={StaticResource boolToStyleImage}}"/>
+                                  <Label Grid.Row="1" 
+                                         Grid.Column="1" 
+                                         Style="{Binding Source={x:Reference StreetValidator}, 
+                                   Path=IsValid, 
+                                   Converter={StaticResource boolToStyleStreet}}" 
+                                         FontSize="16"/>
+                                  <!--/Street-->
+                                  
+                                  <!--Number-->
+                                  <Entry Grid.Row="2"
                                          Grid.Column="1"
                                          Placeholder="Número"
                                          Keyboard="Text"
                                          Text="{Binding Number, Mode=TwoWay}">
+                                      <Entry.Behaviors>
+                                          <behaviors:NotEmptyValidatorBehavior x:Name="NumberValidator" />
+                                      </Entry.Behaviors>
                                   </Entry>
-                                  <Entry Grid.Row="2"
+                                  <Image Grid.Row="2" 
+                                         Grid.Column="2" 
+                                         x:Name="NumberSuccessErrorImage"
+                                         Style="{Binding Source={x:Reference NumberValidator}, 
+                                   Path=IsValid, 
+                                   Converter={StaticResource boolToStyleImage}}"/>
+                                  <Label Grid.Row="3" 
+                                         Grid.Column="1" 
+                                         Style="{Binding Source={x:Reference NumberValidator}, 
+                                   Path=IsValid, 
+                                   Converter={StaticResource boolToStyleNumber}}" 
+                                         FontSize="16"/>
+                                  <!--/Number-->
+                                  
+                                  <!--InternalNumber-->
+                                  <Entry Grid.Row="4"
                                          Grid.Column="1"
                                          Keyboard="Text"
                                          Placeholder="Número Interno"
                                          Text="{Binding InternalNumber, Mode=TwoWay}">
                                   </Entry>
-                                  <Entry Grid.Row="3"
+                                  <!--/InternalNumber-->
+                                  
+                                  <!--/PostalCode-->
+                                  <Entry Grid.Row="5"
                                          Grid.Column="1"
                                          Placeholder="Código Postal"
                                          Keyboard="Numeric"
                                          MaxLength="5"
                                          Text="{Binding PostalCode, Mode=TwoWay}">
+                                      <Entry.Behaviors>
+                                          <behaviors:NotEmptyValidatorBehavior x:Name="PostalCodeValidator" />
+                                      </Entry.Behaviors>
                                   </Entry>
+                                  <Image Grid.Row="5" 
+                                         Grid.Column="2" 
+                                         x:Name="PostalCodeSuccessErrorImage"
+                                         Style="{Binding Source={x:Reference PostalCodeValidator}, 
+                                   Path=IsValid, 
+                                   Converter={StaticResource boolToStyleImage}}"/>
+                                  <Label Grid.Row="6" 
+                                         Grid.Column="1" 
+                                         Style="{Binding Source={x:Reference PostalCodeValidator}, 
+                                   Path=IsValid, 
+                                   Converter={StaticResource boolToStylePostalCode}}" 
+                                         FontSize="16"/>
+                                  <!--/PostalCode-->
                               </Grid>
                           </Frame>
                       </Grid>
@@ -176,34 +462,90 @@
                                       <RowDefinition Height="Auto"></RowDefinition>
                                       <RowDefinition Height="Auto"></RowDefinition>
                                       <RowDefinition Height="Auto"></RowDefinition>
+                                      <RowDefinition Height="Auto"></RowDefinition>
+                                      <RowDefinition Height="Auto"></RowDefinition>
+                                      <RowDefinition Height="Auto"></RowDefinition>
                                   </Grid.RowDefinitions>
                                   <Grid.ColumnDefinitions>
                                       <ColumnDefinition Width="Auto" />
                                       <ColumnDefinition Width="*" />
                                       <ColumnDefinition Width="20" />
                                   </Grid.ColumnDefinitions>
+                                  
+                                  <!--ContactName-->
                                   <Entry Grid.Row="0"
                                          Grid.Column="1"
                                          Keyboard="Text"
                                          Placeholder="Nombre de Contacto"
                                          Text="{Binding ContactName, Mode=TwoWay}">
+                                      <Entry.Behaviors>
+                                          <behaviors:NotEmptyValidatorBehavior x:Name="ContactNameValidator" />
+                                      </Entry.Behaviors>
                                   </Entry>
-                                  <Entry Grid.Row="1"
+                                  <Image Grid.Row="0" 
+                                         Grid.Column="2" 
+                                         x:Name="ContactNameSuccessErrorImage"
+                                         Style="{Binding Source={x:Reference ContactNameValidator}, 
+                                   Path=IsValid, 
+                                   Converter={StaticResource boolToStyleImage}}"/>
+                                  <Label Grid.Row="1" 
+                                         Grid.Column="1" 
+                                         Style="{Binding Source={x:Reference ContactNameValidator}, 
+                                   Path=IsValid, 
+                                   Converter={StaticResource boolToStyleContactName}}" 
+                                         FontSize="16"/>
+                                  <!--/ContactName-->
+                                  
+                                  <!--Email-->
+                                  <Entry Grid.Row="2"
                                          Grid.Column="1"
                                          Keyboard="Email"
                                          Placeholder="Email"
                                          Text="{Binding Email, Mode=TwoWay}">
+                                      <Entry.Behaviors>
+                                          <behaviors:EmailValidatorBehavior x:Name="EmailValidator" />
+                                      </Entry.Behaviors>
                                   </Entry>
-                                  <Entry Grid.Row="2"
+                                  <Image Grid.Row="2" 
+                                         Grid.Column="2" 
+                                         x:Name="EmailSuccessErrorImage"
+                                         Style="{Binding Source={x:Reference EmailValidator}, 
+                                   Path=IsValid, 
+                                   Converter={StaticResource boolToStyleImage}}"/>
+                                  <Label Grid.Row="3" 
+                                         Grid.Column="1" 
+                                         Style="{Binding Source={x:Reference EmailValidator}, 
+                                   Path=IsValid, 
+                                   Converter={StaticResource boolToStyleEmail}}" 
+                                         FontSize="16"/>
+                                  <!--/Email-->
+                                  
+                                  <!--Phone-->
+                                  <Entry Grid.Row="4"
                                          Grid.Column="1"
                                          Placeholder="Teléfono"
                                          Keyboard="Numeric"
                                          Text="{Binding Phone, Mode=TwoWay}">
                                       <Entry.Behaviors>
+                                          <behaviors:NotEmptyValidatorBehavior x:Name="PhoneValidator" />
                                           <behaviors:MaskedBehavior Mask="+52 XX XXXX XXXX" />
                                       </Entry.Behaviors>
                                   </Entry>
-                                  <Entry Grid.Row="3"
+                                  <Image Grid.Row="4" 
+                                         Grid.Column="2" 
+                                         x:Name="PhoneSuccessErrorImage"
+                                         Style="{Binding Source={x:Reference PhoneValidator}, 
+                                   Path=IsValid, 
+                                   Converter={StaticResource boolToStyleImage}}"/>
+                                  <Label Grid.Row="5" 
+                                         Grid.Column="1" 
+                                         Style="{Binding Source={x:Reference PhoneValidator}, 
+                                   Path=IsValid, 
+                                   Converter={StaticResource boolToStylePhone}}" 
+                                         FontSize="16"/>
+                                  <!--/Phone-->
+                                  
+                                  <Entry Grid.Row="6"
                                          Grid.Column="1"
                                          Placeholder="Sitio Web"
                                          Keyboard="Text"

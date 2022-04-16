@@ -13,7 +13,10 @@
         </ToolbarItem>
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <StackLayout>
+        <RefreshView 
+            Command="{Binding RefreshCommand}"
+            IsRefreshing="{Binding IsRefreshing}">
+            <StackLayout>
             <ScrollView>
                 <Grid>
                     <Grid.RowDefinitions>
@@ -58,5 +61,6 @@
                 </Grid>
             </ScrollView>
         </StackLayout>
+        </RefreshView>
     </ContentPage.Content>
 </ContentPage>

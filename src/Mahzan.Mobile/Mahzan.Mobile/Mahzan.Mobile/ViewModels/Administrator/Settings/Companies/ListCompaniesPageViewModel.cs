@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -50,8 +51,17 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings.Companies
             }
         }
         
+        private bool _isRefreshing;
+        public bool IsRefreshing
+        {
+            get { return _isRefreshing; }
+            set { SetProperty(ref _isRefreshing, value); }
+        }
+        
         public ICommand AddCompanyCommand { get; set; }
-
+        
+        public ICommand RefreshCommand { get; set; }
+        
         public ListCompaniesPageViewModel(
             INavigationService navigationService,
             ICompanyService companyService)
@@ -62,10 +72,13 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings.Companies
             Task.Run(() => GetCompanies());
 
             AddCompanyCommand = new Command(async () => await OnAddCompanyCommand());
+            RefreshCommand = new Command(async () => await GetCompanies());
         }
 
         private async Task GetCompanies()
         {
+            IsRefreshing = true;
+            
           var httpResponseMessage=  await _companyService.Get(new GetCompaniesCommand());
           
           var respuesta = await httpResponseMessage.Content.ReadAsStringAsync();
@@ -82,6 +95,8 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings.Companies
 
           if (getCompaniesResponse != null)
               ListViewCompanies = new ObservableCollection<Company>(getCompaniesResponse.Data);
+          
+          IsRefreshing = false;
         }
         
         private void HandleSelectedCompany()
@@ -95,15 +110,16 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings.Companies
         {
             await _navigationService.NavigateAsync("AdminCompanyPage");
         }
+        
 
         public async void OnNavigatedFrom(INavigationParameters parameters)
         {
-
+            Debug.Write("OnNavigatedFrom");
         }
 
         public async void OnNavigatedTo(INavigationParameters parameters)
         {
-
+            Debug.Write("OnNavigatedFrom");
         }
     }
 }

@@ -13,6 +13,7 @@ using Mahzan.Mobile.Models.Company;
 using Mahzan.Mobile.Models.Response;
 using Mahzan.Mobile.Services.CommercialBusiness;
 using Mahzan.Mobile.Services.Company;
+using Mahzan.Mobile.Views.Administrator.Settings.Companies;
 using Newtonsoft.Json;
 using Prism.Mvvm;
 using Prism.Navigation;
@@ -201,6 +202,15 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings.Companies
         {
             if (CompanyId==null)
             {
+                if (Name==null || Rfc== null)
+                {
+                    await App.Current.MainPage.DisplayAlert(
+                        "Guarda la compañia", 
+                        $"Debes capturar la información, dirección y contacto de la compañia. ", 
+                        "Ok");
+                    return;
+                }
+                
                 await CreateCompany();
             }
             else
@@ -256,13 +266,15 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings.Companies
             {
                 var errorApi = JsonConvert.DeserializeObject<ApiResponse>(respuesta);
                 await App.Current.MainPage.DisplayAlert("CreateCompany", errorApi.Message, "Ok");
-                    
+                return;
             }
                 
             await App.Current.MainPage.DisplayAlert(
                 "Creación de Compañia", 
                 $"Se ha creado correctamente la compañía {Name}", 
                 "Ok");
+            
+            await _navigationService.GoBackAsync();
         }
         private async Task UpdateCompany()
         {
@@ -303,6 +315,8 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings.Companies
                 "Actualización de Compañia", 
                 $"Se ha actualizado correctamente la compañía {Name}", 
                 "Ok");
+            
+            await _navigationService.GoBackAsync();
         }
         private async Task DeleteCompany()
         {
@@ -322,13 +336,15 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings.Companies
                 {
                     var errorApi = JsonConvert.DeserializeObject<ApiResponse>(respuesta);
                     await App.Current.MainPage.DisplayAlert("DeleteCompany", errorApi.Message, "Ok");
-                    
+                    return;
                 }
                 
                 await App.Current.MainPage.DisplayAlert(
-                    "Creación de Compañia", 
-                    $"Se ha creado correctamente la compañía {Name}", 
-                    "Ok");    
+                    "Elimina Compañia", 
+                    $"Se ha elimindo correctamente la compañía {Name}", 
+                    "Ok");
+
+                await _navigationService.GoBackAsync();
             }
         }
 
@@ -361,7 +377,10 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings.Companies
                     PostalCode = company.PostalCode;
                     ContactName = company.ContactName;
                     Email = company.Email;
-                    Phone = company.Phone;
+                    if (company.Phone!= null)
+                    {
+                        Phone = "+52 " + company.Phone;      
+                    }
                     WebSite = company.WebSite;
                 }
             }
