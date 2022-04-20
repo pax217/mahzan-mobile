@@ -432,6 +432,7 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings.Companies
             CompanyId = parameters.GetValue<Guid>("companyId");
             if (CompanyId!=null)
             {
+                 await GetCommercialBusiness();
                  await GetCompany();
             }
         }

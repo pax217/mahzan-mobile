@@ -17,7 +17,7 @@ using Prism.Mvvm;
 using Prism.Navigation;
 using Xamarin.Forms;
 
-namespace Mahzan.Mobile.ViewModels.Administrator.WorkEnviroment.Stores
+namespace Mahzan.Mobile.ViewModels.Administrator.Settings.Stores
 {
     public class AdminStorePageViewModel : BindableBase, INavigationAware
     {
@@ -27,7 +27,7 @@ namespace Mahzan.Mobile.ViewModels.Administrator.WorkEnviroment.Stores
 
         private readonly IStoreService _storeService;
         
-        private Guid? StoreId { get; set; }
+        private Guid StoreId { get; set; }
         
         private string _code;
         public string Code
@@ -96,6 +96,8 @@ namespace Mahzan.Mobile.ViewModels.Administrator.WorkEnviroment.Stores
         
         public ICommand SaveStoreCommand { get; set; }
         
+        public ICommand DeleteStoreCommand { get; set; }
+        
         public AdminStorePageViewModel(
             INavigationService navigationService,
             ICompanyService companyService,
@@ -109,6 +111,8 @@ namespace Mahzan.Mobile.ViewModels.Administrator.WorkEnviroment.Stores
             
             //Commands
             SaveStoreCommand = new Command(async () => await OnSaveStoreCommand());
+            DeleteStoreCommand = new Command(async () => await OnDeleteStoreCommand()); 
+
         }
 
         public async Task GetCompanies()
@@ -151,6 +155,10 @@ namespace Mahzan.Mobile.ViewModels.Administrator.WorkEnviroment.Stores
                Code = getStoresResponse.Data.FirstOrDefault()?.Code;
                Name = getStoresResponse.Data.FirstOrDefault()?.Name;
                Phone = getStoresResponse.Data.FirstOrDefault()?.Phone;
+               if (getStoresResponse.Data.FirstOrDefault()?.Phone!= null)
+               {
+                   Phone = "+52 " + getStoresResponse.Data.FirstOrDefault()?.Phone;      
+               }
                Comment = getStoresResponse.Data.FirstOrDefault()?.Comment;
            }
         }
@@ -159,12 +167,7 @@ namespace Mahzan.Mobile.ViewModels.Administrator.WorkEnviroment.Stores
 
         private async Task OnSaveStoreCommand()
         {
-            if (StoreId!=null)
-            {
-
-                
-            }
-            else
+            if (StoreId==Guid.Empty)
             {
                 var httpResponseMessage = await _storeService.Create(new CreateStoreCommand
                 {
@@ -185,12 +188,87 @@ namespace Mahzan.Mobile.ViewModels.Administrator.WorkEnviroment.Stores
                 
                 await Application.Current.MainPage.DisplayAlert(
                     "Creación de Tienda", 
-                    String.Format("Se ha creado correctamenta la tienda{Name}",Name), 
-                    "Ok"); 
+                    $"Se ha creado correctamenta la tienda {Name}", 
+                    "Ok");
+
+                await _navigationService.GoBackAsync();
+
+            }
+            else
+            {
+                var httpResponseMessage = await _storeService.Update(new UpdateStoreCommand
+                {
+                    StoreId = StoreId,
+                    Code = Code,
+                    Name = Name,
+                    Phone = Phone,
+                    Comment = Comment,
+                    CompanyId = _selectedCompany.CompanyId.ToString()
+                });
+                
+                var respuesta = await httpResponseMessage.Content.ReadAsStringAsync();
+          
+                if (httpResponseMessage.StatusCode != HttpStatusCode.OK)
+                {
+                    var errorApi = JsonConvert.DeserializeObject<ApiResponse>(respuesta);
+                    await Application.Current.MainPage.DisplayAlert("OnSaveStoreCommand", errorApi.Message, "Ok");
+                }
+                
+                await Application.Current.MainPage.DisplayAlert(
+                    "Actualización de Tienda", 
+                    $"Se ha actualizado correctamenta la tienda {Name}", 
+                    "Ok");
+
+                await _navigationService.GoBackAsync();
             }
         }
-        
 
+        public async Task OnDeleteStoreCommand()
+        {
+            if (StoreId==Guid.Empty)
+            {
+                await App.Current.MainPage.DisplayAlert(
+                    "Elimina la tienda", 
+                    $"Debes seleccionar una tienda", 
+                    "Ok");
+            }
+            else
+            {
+                await DeleteStore();
+            }
+        }
+
+        private async Task DeleteStore()
+        {
+            var answer = await Application
+                .Current
+                .MainPage
+                .DisplayAlert("Atención!",
+                    "¿Estas seguro de borrar la Tienda?", "Si", "No");
+            
+            if (answer)
+            {
+                var httpResponseMessage = await _storeService.Delete(StoreId.ToString());
+                
+                var respuesta = await httpResponseMessage.Content.ReadAsStringAsync();
+            
+                if (httpResponseMessage.StatusCode!=HttpStatusCode.OK)
+                {
+                    var errorApi = JsonConvert.DeserializeObject<ApiResponse>(respuesta);
+                    await App.Current.MainPage.DisplayAlert("DeleteCompany", errorApi.Message, "Ok");
+                   
+                }
+                else
+                {
+                    await App.Current.MainPage.DisplayAlert(
+                        "Elimina Tienda", 
+                        $"Se ha elimindo correctamente la tienda {Name}", 
+                        "Ok");
+
+                    await _navigationService.GoBackAsync();
+                }
+            }
+        }
 
         #endregion
 
@@ -201,10 +279,9 @@ namespace Mahzan.Mobile.ViewModels.Administrator.WorkEnviroment.Stores
 
         public async void OnNavigatedTo(INavigationParameters parameters)
         {
-            StoreId = parameters.GetValue<Guid?>("storeId");
-            if (StoreId!=null)
+            StoreId = parameters.GetValue<Guid>("storeId");
+            if (StoreId!=Guid.Empty)
             {
-                await GetCompanies();
                 await GetStore(StoreId.ToString());
             }
         }

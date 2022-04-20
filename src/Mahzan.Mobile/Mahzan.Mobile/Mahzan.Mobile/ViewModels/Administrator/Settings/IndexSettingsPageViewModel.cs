@@ -36,16 +36,11 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings
                 case "Compañias":
                     _navigationService.NavigateAsync("ListCompaniesPage");
                     break;
-                case "Tickets":
-                    _navigationService.NavigateAsync("TicketsSettingsPage");
-                    break;
-                case "Impresora":
-                    _navigationService.NavigateAsync("SelectPrinterPage");
+                case "Tiendas":
+                    _navigationService.NavigateAsync("ListStoresPage");
                     break;
                 case "Perfil":
                     _navigationService.NavigateAsync("AdminProfilePage");
-                    break;
-                default:
                     break;
             }
         }
@@ -59,13 +54,6 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings
             {
                 new SettingsOptions(){ Option ="Compañias",OptionDetail="Administra tus compañias."},
                 new SettingsOptions(){ Option ="Tiendas",OptionDetail="Administra tus tiendas."},
-                new SettingsOptions(){ Option ="Puntos de Venta",OptionDetail="Administra tus puntos de venta."},
-                new SettingsOptions(){ Option ="Departamentos",OptionDetail="Administra tus Departamentos."},
-                new SettingsOptions(){ Option ="Categorías",OptionDetail="Administra tus Categoriías."},
-                new SettingsOptions(){ Option ="SubCategorías",OptionDetail="Administra tus Sub categorías."},
-                new SettingsOptions(){ Option ="Empleados",OptionDetail="Administra tus Empleados."},
-                new SettingsOptions(){ Option ="Tickets",OptionDetail="Configura la forma en que se imprimirán tus tickets."},
-                new SettingsOptions(){ Option ="Impresora",OptionDetail="Selecciona tu impresora bluetooth."},
                 new SettingsOptions(){ Option ="Perfil",OptionDetail="Administra la información de tu perfil de usuario."},
             };
         }

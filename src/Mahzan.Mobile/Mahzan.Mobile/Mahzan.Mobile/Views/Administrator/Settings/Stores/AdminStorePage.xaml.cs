@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace Mahzan.Mobile.Views.Administrator.WorkEnviroment.Tpvs
+namespace Mahzan.Mobile.Views.Administrator.Settings.Stores
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ListTpvsPage : ContentPage
+    public partial class AdminStorePage : ContentPage
     {
-        public ListTpvsPage()
+        public AdminStorePage()
         {
             InitializeComponent();
         }

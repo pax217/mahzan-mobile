@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace Mahzan.Mobile.Views.Administrator.WorkEnviroment
+namespace Mahzan.Mobile.Views.Administrator.Settings.Stores
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class IndexWorkEnviromentPage : ContentPage
+    public partial class ListStoresPage : ContentPage
     {
-        public IndexWorkEnviromentPage()
+        public ListStoresPage()
         {
             InitializeComponent();
         }

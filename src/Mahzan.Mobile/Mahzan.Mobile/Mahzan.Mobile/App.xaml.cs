@@ -18,10 +18,8 @@ using Mahzan.Mobile.ViewModels.Administrator.Settings;
 using Mahzan.Mobile.ViewModels.Administrator.Settings.Companies;
 using Mahzan.Mobile.ViewModels.Administrator.Settings.Printers;
 using Mahzan.Mobile.ViewModels.Administrator.Settings.Profile;
+using Mahzan.Mobile.ViewModels.Administrator.Settings.Stores;
 using Mahzan.Mobile.ViewModels.Administrator.Settings.Tickets;
-using Mahzan.Mobile.ViewModels.Administrator.WorkEnviroment;
-using Mahzan.Mobile.ViewModels.Administrator.WorkEnviroment.Stores;
-using Mahzan.Mobile.ViewModels.Administrator.WorkEnviroment.Tpvs;
 using Mahzan.Mobile.Views;
 using Mahzan.Mobile.Views.Administrator;
 using Mahzan.Mobile.Views.Administrator.Products;
@@ -30,11 +28,8 @@ using Mahzan.Mobile.Views.Administrator.Settings;
 using Mahzan.Mobile.Views.Administrator.Settings.Companies;
 using Mahzan.Mobile.Views.Administrator.Settings.Printers;
 using Mahzan.Mobile.Views.Administrator.Settings.Profile;
+using Mahzan.Mobile.Views.Administrator.Settings.Stores;
 using Mahzan.Mobile.Views.Administrator.Settings.Tickets;
-using Mahzan.Mobile.Views.Administrator.WorkEnviroment;
-using Mahzan.Mobile.Views.Administrator.WorkEnviroment.Stores;
-using Mahzan.Mobile.Views.Administrator.WorkEnviroment.Tpvs;
-using Plugin.Toasts;
 using Prism;
 using Prism.Ioc;
 using Xamarin.Forms;
@@ -119,14 +114,6 @@ namespace Mahzan.Mobile
             containerRegistry.RegisterForNavigation<ListProductsPage, ListProductsPageViewModel>();
             containerRegistry.RegisterForNavigation<AddProductPage, AddProductPageViewModel>();
             
-            // Work Enviroment
-            containerRegistry.RegisterForNavigation<IndexWorkEnviromentPage, IndexWorkEnviromentPageViewModel>();
-            
-            containerRegistry.RegisterForNavigation<ListStoresPage, ListStoresPageViewModel>();
-            containerRegistry.RegisterForNavigation<AdminStorePage, AdminStorePageViewModel>();
-            
-            containerRegistry.RegisterForNavigation<ListTpvsPage, ListTpvsPageViewModel>();
-            containerRegistry.RegisterForNavigation<AdminTpvsPage, AdminTpvsPageViewModel>();
         }
 
         protected void RegisterAdministratorSettingsNavigation(IContainerRegistry containerRegistry)
@@ -152,8 +139,13 @@ namespace Mahzan.Mobile
 
         protected void RegisterAdministratorSettingsCompaniesNavigation(IContainerRegistry containerRegistry)
         {
+            // Companies
             containerRegistry.RegisterForNavigation<ListCompaniesPage, ListCompaniesPageViewModel>();
             containerRegistry.RegisterForNavigation<AdminCompanyPage, AdminCompanyPageViewModel>();
+            
+            // stores
+            containerRegistry.RegisterForNavigation<ListStoresPage, ListStoresPageViewModel>();
+            containerRegistry.RegisterForNavigation<AdminStorePage, AdminStorePageViewModel>();
         }
     }
 }

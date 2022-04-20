@@ -9,7 +9,6 @@ using Mahzan.Mobile.SqLite.Entities;
 using Mahzan.Mobile.Views;
 using Mahzan.Mobile.Views.Administrator.Products;
 using Mahzan.Mobile.Views.Administrator.Settings;
-using Mahzan.Mobile.Views.Administrator.WorkEnviroment;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;

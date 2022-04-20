@@ -75,5 +75,52 @@ namespace Mahzan.Mobile.Services.Store
             
             return httpResponseMessage;
         }
+
+        public async Task<HttpResponseMessage> Delete(string storeId)
+        {
+            HttpResponseMessage httpResponseMessage;
+            UriBuilder uriBuilder = new UriBuilder(UrlApi + "/v1/Store/Delete");
+            try
+            {
+                var query = HttpUtility.ParseQueryString(uriBuilder.Query);
+                query["storeId"] = storeId;
+
+                uriBuilder.Query = query.ToString();
+
+                HttpClient httpClient = new HttpClient();
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
+                httpResponseMessage = await httpClient.DeleteAsync(uriBuilder.ToString());
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+
+            return httpResponseMessage;
+        }
+
+        public async Task<HttpResponseMessage> Update(UpdateStoreCommand command)
+        {
+            HttpResponseMessage httpResponseMessage;
+            UriBuilder uriBuilder = new UriBuilder(UrlApi + "/v1/Store/Update");
+            try
+            {
+                HttpClient httpClient = new HttpClient();
+
+                string jsonData = JsonConvert.SerializeObject(command);
+                StringContent stringContent = new StringContent(jsonData, UnicodeEncoding.UTF8, "application/json");
+
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
+                httpResponseMessage = await httpClient.PutAsync(uriBuilder.ToString(), stringContent);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            
+            return httpResponseMessage;
+        }
     }
 }

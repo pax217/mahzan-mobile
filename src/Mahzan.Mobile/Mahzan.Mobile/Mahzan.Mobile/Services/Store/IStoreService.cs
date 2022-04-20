@@ -10,5 +10,9 @@ namespace Mahzan.Mobile.Services.Store
         Task<HttpResponseMessage> Get(GetStoreCommand command);
 
         Task<HttpResponseMessage> Create(CreateStoreCommand command);
+
+        Task<HttpResponseMessage> Delete(string storeId);
+
+        Task<HttpResponseMessage> Update(UpdateStoreCommand command);
     }
 }

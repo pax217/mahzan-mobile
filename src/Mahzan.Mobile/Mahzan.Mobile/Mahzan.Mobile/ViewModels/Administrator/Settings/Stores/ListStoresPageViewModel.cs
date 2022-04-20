@@ -13,7 +13,7 @@ using Prism.Mvvm;
 using Prism.Navigation;
 using Xamarin.Forms;
 
-namespace Mahzan.Mobile.ViewModels.Administrator.WorkEnviroment.Stores
+namespace Mahzan.Mobile.ViewModels.Administrator.Settings.Stores
 {
     public class ListStoresPageViewModel : BindableBase, INavigationAware
     {
@@ -57,9 +57,19 @@ namespace Mahzan.Mobile.ViewModels.Administrator.WorkEnviroment.Stores
             navigationParams.Add("storeId", SelectedStore.StoreId);
             _navigationService.NavigateAsync("AdminStorePage", navigationParams);
         }
+        
+        private bool _isRefreshing;
+        public bool IsRefreshing
+        {
+            get { return _isRefreshing; }
+            set { SetProperty(ref _isRefreshing, value); }
+        }
 
         //Commands
         public ICommand AddStoreCommand { get; set; }
+        
+        public ICommand RefreshCommand { get; set; }
+        
         public ListStoresPageViewModel(
             INavigationService navigationService,
             IStoreService storesService)
@@ -73,11 +83,24 @@ namespace Mahzan.Mobile.ViewModels.Administrator.WorkEnviroment.Stores
 
             //Commands
             AddStoreCommand = new Command(async () => await OnAddStoreCommand());
+            RefreshCommand = new Command(async () => await OnRefreshCommand());
         }
         private async Task OnAddStoreCommand()
         {
             await _navigationService.NavigateAsync("AdminStorePage");
         }
+
+        private async Task OnRefreshCommand()
+        {
+            IsRefreshing = true;
+
+            await GetStores();
+            
+            IsRefreshing = false;
+        }
+
+        
+        
         private async Task GetStores()
         {
             var httpResponseMessage = await _storeService.Get(new GetStoreCommand());
