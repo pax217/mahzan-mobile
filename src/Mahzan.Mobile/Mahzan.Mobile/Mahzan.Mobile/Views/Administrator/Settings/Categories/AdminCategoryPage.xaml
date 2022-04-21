@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="http://prismlibrary.com"
+             xmlns:behaviors="clr-namespace:Mahzan.Mobile.Behaviors;assembly=Mahzan.Mobile"
+             xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="Mahzan.Mobile.Views.Administrator.Settings.Categories.AdminCategoryPage">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="icon_delete.png"
+                     Command="{Binding DeleteCategoryCommand}">
+        </ToolbarItem>
+        <ToolbarItem IconImageSource="icon_save.png"
+                     Command="{Binding SaveCategoryCommand}">
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+        <ContentPage.Resources>
+        <behaviors:BooleanToObjectConverter x:Key="boolToStyleImage"
+                                            x:TypeArguments="Style">
+            <behaviors:BooleanToObjectConverter.FalseObject>
+                <Style TargetType="Image">
+                    <Setter Property="HeightRequest" Value="20" />
+                    <Setter Property="Source" Value="{behaviors:ImageResource Mahzan.Mobile.Images.error.png}" />
+                </Style>
+            </behaviors:BooleanToObjectConverter.FalseObject>
+
+            <behaviors:BooleanToObjectConverter.TrueObject>
+                <Style TargetType="Image">
+                    <Setter Property="HeightRequest" Value="20" />
+                    <Setter Property="Source" Value="{behaviors:ImageResource Mahzan.Mobile.Images.success.png}" />
+                </Style>
+            </behaviors:BooleanToObjectConverter.TrueObject>
+        </behaviors:BooleanToObjectConverter>
+
+        <Style x:Key="baseStyle"
+               TargetType="Label">
+            <Setter Property="XAlign" Value="Start" />
+            <Setter Property="YAlign" Value="Center" />
+            <Setter Property="FontSize" Value="Micro" />
+            <Setter Property="FontAttributes" Value="Italic" />
+        </Style>
+        <!--Picker Departments-->
+        <behaviors:StringToObjectConverter x:Key="boolToStyleDepartments"
+                                           x:TypeArguments="Style">
+            <behaviors:StringToObjectConverter.FalseObject>
+                <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+                    <Setter Property="TextColor" Value="#F44336" />
+                    <Setter Property="Text" Value="selecciona una tienda" />
+                    <Setter Property="FontSize" Value="5" />
+                </Style>
+            </behaviors:StringToObjectConverter.FalseObject>
+
+            <behaviors:StringToObjectConverter.TrueObject>
+                <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+                    <Setter Property="TextColor" Value="#4CAF50" />
+                    <Setter Property="Text" Value="correcto" />
+                </Style>
+            </behaviors:StringToObjectConverter.TrueObject>
+        </behaviors:StringToObjectConverter>
+
+        <!--/Picker Stores-->
+        
+        <!--Name-->
+        <behaviors:BooleanToObjectConverter x:Key="boolToStyleName"
+                                            x:TypeArguments="Style">
+            <behaviors:BooleanToObjectConverter.FalseObject>
+                <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+                    <Setter Property="TextColor" Value="#F44336" />
+                    <Setter Property="Text" Value="requerido" />
+                    <Setter Property="FontSize" Value="5" />
+                </Style>
+            </behaviors:BooleanToObjectConverter.FalseObject>
+
+            <behaviors:BooleanToObjectConverter.TrueObject>
+                <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+                    <Setter Property="TextColor" Value="#4CAF50" />
+                    <Setter Property="Text" Value="correcto" />
+                </Style>
+            </behaviors:BooleanToObjectConverter.TrueObject>
+        </behaviors:BooleanToObjectConverter>
+        <!--/Name-->
+        
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout>
+            <ScrollView>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <forms:CachedImage
+                        Grid.Row="0"
+                        Source="background_categories.png"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="StartAndExpand"
+                        CacheType="Memory"
+                        Aspect="AspectFill"
+                    >
+                    </forms:CachedImage>
+                    <Frame CornerRadius="10" 
+                           BackgroundColor="White" 
+                           Grid.RowSpan="2" 
+                           Margin="20,150,20,20">
+                        <Grid RowSpacing="10">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="20" />
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Row="0"
+                                   Grid.ColumnSpan="3"
+                                   Text="Detalle de Categoría"
+                                   HorizontalTextAlignment="Center"
+                                   FontSize="18">
+                            </Label>
+                            <!-- Departments-->
+                            <Picker Grid.Row="1"
+                                    Grid.Column="1"
+                                    Title="- Departamentos -"
+                                    ItemsSource="{Binding Departments, Mode=TwoWay}" 
+                                    ItemDisplayBinding="{Binding Name, Mode=TwoWay}"
+                                    SelectedItem="{Binding SelectedDepartment, Mode=TwoWay}">
+                                <Picker.Behaviors>
+                                    <behaviors:PickerBehavior x:Name="DepartmentsValidator" />
+                                </Picker.Behaviors>
+                            </Picker>
+                            <Label Grid.Row="2" 
+                                   Grid.Column="1" 
+                                   Style="{Binding Source={x:Reference DepartmentsValidator}, 
+                                   Path=SelectedItem, 
+                                   Converter={StaticResource boolToStyleDepartments}}" 
+                                   FontSize="16"/>
+                            <!-- /Departments-->
+                            
+                            <!-- Name-->
+                            <Entry Grid.Row="3"
+                                   Grid.Column="1"
+                                   Placeholder="* Nombre"
+                                   Keyboard="Text"
+                                   Text="{Binding Name, Mode=TwoWay}">
+                                <Entry.Behaviors>
+                                    <behaviors:NotEmptyValidatorBehavior x:Name="NameValidator" />
+                                </Entry.Behaviors>
+                            </Entry>
+                            <Image Grid.Row="3" 
+                                   Grid.Column="2" 
+                                   x:Name="NameSuccessErrorImage"
+                                   Style="{Binding Source={x:Reference NameValidator}, 
+                                   Path=IsValid, 
+                                   Converter={StaticResource boolToStyleImage}}"/>
+                            <Label Grid.Row="4" 
+                                   Grid.Column="1" 
+                                   Style="{Binding Source={x:Reference NameValidator}, 
+                                   Path=IsValid, 
+                                   Converter={StaticResource boolToStyleName}}" 
+                                   FontSize="16"/>
+                            <!--/Name-->
+                        </Grid>
+                    </Frame>
+                </Grid>
+            </ScrollView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

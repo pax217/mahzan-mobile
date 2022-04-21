@@ -94,6 +94,9 @@
         </AndroidResource>
         <AndroidResource Include="Resources\drawable\background_companies.png" />
         <AndroidResource Include="Resources\drawable\background_company.png" />
+        <AndroidResource Include="Resources\drawable\background_departments.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </AndroidResource>
         <AndroidResource Include="Resources\drawable\background_end_sale.png">
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </AndroidResource>
@@ -158,6 +161,14 @@
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </AndroidResource>
         <AndroidResource Include="Resources\drawable\mahzan_logo.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </AndroidResource>
+        <AndroidResource Include="Resources\drawable\menu_icon_exit.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </AndroidResource>
+        <AndroidResource Include="Resources\drawable\menu_icon_operations.png" />
+        <AndroidResource Include="Resources\drawable\menu_icon_settings.png">
+          <SubType>Designer</SubType>
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </AndroidResource>
         <AndroidResource Include="Resources\drawable\products_background.png">

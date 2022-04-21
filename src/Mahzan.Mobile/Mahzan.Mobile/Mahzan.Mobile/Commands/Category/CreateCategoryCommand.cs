@@ -1,11 +1,9 @@
 using System;
 
-namespace Mahzan.Mobile.Models.Category
+namespace Mahzan.Mobile.Commands.Category
 {
-    public class Category
+    public class CreateCategoryCommand
     {
-        public Guid CategoryId { get; set; }
-
         public string Name { get; set; }
         
         public Guid DepartmentId { get; set; }

@@ -7,5 +7,11 @@ namespace Mahzan.Mobile.Services.Department
     public interface IDepartmentService
     {
         Task<HttpResponseMessage> Get(GetDepartmentsCommand command);
+
+        Task<HttpResponseMessage> Create(CreateDepartmentCommand command);
+
+        Task<HttpResponseMessage> Delete(string departmentId);
+
+        Task<HttpResponseMessage> Update(UpdateDepartmentCommand command);
     }
 }

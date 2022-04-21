@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Mahzan.Mobile.Services.BlueTooth;
+using Mahzan.Mobile.Services.Printer;
 using Mahzan.Mobile.SqLite._Base;
 using Mahzan.Mobile.SqLite.Entities;
 using Prism.Mvvm;
@@ -22,6 +23,8 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings.Printers
         private readonly IPageDialogService _dialogService;
 
         private readonly IRepository<BluetoothDevice> _bluetoothDeviceRepository;
+        
+        private Printer _printer;
 
         private IList<string> _deviceList;
         public IList<string> DeviceList
@@ -80,6 +83,7 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings.Printers
             _blueToothService = Xamarin.Forms.DependencyService.Get<IBlueToothService>();
             _dialogService = pageDialogService;
             _bluetoothDeviceRepository = bluetoothDeviceRespository;
+            _printer = new Printer(_blueToothService);
 
             //Comands
             PrintCommand = new Command(async () => await OnPrintCommand());
@@ -89,36 +93,60 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings.Printers
 
         private async Task OnPrintCommand()
         {
-            await _bluetoothDeviceRepository.DeleteAll();
-
-            //Inserta en SQL configuración
-            await _bluetoothDeviceRepository
-                  .Insert(new BluetoothDevice
-                         {
-                            DeviceName = SelectedDevice
-                         });
-
-            StringBuilder stringBuilder = new StringBuilder();
-
-            stringBuilder.Append("--------------------------------\n");
-            stringBuilder.Append("              Mahzan            \n");
-            stringBuilder.Append("--------------------------------\n");
-            stringBuilder.Append("******Impresion de prueba*******\n");
-            stringBuilder.Append("--------------------------------\n");
-            stringBuilder.Append("   " + DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss tt" + "   \n"));
-            stringBuilder.Append("--------------------------------\n");
 
             if (SelectedDevice==null)
             {
-                await _dialogService
-                      .DisplayAlertAsync("Dispositivos Bluetooth",
-                                         "Debes seleccionar un dispositivo",
-                                         "Ok");
+                await Application.Current.MainPage.DisplayAlert(
+                    "Impresora", "Debes seleccionar un dispositivo bluethood", "ok");
+                
                 return;
             }
             else 
             {
-                //await _blueToothService.Print(SelectedDevice, stringBuilder.ToString());
+                await _bluetoothDeviceRepository.DeleteAll();
+
+                //Inserta en SQL configuración
+                await _bluetoothDeviceRepository
+                    .Insert(new BluetoothDevice
+                    {
+                        DeviceName = SelectedDevice
+                    });
+
+                _printer.MyPrinter = SelectedDevice;
+                PrintMessage = "Mahzan";
+                
+                await _printer.Reset();
+                await _printer.SetAlignCenter();
+                await _printer.WriteLine($"Normal: {PrintMessage}");
+                await _printer.LineFeed();
+                await _printer.BoldOn();
+                await _printer.WriteLine($"Bold: {PrintMessage}");
+                await _printer.BoldOff();
+                await _printer.LineFeed();
+                await _printer.WriteLine_Big($"Grande: \n{PrintMessage}");
+                await _printer.LineFeed();
+                await _printer.SetUnderLine($"Subrayado: {PrintMessage}");
+                await _printer.LineFeed();
+                await _printer.SetAlignRight();
+                await _printer.WriteLine_Bold("Negrito en la Derecha:");
+                await _printer.BoldOn();
+                await _printer.WriteLine_Bigger($"G1: {PrintMessage}",1);
+                await _printer.BoldOff();
+                await _printer.WriteLine_Bold("Underline...");
+                await _printer.SetUnderLineOn();
+                await _printer.WriteLine_Bigger($"G2: {PrintMessage}", 2);
+                await _printer.WriteLine_Bigger($"G3: {PrintMessage}", 3);
+                await _printer.SetUnderLineOff();
+                await _printer.LineFeed(2);
+                await _printer.SetAlignCenter();
+                await _printer.WriteLine_Bold("Texto Reverse...");
+                await _printer.SetReverseOn();
+                await _printer.WriteLine_Bigger($"Reverse: {PrintMessage}", 1);
+                await _printer.SetReverseOff();
+                await _printer.WriteLine_Bigger($"Not Reverse: {PrintMessage}", 1);
+                await _printer.LineFeed(3);
+                await _printer.WriteLine( DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss tt"));
+                await _printer.Reset();
             }
 
 

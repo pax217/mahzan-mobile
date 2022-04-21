@@ -8,5 +8,11 @@ namespace Mahzan.Mobile.Services.Category
     public interface ICategoryService
     {
         Task<HttpResponseMessage> Get(GetCategoriesCommand command);
+
+        Task<HttpResponseMessage> Create(CreateCategoryCommand command);
+        
+        Task<HttpResponseMessage> Update(UpdateCategoryCommand command);
+        
+        Task<HttpResponseMessage> Delete(string categoryId);
     }
 }

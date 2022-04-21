@@ -15,7 +15,9 @@ using Mahzan.Mobile.ViewModels.Administrator;
 using Mahzan.Mobile.ViewModels.Administrator.Products;
 using Mahzan.Mobile.ViewModels.Administrator.Products.Inventory;
 using Mahzan.Mobile.ViewModels.Administrator.Settings;
+using Mahzan.Mobile.ViewModels.Administrator.Settings.Categories;
 using Mahzan.Mobile.ViewModels.Administrator.Settings.Companies;
+using Mahzan.Mobile.ViewModels.Administrator.Settings.Departaments;
 using Mahzan.Mobile.ViewModels.Administrator.Settings.Printers;
 using Mahzan.Mobile.ViewModels.Administrator.Settings.Profile;
 using Mahzan.Mobile.ViewModels.Administrator.Settings.Stores;
@@ -25,7 +27,9 @@ using Mahzan.Mobile.Views.Administrator;
 using Mahzan.Mobile.Views.Administrator.Products;
 using Mahzan.Mobile.Views.Administrator.Products.Inventory;
 using Mahzan.Mobile.Views.Administrator.Settings;
+using Mahzan.Mobile.Views.Administrator.Settings.Categories;
 using Mahzan.Mobile.Views.Administrator.Settings.Companies;
+using Mahzan.Mobile.Views.Administrator.Settings.Departments;
 using Mahzan.Mobile.Views.Administrator.Settings.Printers;
 using Mahzan.Mobile.Views.Administrator.Settings.Profile;
 using Mahzan.Mobile.Views.Administrator.Settings.Stores;
@@ -126,11 +130,8 @@ namespace Mahzan.Mobile
             
             // Companies
             RegisterAdministratorSettingsCompaniesNavigation(containerRegistry);
-            
-            //Profile
-            containerRegistry.RegisterForNavigation<AdminProfilePage, AdminProfilePageViewModel>();
-            
-            
+
+
             containerRegistry.RegisterForNavigation<SelectPrinterPage, SelectPrinterPageViewModel>();
             
             // Tickets
@@ -143,9 +144,20 @@ namespace Mahzan.Mobile
             containerRegistry.RegisterForNavigation<ListCompaniesPage, ListCompaniesPageViewModel>();
             containerRegistry.RegisterForNavigation<AdminCompanyPage, AdminCompanyPageViewModel>();
             
-            // stores
+            // Stores
             containerRegistry.RegisterForNavigation<ListStoresPage, ListStoresPageViewModel>();
             containerRegistry.RegisterForNavigation<AdminStorePage, AdminStorePageViewModel>();
+            
+            // Departments
+            containerRegistry.RegisterForNavigation<ListDepartmentsPage, ListDepartmentsPageViewModel>();
+            containerRegistry.RegisterForNavigation<AdminDepartmentPage, AdminDepartmentPageViewModel>();
+            
+            // Categories
+            containerRegistry.RegisterForNavigation<ListCategoriesPage, ListCategoriesPageViewModel>();
+            containerRegistry.RegisterForNavigation<AdminCategoryPage, AdminCategoryPageViewModel>();
+            
+            // Profile
+            containerRegistry.RegisterForNavigation<AdminProfilePage, AdminProfilePageViewModel>();
         }
     }
 }

@@ -147,21 +147,21 @@ namespace Mahzan.Mobile.ViewModels
             
             result.Add(new MyMenuItem()
             {
-                Icon = "ic_viewb",
+                Icon = "menu_icon_operations",
                 PageName = nameof(IndexProductsPage),
                 Title = "Operaciones",
             });
 
             result.Add(new MyMenuItem()
             {
-                Icon = "ic_viewb",
+                Icon = "menu_icon_settings",
                 PageName = nameof(IndexSettingsPage),
                 Title = "Configuración",
             });
 
             result.Add(new MyMenuItem()
             {
-                Icon = "ic_viewb",
+                Icon = "menu_icon_exit",
                 PageName = nameof(LoginPage),
                 Title = "Salir",
                 ExitAplication = true

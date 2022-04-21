@@ -107,12 +107,11 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings.Stores
             _companyService = companyService;
             _storeService = storeService;
 
-            Task.Run(() => GetCompanies());
+            Task.Run(GetCompanies);
             
             //Commands
             SaveStoreCommand = new Command(async () => await OnSaveStoreCommand());
-            DeleteStoreCommand = new Command(async () => await OnDeleteStoreCommand()); 
-
+            DeleteStoreCommand = new Command(async () => await OnDeleteStoreCommand());
         }
 
         public async Task GetCompanies()

@@ -39,6 +39,15 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings
                 case "Tiendas":
                     _navigationService.NavigateAsync("ListStoresPage");
                     break;
+                case "Departamentos":
+                    _navigationService.NavigateAsync("ListDepartmentsPage");
+                    break;
+                case "Categorías":
+                    _navigationService.NavigateAsync("ListCategoriesPage");
+                    break;
+                case "Impresora":
+                    _navigationService.NavigateAsync("SelectPrinterPage");
+                    break;
                 case "Perfil":
                     _navigationService.NavigateAsync("AdminProfilePage");
                     break;
@@ -52,9 +61,30 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings
 
             ListSettingsOptionsItem = new ObservableCollection<SettingsOptions>()
             {
-                new SettingsOptions(){ Option ="Compañias",OptionDetail="Administra tus compañias."},
-                new SettingsOptions(){ Option ="Tiendas",OptionDetail="Administra tus tiendas."},
-                new SettingsOptions(){ Option ="Perfil",OptionDetail="Administra la información de tu perfil de usuario."},
+                new SettingsOptions()
+                {
+                    Option ="Compañias",OptionDetail="Administra tus compañias."
+                },
+                new SettingsOptions()
+                {
+                    Option ="Tiendas",OptionDetail="Administra tus tiendas."
+                },
+                new SettingsOptions()
+                {
+                    Option ="Departamentos",OptionDetail="Administra los departamentos existentes en tus tiendas."
+                },
+                new SettingsOptions()
+                {
+                    Option ="Categorías",OptionDetail="Administra las categorías de tus productos."
+                },
+                new SettingsOptions()
+                {
+                    Option ="Impresora",OptionDetail="Selecciona tu impresora bluetooth."
+                },
+                new SettingsOptions()
+                {
+                    Option ="Perfil",OptionDetail="Administra la información de tu perfil de usuario."
+                },
             };
         }
     }
