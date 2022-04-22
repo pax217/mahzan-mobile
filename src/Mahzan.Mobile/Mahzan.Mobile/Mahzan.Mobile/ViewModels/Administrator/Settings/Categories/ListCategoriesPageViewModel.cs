@@ -47,7 +47,7 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings.Categories
                 if (_selectedCategory != value)
                 {
                     _selectedCategory = value;
-                    HandleCategoryStore();
+                    HandleCategory();
                 }
             }
         }
@@ -104,13 +104,13 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings.Categories
 
                 return;  
             }
-            var getDepartmentsResponse = JsonConvert.DeserializeObject<GetCategoriesResponse>(respuesta);
+            var getCategoriesResponse = JsonConvert.DeserializeObject<GetCategoriesResponse>(respuesta);
 
-            if (getDepartmentsResponse != null)
-                ListViewCategories = new ObservableCollection<Category>(getDepartmentsResponse.Data);   
+            if (getCategoriesResponse != null)
+                ListViewCategories = new ObservableCollection<Category>(getCategoriesResponse.Data);   
         }
 
-        private void HandleCategoryStore()
+        private void HandleCategory()
         {
             var navigationParams = new NavigationParameters();
             navigationParams.Add("categoryId", SelectedCategory.CategoryId);

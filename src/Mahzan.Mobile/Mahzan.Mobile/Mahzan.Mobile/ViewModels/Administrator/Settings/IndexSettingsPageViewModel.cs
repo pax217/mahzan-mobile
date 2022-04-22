@@ -45,6 +45,9 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings
                 case "Categorías":
                     _navigationService.NavigateAsync("ListCategoriesPage");
                     break;
+                case "Sub Categorías":
+                    _navigationService.NavigateAsync("ListSubCategoriesPage");
+                    break;
                 case "Impresora":
                     _navigationService.NavigateAsync("SelectPrinterPage");
                     break;
@@ -76,6 +79,10 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings
                 new SettingsOptions()
                 {
                     Option ="Categorías",OptionDetail="Administra las categorías de tus productos."
+                },
+                new SettingsOptions()
+                {
+                    Option ="Sub Categorías",OptionDetail="Administra las sub categorías de tus productos."
                 },
                 new SettingsOptions()
                 {

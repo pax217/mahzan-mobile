@@ -118,6 +118,9 @@
         <AndroidResource Include="Resources\drawable\background_units.png">
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </AndroidResource>
+        <AndroidResource Include="Resources\drawable\background_sub_categories.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </AndroidResource>
         <AndroidResource Include="Resources\drawable\error.png">
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </AndroidResource>

@@ -21,6 +21,7 @@ using Mahzan.Mobile.ViewModels.Administrator.Settings.Departaments;
 using Mahzan.Mobile.ViewModels.Administrator.Settings.Printers;
 using Mahzan.Mobile.ViewModels.Administrator.Settings.Profile;
 using Mahzan.Mobile.ViewModels.Administrator.Settings.Stores;
+using Mahzan.Mobile.ViewModels.Administrator.Settings.SubCategories;
 using Mahzan.Mobile.ViewModels.Administrator.Settings.Tickets;
 using Mahzan.Mobile.Views;
 using Mahzan.Mobile.Views.Administrator;
@@ -33,6 +34,7 @@ using Mahzan.Mobile.Views.Administrator.Settings.Departments;
 using Mahzan.Mobile.Views.Administrator.Settings.Printers;
 using Mahzan.Mobile.Views.Administrator.Settings.Profile;
 using Mahzan.Mobile.Views.Administrator.Settings.Stores;
+using Mahzan.Mobile.Views.Administrator.Settings.SubCategories;
 using Mahzan.Mobile.Views.Administrator.Settings.Tickets;
 using Prism;
 using Prism.Ioc;
@@ -155,6 +157,10 @@ namespace Mahzan.Mobile
             // Categories
             containerRegistry.RegisterForNavigation<ListCategoriesPage, ListCategoriesPageViewModel>();
             containerRegistry.RegisterForNavigation<AdminCategoryPage, AdminCategoryPageViewModel>();
+            
+            // SubCategories
+            containerRegistry.RegisterForNavigation<ListSubCategoriesPage, ListSubCategoriesPageViewModel>();
+            containerRegistry.RegisterForNavigation<AdminSubCategoryPage, AdminSubCategoryPageViewModel>();
             
             // Profile
             containerRegistry.RegisterForNavigation<AdminProfilePage, AdminProfilePageViewModel>();

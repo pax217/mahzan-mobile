@@ -7,5 +7,11 @@ namespace Mahzan.Mobile.Services.SubCategory
     public interface ISubCategoryService
     {
         Task<HttpResponseMessage> Get(GetSubCategoriesCommand command);
+
+        Task<HttpResponseMessage> Delete(string subCategoryId);
+
+        Task<HttpResponseMessage> Create(CreateSubCategoryCommand command);
+
+        Task<HttpResponseMessage> Update(UpdateSubCategoryCommand command);
     }
 }

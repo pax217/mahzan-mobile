@@ -154,10 +154,6 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings.Stores
                Code = getStoresResponse.Data.FirstOrDefault()?.Code;
                Name = getStoresResponse.Data.FirstOrDefault()?.Name;
                Phone = getStoresResponse.Data.FirstOrDefault()?.Phone;
-               if (getStoresResponse.Data.FirstOrDefault()?.Phone!= null)
-               {
-                   Phone = "+52 " + getStoresResponse.Data.FirstOrDefault()?.Phone;      
-               }
                Comment = getStoresResponse.Data.FirstOrDefault()?.Comment;
            }
         }

@@ -6,49 +6,48 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Mahzan.Mobile.Commands.Category;
-using Mahzan.Mobile.Commands.Department;
+using Mahzan.Mobile.Commands.SubCategory;
 using Mahzan.Mobile.Models.Category;
-using Mahzan.Mobile.Models.Department;
 using Mahzan.Mobile.Models.Response;
+using Mahzan.Mobile.Models.SubCategory;
 using Mahzan.Mobile.Services.Category;
-using Mahzan.Mobile.Services.Department;
+using Mahzan.Mobile.Services.SubCategory;
 using Newtonsoft.Json;
 using Prism.Mvvm;
 using Prism.Navigation;
 using Xamarin.Forms;
 
-namespace Mahzan.Mobile.ViewModels.Administrator.Settings.Categories
+namespace Mahzan.Mobile.ViewModels.Administrator.Settings.SubCategories
 {
-    public class AdminCategoryPageViewModel: BindableBase, INavigationAware
+    public class AdminSubCategoryPageViewModel: BindableBase, INavigationAware
     {
         private readonly INavigationService _navigationService;
-
-        private readonly IDepartmentService _departmentService;
-
+        
         private readonly ICategoryService _categoryService;
 
-        //Departments
-        private ObservableCollection<Department> _departments;
-        public ObservableCollection<Department> Departments
+        private readonly ISubCategoryService _subCategoryService;
+        
+        //Categories
+        private ObservableCollection<Category> _categories;
+        public ObservableCollection<Category> Categories
         {
-            get => _departments;
-            set => SetProperty(ref _departments, value);
+            get => _categories;
+            set => SetProperty(ref _categories, value);
         }
-        private Department _selectedDepartment;
-        public Department SelectedDepartment
+        private Category _selectedCategory;
+        public Category SelectedCategory
         {
-            get => _selectedDepartment;
+            get => _selectedCategory;
             set
             {
-                if (_selectedDepartment != value)
+                if (_selectedCategory != value)
                 {
-                    _selectedDepartment = value;
+                    _selectedCategory = value;
                 }
-                OnPropertyChanged(new PropertyChangedEventArgs(nameof(SelectedDepartment))); // Notify that there was a change on this property
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(SelectedCategory))); // Notify that there was a change on this property
             }
         }
-        
-        public Guid CategoryId { get; set; }
+        public Guid SubCategoryId { get; set; }
         
         private string _name;
         public string Name
@@ -60,45 +59,50 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings.Categories
                 OnPropertyChanged(new PropertyChangedEventArgs(nameof(Name)));
             }
         }
-
-        public ICommand DeleteCategoryCommand { get; set; }
-        public ICommand SaveCategoryCommand { get; set; }
-
-        public AdminCategoryPageViewModel(
+        
+        public ICommand DeleteSubCategoryCommand { get; set; }
+        public ICommand SaveSubCategoryCommand { get; set; }
+        
+        public AdminSubCategoryPageViewModel(
             INavigationService navigationService,
-            IDepartmentService departmentService,
-            ICategoryService categoryService)
+            ICategoryService categoryService,
+            ISubCategoryService subCategoryService)
         {
             _navigationService = navigationService;
-            _departmentService = departmentService;
             _categoryService = categoryService;
-
-            Task.Run(GetDepartments);
+            _subCategoryService = subCategoryService;
             
-            SaveCategoryCommand = new Command(async () => await OnSaveCategoryCommand());
+            Task.Run(GetCategories);
             
-            DeleteCategoryCommand = new Command(async () => await OnDeleteCategoryCommand());
+            SaveSubCategoryCommand = new Command(async () => await OnSaveSubCategoryCommand());
+            
+            DeleteSubCategoryCommand = new Command(async () => await OnDeleteSubCategoryCommand());
 
         }
-
-        private async Task OnSaveCategoryCommand()
+        
+        private async Task OnSaveSubCategoryCommand()
         {
-            if (CategoryId==Guid.Empty)
+            if (SubCategoryId==Guid.Empty)
             {
-                await CreateCategory();
+                await CreateSubCategory();
             }
             else
             {
-                await UpdateCategory();
+                await UpdateSubCategory();
             }
         }
-
-        private async Task CreateCategory()
+        
+        private async Task OnDeleteSubCategoryCommand()
         {
-            var httpResponseMessage = await _categoryService.Create(new CreateCategoryCommand
+            await DeleteCategory();
+        }
+        
+        private async Task CreateSubCategory()
+        {
+            var httpResponseMessage = await _subCategoryService.Create(new CreateSubCategoryCommand
             {
                 Name = Name,
-                DepartmentId = _selectedDepartment.DepartmentId
+                CategoryId = _selectedCategory.CategoryId
             });
             
             var respuesta = await httpResponseMessage.Content.ReadAsStringAsync();
@@ -106,27 +110,27 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings.Categories
             if (httpResponseMessage.StatusCode!=HttpStatusCode.OK)
             {
                 var errorApi = JsonConvert.DeserializeObject<ApiResponse>(respuesta);
-                await App.Current.MainPage.DisplayAlert("CreateCompany", errorApi.Message, "Ok");
+                await App.Current.MainPage.DisplayAlert("CreateSubCategory", errorApi.Message, "Ok");
                 
             }
             else
             {
                 await App.Current.MainPage.DisplayAlert(
-                    "Creación de Categoría", 
-                    $"Se ha creado correctamente la categoría {Name}", 
+                    "Creación de Sub Categoría", 
+                    $"Se ha creado correctamente la sub categoría {Name}", 
                     "Ok");
             
                 await _navigationService.GoBackAsync();   
             }
         }
-
-        private async Task UpdateCategory()
+        
+        private async Task UpdateSubCategory()
         {
-            var httpResponseMessage = await _categoryService.Update(new UpdateCategoryCommand
+            var httpResponseMessage = await _subCategoryService.Update(new UpdateSubCategoryCommand
             {
-                CategoryId = CategoryId,
+                SubCategoryId = SubCategoryId,
                 Name = Name,
-                DepartmentId = _selectedDepartment.DepartmentId,
+                CategoryId = _selectedCategory.CategoryId,
             });
                 
             var respuesta = await httpResponseMessage.Content.ReadAsStringAsync();
@@ -138,8 +142,8 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings.Categories
             }
                 
             await App.Current.MainPage.DisplayAlert(
-                "Actualización de Categoría", 
-                $"Se ha actualizado correctamenta la categoría {Name}", 
+                "Actualización de Sub Categoría", 
+                $"Se ha actualizado correctamenta la sub categoría {Name}", 
                 "Ok");
 
             await _navigationService.GoBackAsync();
@@ -151,11 +155,11 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings.Categories
                 .Current
                 .MainPage
                 .DisplayAlert("Atención!",
-                    "¿Estas seguro de borrar la categoría?", "Si", "No");
+                    "¿Estas seguro de borrar la sub categoría?", "Si", "No");
             
             if (answer)
             {
-                var httpResponseMessage = await _categoryService.Delete(CategoryId.ToString());
+                var httpResponseMessage = await _subCategoryService.Delete(SubCategoryId.ToString());
                 
                 var respuesta = await httpResponseMessage.Content.ReadAsStringAsync();
             
@@ -163,7 +167,7 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings.Categories
                 {
                     var errorApi = JsonConvert.DeserializeObject<ApiResponse>(respuesta);
                     await App.Current.MainPage.DisplayAlert(
-                        "DeleteDepartment", 
+                        "DeleteCategory", 
                         errorApi.Message, 
                         "Ok");
                 }
@@ -178,15 +182,10 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings.Categories
                 }
             }
         }
-
-        private async Task OnDeleteCategoryCommand()
+        
+        private async Task GetCategories()
         {
-            await DeleteCategory();
-        }
-
-        private async Task GetDepartments()
-        {
-            var httpResponseMessage = await _departmentService.Get(new GetDepartmentsCommand());
+            var httpResponseMessage = await _categoryService.Get(new GetCategoriesCommand());
             
             var respuesta = await httpResponseMessage.Content.ReadAsStringAsync();
 
@@ -194,21 +193,21 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings.Categories
             {
                 var errorApi = JsonConvert.DeserializeObject<ApiResponse>(respuesta);
                 await Application.Current.MainPage.DisplayAlert(
-                    "GetDepartments", errorApi.Message, "ok");
+                    "GetCategories", errorApi.Message, "ok");
 
                 return;  
             }
-            var getDepartmentsResponse = JsonConvert.DeserializeObject<GetDepartmantsResponse>(respuesta);
+            var getCategoriesResponse = JsonConvert.DeserializeObject<GetCategoriesResponse>(respuesta);
 
-            if (getDepartmentsResponse != null)
-                Departments = new ObservableCollection<Department>(getDepartmentsResponse.Data);
+            if (getCategoriesResponse != null)
+                Categories = new ObservableCollection<Category>(getCategoriesResponse.Data);
         }
         
-        public async Task GetCategory(Guid categoryId)
+        public async Task GetSubCategory(Guid subCategoryId)
         {
-            var httpResponseMessageStores = await _categoryService.Get(new GetCategoriesCommand
+            var httpResponseMessageStores = await _subCategoryService.Get(new GetSubCategoriesCommand()
             {
-                CategoryId = categoryId
+                SubCategoryId = subCategoryId
             });
            
             var respuesta = await httpResponseMessageStores.Content.ReadAsStringAsync();
@@ -219,27 +218,27 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings.Categories
                 await App.Current.MainPage.DisplayAlert("GetCategory", errorApi.Message, "Ok");
             }
            
-            var getCategoriesResponse = JsonConvert.DeserializeObject<GetCategoriesResponse>(respuesta);
+            var getSubCategoriesResponse = JsonConvert.DeserializeObject<GetSubCategoriesResponse>(respuesta);
 
-            if (getCategoriesResponse != null)
+            if (getSubCategoriesResponse != null)
             {
-                SelectedDepartment = Departments.FirstOrDefault(c => 
-                    c.DepartmentId == getCategoriesResponse.Data.FirstOrDefault().DepartmentId);
-                Name = getCategoriesResponse.Data.FirstOrDefault()?.Name;
+                SelectedCategory = Categories.FirstOrDefault(c => 
+                    c.CategoryId == getSubCategoriesResponse.Data.FirstOrDefault().CategoryId);
+                Name = getSubCategoriesResponse.Data.FirstOrDefault()?.Name;
             }
         }
 
-        public  void OnNavigatedFrom(INavigationParameters parameters)
+        public async void OnNavigatedFrom(INavigationParameters parameters)
         {
-            throw new System.NotImplementedException();
+
         }
 
         public async void OnNavigatedTo(INavigationParameters parameters)
         {
-            CategoryId = parameters.GetValue<Guid>("categoryId");
-            if (CategoryId!=Guid.Empty)
+            SubCategoryId = parameters.GetValue<Guid>("subCategoryId");
+            if (SubCategoryId!=Guid.Empty)
             {
-                await GetCategory(CategoryId);
+                await GetSubCategory(SubCategoryId);
             }
         }
     }

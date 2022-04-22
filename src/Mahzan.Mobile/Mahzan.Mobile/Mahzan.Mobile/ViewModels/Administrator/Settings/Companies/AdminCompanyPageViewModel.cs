@@ -413,10 +413,7 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings.Companies
                     PostalCode = company.PostalCode;
                     ContactName = company.ContactName;
                     Email = company.Email;
-                    if (company.Phone!= null)
-                    {
-                        Phone = "+52 " + company.Phone;      
-                    }
+                    Phone = company.Phone;
                     WebSite = company.WebSite;
                 }
             }
@@ -432,7 +429,6 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings.Companies
             CompanyId = parameters.GetValue<Guid>("companyId");
             if (CompanyId!=null)
             {
-                 await GetCommercialBusiness();
                  await GetCompany();
             }
         }
