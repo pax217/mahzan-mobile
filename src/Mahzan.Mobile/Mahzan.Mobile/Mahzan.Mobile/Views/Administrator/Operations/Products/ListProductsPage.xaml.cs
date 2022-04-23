@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace Mahzan.Mobile.Views.Administrator.Products.Inventory
+namespace Mahzan.Mobile.Views.Administrator.Operations.Products
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ListProductsPage : ContentPage

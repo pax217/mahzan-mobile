@@ -26,7 +26,7 @@ using Prism.Navigation;
 using Prism.Services;
 using Xamarin.Forms;
 
-namespace Mahzan.Mobile.ViewModels.Administrator.Products.Inventory
+namespace Mahzan.Mobile.ViewModels.Administrator.Operations.Products
 {
     public class AddProductPageViewModel : ViewModelBase
     {

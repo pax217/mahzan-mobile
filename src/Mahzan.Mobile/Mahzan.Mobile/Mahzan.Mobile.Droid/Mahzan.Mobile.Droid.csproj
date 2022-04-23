@@ -77,7 +77,7 @@
         <None Include="Properties\AndroidManifest.xml" />
     </ItemGroup>
     <ItemGroup>
-        <AndroidResource Include="Resources\drawable\add_product_background.png">
+        <AndroidResource Include="Resources\drawable\background_products.png">
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </AndroidResource>
         <AndroidResource Include="Resources\drawable\background_bluetooth.png">
@@ -174,10 +174,10 @@
           <SubType>Designer</SubType>
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </AndroidResource>
-        <AndroidResource Include="Resources\drawable\products_background.png">
+        <AndroidResource Include="Resources\drawable\background_operations.png">
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </AndroidResource>
-        <AndroidResource Include="Resources\drawable\sales_background.png">
+        <AndroidResource Include="Resources\drawable\background_sales.png">
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </AndroidResource>
         <AndroidResource Include="Resources\drawable\splashscreen.png">

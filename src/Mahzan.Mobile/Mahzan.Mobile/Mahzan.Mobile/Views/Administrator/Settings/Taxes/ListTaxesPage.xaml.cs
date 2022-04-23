@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace Mahzan.Mobile.Views.Administrator.Products
+namespace Mahzan.Mobile.Views.Administrator.Settings.Taxes
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class IndexProductsPage : ContentPage
+    public partial class ListTaxesPage : ContentPage
     {
-        public IndexProductsPage()
+        public ListTaxesPage()
         {
             InitializeComponent();
         }

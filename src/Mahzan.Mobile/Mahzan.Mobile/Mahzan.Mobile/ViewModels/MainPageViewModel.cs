@@ -7,7 +7,7 @@ using Mahzan.Mobile.Models.Menu;
 using Mahzan.Mobile.SqLite._Base;
 using Mahzan.Mobile.SqLite.Entities;
 using Mahzan.Mobile.Views;
-using Mahzan.Mobile.Views.Administrator.Products;
+using Mahzan.Mobile.Views.Administrator.Operations;
 using Mahzan.Mobile.Views.Administrator.Settings;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -148,7 +148,7 @@ namespace Mahzan.Mobile.ViewModels
             result.Add(new MyMenuItem()
             {
                 Icon = "menu_icon_operations",
-                PageName = nameof(IndexProductsPage),
+                PageName = nameof(IndexOperationsPage),
                 Title = "Operaciones",
             });
 

@@ -14,7 +14,7 @@ using Newtonsoft.Json;
 using Prism.Navigation;
 using Xamarin.Forms;
 
-namespace Mahzan.Mobile.ViewModels.Administrator.Products.Inventory
+namespace Mahzan.Mobile.ViewModels.Administrator.Operations.Products
 {
     public class ListProductsPageViewModel : ViewModelBase
     {

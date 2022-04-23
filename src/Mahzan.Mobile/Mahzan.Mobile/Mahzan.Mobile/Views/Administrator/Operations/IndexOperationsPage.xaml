@@ -5,8 +5,7 @@
              xmlns:prism="http://prismlibrary.com"
              xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
-             x:Class="Mahzan.Mobile.Views.Administrator.Products.IndexProductsPage"
-             Title="Productos">
+             x:Class="Mahzan.Mobile.Views.Administrator.Operations.IndexOperationsPage">
     <ContentPage.Content>
         <StackLayout>
             <ScrollView>
@@ -17,7 +16,7 @@
                     </Grid.RowDefinitions>
                     <forms:CachedImage
                         Grid.Row="0"
-                        Source="products_background.png"
+                        Source="background_operations.png"
                         HorizontalOptions="FillAndExpand"
                         VerticalOptions="StartAndExpand"
                         CacheType="Memory"
@@ -34,13 +33,13 @@
                                 <RowDefinition Height="200"></RowDefinition>
                             </Grid.RowDefinitions>
                             <Label Grid.Row="0"
-                                   Text="Opciónes"
+                                   Text="Menú de Operaciones"
                                    HorizontalTextAlignment="Center"
                                    FontSize="18">
                             </Label>
                             <ListView Grid.Row="1"
-                                      ItemsSource="{Binding ListProductsOptionsItems}"
-                                      SelectedItem="{Binding SelectedProductOptions}">
+                                      ItemsSource="{Binding ListOperationsOptionsItems}"
+                                      SelectedItem="{Binding SelectedOperationOptions}">
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
                                         <TextCell Detail="{Binding OptionDetail}" 

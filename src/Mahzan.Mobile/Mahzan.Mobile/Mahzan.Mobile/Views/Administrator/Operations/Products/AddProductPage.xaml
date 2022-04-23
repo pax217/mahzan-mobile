@@ -6,8 +6,23 @@
              xmlns:local="clr-namespace:Mahzan.Mobile.Behaviors;"
              xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
-             x:Class="Mahzan.Mobile.Views.Administrator.Products.Inventory.AddProductPage"
-             Title="Producto">
+             x:Class="Mahzan.Mobile.Views.Administrator.Operations.Products.AddProductPage">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="toolbarItemBarCode"
+                     IconImageSource="icon_barcode.png"
+                     Command="{Binding OpenBarCodeCommand}">
+        </ToolbarItem>
+        <ToolbarItem x:Name="toolbarItemAddProduct"
+                     IconImageSource="icon_camera.png"
+                     Command="{Binding OpenCameraCommand}">
+        </ToolbarItem>
+        <ToolbarItem IconImageSource="icon_delete.png"
+                     Command="{Binding DeleteProductCommand}">
+        </ToolbarItem>
+        <ToolbarItem IconImageSource="icon_save.png"
+                     Command="{Binding SaveProductCommand}">
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
     <ContentPage.Resources>
         <ResourceDictionary>
             <local:BooleanToObjectConverter x:Key="boolToStyleImage"
@@ -102,16 +117,6 @@
 
         </ResourceDictionary>
     </ContentPage.Resources>
-    <ContentPage.ToolbarItems>
-        <ToolbarItem x:Name="toolbarItemBarCode"
-                     IconImageSource="icon_barcode.png"
-                     Command="{Binding OpenBarCodeCommand}">
-        </ToolbarItem>
-        <ToolbarItem x:Name="toolbarItemAddProduct"
-                     IconImageSource="icon_camera.png"
-                     Command="{Binding OpenCameraCommand}">
-        </ToolbarItem>
-    </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <StackLayout>
             <ScrollView>
@@ -122,7 +127,7 @@
                     </Grid.RowDefinitions>
                     <forms:CachedImage
                         Grid.Row="0"
-                        Source="add_product_background.png"
+                        Source="background_products.png"
                         HorizontalOptions="FillAndExpand"
                         VerticalOptions="StartAndExpand"
                         CacheType="Memory"
@@ -334,12 +339,12 @@
                             <!-- </ListView> -->
                             <!--/Taxes-->
 
-                            <Label Grid.Row="14"
-                                   Grid.ColumnSpan="3"
-                                   Text="Inventario"
-                                   FontSize="20"
-                                   FontAttributes="Bold">
-                            </Label>
+                            <!-- <Label Grid.Row="14" -->
+                            <!--        Grid.ColumnSpan="3" -->
+                            <!--        Text="Inventario" -->
+                            <!--        FontSize="20" -->
+                            <!--        FontAttributes="Bold"> -->
+                            <!-- </Label> -->
                             
                             <!--/FollowInventory-->
                             <!-- <Label Grid.Row="15" -->

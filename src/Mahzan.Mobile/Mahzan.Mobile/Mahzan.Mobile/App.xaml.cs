@@ -7,13 +7,14 @@ using Mahzan.Mobile.Services.Product;
 using Mahzan.Mobile.Services.SHA1;
 using Mahzan.Mobile.Services.Store;
 using Mahzan.Mobile.Services.SubCategory;
+using Mahzan.Mobile.Services.Tax;
 using Mahzan.Mobile.Services.User;
 using Mahzan.Mobile.SqLite._Base;
 using Mahzan.Mobile.SqLite.Entities;
 using Mahzan.Mobile.ViewModels;
 using Mahzan.Mobile.ViewModels.Administrator;
-using Mahzan.Mobile.ViewModels.Administrator.Products;
-using Mahzan.Mobile.ViewModels.Administrator.Products.Inventory;
+using Mahzan.Mobile.ViewModels.Administrator.Operations;
+using Mahzan.Mobile.ViewModels.Administrator.Operations.Products;
 using Mahzan.Mobile.ViewModels.Administrator.Settings;
 using Mahzan.Mobile.ViewModels.Administrator.Settings.Categories;
 using Mahzan.Mobile.ViewModels.Administrator.Settings.Companies;
@@ -22,11 +23,12 @@ using Mahzan.Mobile.ViewModels.Administrator.Settings.Printers;
 using Mahzan.Mobile.ViewModels.Administrator.Settings.Profile;
 using Mahzan.Mobile.ViewModels.Administrator.Settings.Stores;
 using Mahzan.Mobile.ViewModels.Administrator.Settings.SubCategories;
+using Mahzan.Mobile.ViewModels.Administrator.Settings.Taxes;
 using Mahzan.Mobile.ViewModels.Administrator.Settings.Tickets;
 using Mahzan.Mobile.Views;
 using Mahzan.Mobile.Views.Administrator;
-using Mahzan.Mobile.Views.Administrator.Products;
-using Mahzan.Mobile.Views.Administrator.Products.Inventory;
+using Mahzan.Mobile.Views.Administrator.Operations;
+using Mahzan.Mobile.Views.Administrator.Operations.Products;
 using Mahzan.Mobile.Views.Administrator.Settings;
 using Mahzan.Mobile.Views.Administrator.Settings.Categories;
 using Mahzan.Mobile.Views.Administrator.Settings.Companies;
@@ -35,6 +37,7 @@ using Mahzan.Mobile.Views.Administrator.Settings.Printers;
 using Mahzan.Mobile.Views.Administrator.Settings.Profile;
 using Mahzan.Mobile.Views.Administrator.Settings.Stores;
 using Mahzan.Mobile.Views.Administrator.Settings.SubCategories;
+using Mahzan.Mobile.Views.Administrator.Settings.Taxes;
 using Mahzan.Mobile.Views.Administrator.Settings.Tickets;
 using Prism;
 using Prism.Ioc;
@@ -101,6 +104,8 @@ namespace Mahzan.Mobile
             containerRegistry.Register<IStoreService, StoreService>();
             containerRegistry.Register<ICompanyService, CompanyService>();
             containerRegistry.Register<ICommercialBusinessService, CommercialBusinessService>();
+            containerRegistry.Register<ITaxService, TaxService>();
+            
         }
         
         protected void RegisterNavigationDependencies(IContainerRegistry containerRegistry)
@@ -114,11 +119,6 @@ namespace Mahzan.Mobile
             
             //Administrator
             RegisterAdministratorSettingsNavigation(containerRegistry);
-                
-            // Products
-            containerRegistry.RegisterForNavigation<IndexProductsPage, IndexProductsPageViewModel>();
-            containerRegistry.RegisterForNavigation<ListProductsPage, ListProductsPageViewModel>();
-            containerRegistry.RegisterForNavigation<AddProductPage, AddProductPageViewModel>();
             
         }
 
@@ -128,20 +128,18 @@ namespace Mahzan.Mobile
             containerRegistry.RegisterForNavigation<AdministratorDashboardPage, AdministratorDashboardPageViewModel>();
             
             // Settings
-            containerRegistry.RegisterForNavigation<IndexSettingsPage, IndexSettingsPageViewModel>();
-            
-            // Companies
             RegisterAdministratorSettingsCompaniesNavigation(containerRegistry);
 
-
-            containerRegistry.RegisterForNavigation<SelectPrinterPage, SelectPrinterPageViewModel>();
+            // Operations
+            RegisterAdministratorOperationsCompaniesNavigation(containerRegistry);
             
-            // Tickets
-            containerRegistry.RegisterForNavigation<TicketsSettingsPage, TicketsSettingsPageViewModel>();
         }
 
         protected void RegisterAdministratorSettingsCompaniesNavigation(IContainerRegistry containerRegistry)
         {
+            // Settings
+            containerRegistry.RegisterForNavigation<IndexSettingsPage, IndexSettingsPageViewModel>();
+
             // Companies
             containerRegistry.RegisterForNavigation<ListCompaniesPage, ListCompaniesPageViewModel>();
             containerRegistry.RegisterForNavigation<AdminCompanyPage, AdminCompanyPageViewModel>();
@@ -162,8 +160,29 @@ namespace Mahzan.Mobile
             containerRegistry.RegisterForNavigation<ListSubCategoriesPage, ListSubCategoriesPageViewModel>();
             containerRegistry.RegisterForNavigation<AdminSubCategoryPage, AdminSubCategoryPageViewModel>();
             
+            // Taxes
+            containerRegistry.RegisterForNavigation<ListTaxesPage, ListTaxesPageViewModel>();
+            containerRegistry.RegisterForNavigation<AdminTaxPage, AdminTaxPageViewModel>();
+            
+            // Printers
+            containerRegistry.RegisterForNavigation<SelectPrinterPage, SelectPrinterPageViewModel>();
+            
+            // Tickets
+            containerRegistry.RegisterForNavigation<TicketsSettingsPage, TicketsSettingsPageViewModel>();
+            
             // Profile
             containerRegistry.RegisterForNavigation<AdminProfilePage, AdminProfilePageViewModel>();
+        }
+        
+        protected void RegisterAdministratorOperationsCompaniesNavigation(IContainerRegistry containerRegistry)
+        {
+            // Operations
+            containerRegistry.RegisterForNavigation<IndexOperationsPage, IndexOperationsPageViewModel>();
+            
+            // Poducts
+            containerRegistry.RegisterForNavigation<ListProductsPage, ListProductsPageViewModel>();
+            containerRegistry.RegisterForNavigation<AddProductPage, AddProductPageViewModel>();
+
         }
     }
 }

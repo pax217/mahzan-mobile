@@ -5,8 +5,8 @@
              xmlns:prism="http://prismlibrary.com"
              xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
-             x:Class="Mahzan.Mobile.Views.Administrator.Products.Inventory.ListProductsPage"
-             Title="Inventario">
+             x:Class="Mahzan.Mobile.Views.Administrator.Operations.Products.ListProductsPage"
+             Title="Productos">
     <ContentPage.ToolbarItems>
         <ToolbarItem x:Name="toolbarItemBarCode"
                      IconImageSource="icon_barcode.png"
@@ -27,7 +27,7 @@
                     </Grid.RowDefinitions>
                     <forms:CachedImage
                         Grid.Row="0"
-                        Source="inventory_background.png"
+                        Source="background_products.png"
                         HorizontalOptions="FillAndExpand"
                         VerticalOptions="StartAndExpand"
                         CacheType="Memory"
@@ -80,14 +80,14 @@
                                                            Grid.Column="1"
                                                            Text="{Binding Description}"
                                                            VerticalOptions="Center"
-                                                           HorizontalOptions="Center"
+                                                           HorizontalOptions="CenterAndExpand"
                                                            XAlign="Center"
                                                            FontSize="14"/>
                                                     <Label Grid.Row="0"
                                                            Grid.Column="2"
                                                            Text="{Binding Price}"
                                                            VerticalOptions="Center"
-                                                           HorizontalOptions="Center"
+                                                           HorizontalOptions="End"
                                                            FontSize="18"
                                                            FontAttributes="Bold"/>
                                                 </Grid>

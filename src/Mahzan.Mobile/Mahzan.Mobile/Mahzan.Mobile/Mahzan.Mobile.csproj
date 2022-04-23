@@ -47,5 +47,13 @@
         <DependentUpon>ListStoresPage.xaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
+      <Compile Update="Views\Administrator\Operations\Products\AddProductPage.xaml.cs">
+        <DependentUpon>AddProductPage.xaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Views\Administrator\Operations\Products\ListProductsPage.xaml.cs">
+        <DependentUpon>ListProductsPage.xaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
     </ItemGroup>
 </Project>

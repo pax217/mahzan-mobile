@@ -48,6 +48,9 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings
                 case "Sub Categorías":
                     _navigationService.NavigateAsync("ListSubCategoriesPage");
                     break;
+                case "Impuestos":
+                    _navigationService.NavigateAsync("ListTaxesPage");
+                    break;
                 case "Impresora":
                     _navigationService.NavigateAsync("SelectPrinterPage");
                     break;
@@ -83,6 +86,10 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings
                 new SettingsOptions()
                 {
                     Option ="Sub Categorías",OptionDetail="Administra las sub categorías de tus productos."
+                },
+                new SettingsOptions()
+                {
+                    Option ="Impuestos",OptionDetail="Administra los impuestos de tus productos."
                 },
                 new SettingsOptions()
                 {
