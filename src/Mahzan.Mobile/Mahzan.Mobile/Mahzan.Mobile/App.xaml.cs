@@ -1,5 +1,4 @@
-﻿using System;
-using Mahzan.Mobile.Services.Category;
+﻿using Mahzan.Mobile.Services.Category;
 using Mahzan.Mobile.Services.CommercialBusiness;
 using Mahzan.Mobile.Services.Company;
 using Mahzan.Mobile.Services.Department;
@@ -8,6 +7,8 @@ using Mahzan.Mobile.Services.SHA1;
 using Mahzan.Mobile.Services.Store;
 using Mahzan.Mobile.Services.SubCategory;
 using Mahzan.Mobile.Services.Tax;
+using Mahzan.Mobile.Services.UnitSale;
+using Mahzan.Mobile.Services.UnitsSale;
 using Mahzan.Mobile.Services.User;
 using Mahzan.Mobile.SqLite._Base;
 using Mahzan.Mobile.SqLite.Entities;
@@ -25,6 +26,7 @@ using Mahzan.Mobile.ViewModels.Administrator.Settings.Stores;
 using Mahzan.Mobile.ViewModels.Administrator.Settings.SubCategories;
 using Mahzan.Mobile.ViewModels.Administrator.Settings.Taxes;
 using Mahzan.Mobile.ViewModels.Administrator.Settings.Tickets;
+using Mahzan.Mobile.ViewModels.Administrator.Settings.UnitsSale;
 using Mahzan.Mobile.Views;
 using Mahzan.Mobile.Views.Administrator;
 using Mahzan.Mobile.Views.Administrator.Operations;
@@ -39,6 +41,7 @@ using Mahzan.Mobile.Views.Administrator.Settings.Stores;
 using Mahzan.Mobile.Views.Administrator.Settings.SubCategories;
 using Mahzan.Mobile.Views.Administrator.Settings.Taxes;
 using Mahzan.Mobile.Views.Administrator.Settings.Tickets;
+using Mahzan.Mobile.Views.Administrator.Settings.UnitsSale;
 using Prism;
 using Prism.Ioc;
 using Xamarin.Forms;
@@ -105,7 +108,7 @@ namespace Mahzan.Mobile
             containerRegistry.Register<ICompanyService, CompanyService>();
             containerRegistry.Register<ICommercialBusinessService, CommercialBusinessService>();
             containerRegistry.Register<ITaxService, TaxService>();
-            
+            containerRegistry.Register<IUnitSaleService, UnitSaleService>();
         }
         
         protected void RegisterNavigationDependencies(IContainerRegistry containerRegistry)
@@ -160,6 +163,10 @@ namespace Mahzan.Mobile
             containerRegistry.RegisterForNavigation<ListSubCategoriesPage, ListSubCategoriesPageViewModel>();
             containerRegistry.RegisterForNavigation<AdminSubCategoryPage, AdminSubCategoryPageViewModel>();
             
+            // Units Sale
+            containerRegistry.RegisterForNavigation<ListUnitsSalePage, ListUnitsSalePageViewModel>();
+            containerRegistry.RegisterForNavigation<AdminUnitSalePage, AdminUnitSalePageViewModel>();
+            
             // Taxes
             containerRegistry.RegisterForNavigation<ListTaxesPage, ListTaxesPageViewModel>();
             containerRegistry.RegisterForNavigation<AdminTaxPage, AdminTaxPageViewModel>();
@@ -181,7 +188,7 @@ namespace Mahzan.Mobile
             
             // Poducts
             containerRegistry.RegisterForNavigation<ListProductsPage, ListProductsPageViewModel>();
-            containerRegistry.RegisterForNavigation<AddProductPage, AddProductPageViewModel>();
+            containerRegistry.RegisterForNavigation<AdminProductPage, AdminProductPageViewModel>();
 
         }
     }

@@ -10,5 +10,6 @@ namespace Mahzan.Mobile.Services.Product
 
         Task<HttpResponseMessage> Get(GetProductsCommand command);
 
+        Task<HttpResponseMessage> Delete(string productId);
     }
 }

@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:prism="http://prismlibrary.com" 
-             xmlns:local="clr-namespace:Mahzan.Mobile.Behaviors;"
-             xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
-             prism:ViewModelLocator.AutowireViewModel="True"
-             x:Class="Mahzan.Mobile.Views.Administrator.Operations.Products.AddProductPage">
-    <ContentPage.ToolbarItems>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:prism="http://prismlibrary.com" 
+            xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+            xmlns:local="clr-namespace:Mahzan.Mobile.Behaviors;"
+            xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+            android:TabbedPage.ToolbarPlacement="Top"
+            prism:ViewModelLocator.AutowireViewModel="True"
+            x:Class="Mahzan.Mobile.Views.Administrator.Operations.Products.AdminProductPage"
+            Title="Producto">
+    <TabbedPage.ToolbarItems>
         <ToolbarItem x:Name="toolbarItemBarCode"
                      IconImageSource="icon_barcode.png"
                      Command="{Binding OpenBarCodeCommand}">
@@ -22,8 +25,8 @@
         <ToolbarItem IconImageSource="icon_save.png"
                      Command="{Binding SaveProductCommand}">
         </ToolbarItem>
-    </ContentPage.ToolbarItems>
-    <ContentPage.Resources>
+    </TabbedPage.ToolbarItems>
+    <TabbedPage.Resources>
         <ResourceDictionary>
             <local:BooleanToObjectConverter x:Key="boolToStyleImage"
                                               x:TypeArguments="Style">
@@ -116,10 +119,12 @@
             
 
         </ResourceDictionary>
-    </ContentPage.Resources>
-    <ContentPage.Content>
-        <StackLayout>
-            <ScrollView>
+    </TabbedPage.Resources>
+    <TabbedPage.Children>
+        <ContentPage Title="Detalle">
+            <ContentPage.Content>
+                <StackLayout>
+                    <ScrollView>
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -137,7 +142,7 @@
                     <Frame CornerRadius="10" 
                            BackgroundColor="White" 
                            Grid.RowSpan="2" 
-                           Margin="20,150,20,20">
+                           Margin="20,50,20,20">
                         <Grid RowSpacing="10">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"></RowDefinition>
@@ -152,35 +157,23 @@
                                 <RowDefinition Height="Auto"></RowDefinition>
                                 <RowDefinition Height="Auto"></RowDefinition>
                                 <RowDefinition Height="Auto"></RowDefinition>
-                                <RowDefinition Height="Auto"></RowDefinition>
-                                <RowDefinition Height="Auto"></RowDefinition>
-                                <RowDefinition Height="Auto"></RowDefinition>
-                                <RowDefinition Height="Auto"></RowDefinition>
                             </Grid.RowDefinitions>
-
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="20" />
                             </Grid.ColumnDefinitions>
-
-                            <Label Grid.Row="0"
-                                   Grid.ColumnSpan="3"
-                                   Text="Detalle de Producto"
-                                   HorizontalTextAlignment="Center"
-                                   FontSize="18">
-                            </Label>
-                            <Image Grid.Row="1"
+                            <Image Grid.Row="0"
                                    Grid.ColumnSpan="3"
                                    Source="{Binding ProductImageSource, Mode=TwoWay}"
                                    Aspect="AspectFill"
                                    HorizontalOptions="FillAndExpand"
-                                   VerticalOptions="StartAndExpand"
+                                   VerticalOptions="Center"
                                    HeightRequest="300"
-                                   WidthRequest="150">
+                                   WidthRequest="50">
                             </Image>
                             <!--Barcode-->
-                            <Entry Grid.Row="2"
+                            <Entry Grid.Row="1"
                                    Grid.Column="1"
                                    Placeholder="Código de Barras"
                                    Text="{Binding BarCode, Mode=TwoWay}"
@@ -189,89 +182,63 @@
                             <!--/Barcode-->
                             
                             <!--AlternativeKey-->
-                            <Entry Grid.Row="3"
+                            <Entry Grid.Row="2"
                                    Grid.Column="1"
                                    Placeholder="Alternative Key"
                                    Text="{Binding AlternativeKey, Mode=TwoWay}">
                             </Entry>
                             <!--/AlternativeKey-->
-
+                            
                             <!--Description-->
-                            <Entry Grid.Row="4"
+                            <Entry Grid.Row="3"
                                    Grid.Column="1" 
                                    Placeholder="Descripción"
                                    Text="{Binding Description, Mode=TwoWay}"
                                    Keyboard="Text">
                                 <Entry.Behaviors>
-                                    <local:AlphaNumericValidatorBehavior x:Name="descriptionValidator"/>
+                                    <local:NotEmptyValidatorBehavior x:Name="descriptionValidator"/>
                                 </Entry.Behaviors>
                             </Entry>
-                            <Image Grid.Row="4" 
+                            <Image Grid.Row="3" 
                                    Grid.Column="2" 
                                    x:Name="descriptionSuccessErrorImage"
                                    Style="{Binding Source={x:Reference descriptionValidator}, 
                                    Path=IsValid, 
                                    Converter={StaticResource boolToStyleImage}}"/>
-                            <Label Grid.Row="5" 
+                            <Label Grid.Row="4" 
                                    Grid.Column="1" 
                                    Style="{Binding Source={x:Reference descriptionValidator}, 
                                    Path=IsValid, 
                                    Converter={StaticResource boolToStyleDescription}}" 
                                    FontSize="16"/>
                             <!--/Description-->
-                            <!--Departments-->
-                            <Picker Grid.Row="6"
-                                    Grid.ColumnSpan="3" 
-                                    Title="- Departamento -" 
-                                    ItemsSource="{Binding Departments, Mode=TwoWay}" 
-                                    ItemDisplayBinding="{Binding Name, Mode=TwoWay}"
-                                    SelectedItem="{Binding SelectedDepartment , Mode=TwoWay}"/>
-                            <!--/Departments-->
-
-                            <!--Categories-->
-                            <Picker Grid.Row="7"
-                                    Grid.ColumnSpan="3"
-                                    Title="- Categoría -"
-                                    ItemsSource="{Binding Categories, Mode=TwoWay}"
-                                    ItemDisplayBinding="{Binding Name, Mode=TwoWay}"
-                                    SelectedItem="{Binding SelectedCategory , Mode=TwoWay}"/>
-                            <!--/Categories-->
                             
-                            <!--Sub Categories-->
-                            <Picker Grid.Row="8"
-                                    Grid.ColumnSpan="3"
-                                    Title="- Sub Categoría -"
-                                    ItemsSource="{Binding SubCategories, Mode=TwoWay}"
-                                    ItemDisplayBinding="{Binding Name, Mode=TwoWay}"
-                                    SelectedItem="{Binding SelectedSubCategory , Mode=TwoWay}"/>
-                            <!--/Categories-->
-
-                            <!--ProductUnits-->
-                            <!-- <Picker Grid.Row="7" -->
-                            <!--         Grid.ColumnSpan="3" -->
-                            <!--         Title="- Unidades -"  -->
-                            <!--         ItemsSource="{Binding ProductUnits, Mode=TwoWay}"  -->
-                            <!--         ItemDisplayBinding="{Binding Description, Mode=TwoWay}" -->
-                            <!--         SelectedItem="{Binding SelectedProductUnit, Mode=TwoWay}"/> -->
-                            <!--/ProductUnits-->
+                            <!--Units Sale-->
+                            <Picker Grid.Row="5"
+                                    Grid.ColumnSpan="2" 
+                                    Title="- Unidad de Venta -" 
+                                    ItemsSource="{Binding UnitsSale, Mode=TwoWay}" 
+                                    ItemDisplayBinding="{Binding Description, Mode=TwoWay}"
+                                    SelectedItem="{Binding SelectedUnitSale , Mode=TwoWay}"/>
+                            <!--/Units Sale-->
 
                             <!--Price-->
-                            <Entry Grid.Row="9"
+                            <Entry Grid.Row="6"
                                    Grid.Column="1" 
                                    Keyboard="Numeric"
                                    Placeholder="Precio"
-                                   Text="{Binding Price, Mode=TwoWay}">
+                                   Text="{Binding Price ,Mode=TwoWay}">
                                 <Entry.Behaviors>
                                     <local:DecimalValidatorBehavior x:Name="priceValidator"/>
                                 </Entry.Behaviors>
                             </Entry>
-                            <Image Grid.Row="9" 
+                            <Image Grid.Row="6" 
                                    Grid.Column="2" 
                                    x:Name="priceSuccessErrorImage"
                                    Style="{Binding Source={x:Reference priceValidator}, 
                                    Path=IsValid, 
                                    Converter={StaticResource boolToStyleImage}}"/>
-                            <Label Grid.Row="10" 
+                            <Label Grid.Row="7" 
                                    Grid.Column="1" 
                                    Style="{Binding Source={x:Reference priceValidator}, 
                                    Path=IsValid, 
@@ -280,7 +247,7 @@
                             <!--/Price-->
 
                             <!--Cost-->
-                            <Entry  Grid.Row="11"
+                            <Entry  Grid.Row="8"
                                     Grid.Column="1"
                                     Keyboard="Numeric"
                                     Placeholder="Costo"
@@ -290,13 +257,13 @@
                                     <local:DecimalValidatorBehavior x:Name="costValidator"/>
                                 </Entry.Behaviors>
                             </Entry>
-                            <Image Grid.Row="11" 
+                            <Image Grid.Row="8" 
                                    Grid.Column="2" 
                                    x:Name="costSuccessErrorImage"
                                    Style="{Binding Source={x:Reference costValidator}, 
                                    Path=IsValid, 
                                    Converter={StaticResource boolToStyleImage}}"/>
-                            <Label Grid.Row="12" 
+                            <Label Grid.Row="9" 
                                    Grid.Column="1" 
                                    Style="{Binding Source={x:Reference costValidator}, 
                                    Path=IsValid, 
@@ -304,39 +271,50 @@
                                    FontSize="16"/>
                             <!--/Cost-->
                             
+                            <Label  Grid.Row="10"
+                                    Grid.ColumnSpan="3" 
+                                    Grid.Column="0"
+                                    Text="Impuestos"
+                                    FontSize="20">
+                            </Label>
                             <!--Taxes-->
-                            <!-- <Label Grid.Row="13" -->
-                            <!--        Grid.ColumnSpan="3" -->
-                            <!--        Text="Impuestos" -->
-                            <!--        FontSize="20" -->
-                            <!--        FontAttributes="Bold"></Label> -->
-                            <!-- <ListView Grid.Row="14" -->
-                            <!--           Grid.ColumnSpan="3" -->
-                            <!--           ItemsSource="{Binding Taxes, Mode=TwoWay}" -->
-                            <!--           SelectionMode="None"> -->
-                            <!--     <ListView.ItemTemplate> -->
-                            <!--         <DataTemplate> -->
-                            <!--             <ViewCell> -->
-                            <!--                 <Grid Margin="0,0,0,1"> -->
-                            <!--                     <Grid.ColumnDefinitions> -->
-                            <!--                         <ColumnDefinition Width="Auto" /> -->
-                            <!--                         <ColumnDefinition Width="50" /> -->
-                            <!--                         <ColumnDefinition Width="Auto" /> -->
-                            <!--                     </Grid.ColumnDefinitions> -->
-                            <!--                         <Label Grid.Column="1" -->
-                            <!--                                Text="{Binding Name, StringFormat='{0:F0}%'}" -->
-                            <!--                                HorizontalOptions="CenterAndExpand"/> -->
-                            <!--                         <Entry Grid.Column="2" -->
-                            <!--                                Text="{Binding TaxRatePercentage}" -->
-                            <!--                                Keyboard="Numeric" -->
-                            <!--                                HorizontalOptions="CenterAndExpand"/> -->
-                            <!--                         <Switch Grid.Column="3" -->
-                            <!--                             IsToggled="{Binding Active}"  /> -->
-                            <!--                 </Grid> -->
-                            <!--             </ViewCell> -->
-                            <!--         </DataTemplate> -->
-                            <!--     </ListView.ItemTemplate> -->
-                            <!-- </ListView> -->
+                            <ListView Grid.Row="11"
+                                      Grid.Column="0"
+                                      Grid.ColumnSpan="3"
+                                      ItemsSource="{Binding Taxes, Mode=TwoWay}"
+                                      SelectionMode="None"
+                                      HasUnevenRows="True"
+                                      SeparatorVisibility="None"
+                                      VerticalOptions="CenterAndExpand"
+                                      HorizontalOptions="FillAndExpand"
+                                      HeightRequest="100">
+                                <ListView.ItemTemplate >
+                                    <DataTemplate>
+                                        <ViewCell>
+                                            <StackLayout BackgroundColor="#eee"
+                                                         Orientation="Vertical">
+                                                <Grid Margin="0,0,0,0">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="200" />
+                                                        <ColumnDefinition Width="50" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <Label Grid.Column="0"
+                                                           Text="{Binding Name}"
+                                                           FontSize="Medium"
+                                                           HorizontalOptions="Start"/>
+                                                    <Entry Grid.Column="1"
+                                                           Text="{Binding Percentage, StringFormat='{0:F0}%'}"
+                                                           Keyboard="Numeric"
+                                                           HorizontalOptions="CenterAndExpand"/>
+                                                    <Switch Grid.Column="2" 
+                                                            IsToggled="{Binding  Active}"/>
+                                                </Grid>
+                                            </StackLayout>
+                                        </ViewCell>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
                             <!--/Taxes-->
 
                             <!-- <Label Grid.Row="14" -->
@@ -358,21 +336,88 @@
                             <!--         IsToggled="{Binding SwitchFollowInventory}"> -->
                             <!-- </Switch> -->
                             <!--/FollowInventory-->
-                            
-                            <Button Grid.Row="15"
-                                    Grid.ColumnSpan="3"
-                                    Text="Guardar"
-                                    BackgroundColor="#146AB0"
-                                    CornerRadius="3"
-                                    TextColor="White"
-                                    Command="{Binding CreateProductCommand}">
-                            </Button>
-
                         </Grid>
                     </Frame>
                 </Grid>
             </ScrollView>
-        </StackLayout>
+                </StackLayout>
+            </ContentPage.Content>
+        </ContentPage>
+        <ContentPage Title="Organización">
+            <ContentPage.Content>
+                <StackLayout>
+                    <ScrollView>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <forms:CachedImage
+                        Grid.Row="0"
+                        Source="background_product_organization.png"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="StartAndExpand"
+                        CacheType="Memory"
+                        Aspect="AspectFill"
+                    >
+                    </forms:CachedImage>
+                    <Frame CornerRadius="10" 
+                           BackgroundColor="White" 
+                           Grid.RowSpan="2" 
+                           Margin="20,150,20,20">
+                        <Grid RowSpacing="10">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
 
-    </ContentPage.Content>
-</ContentPage>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="20" />
+                            </Grid.ColumnDefinitions>
+                            <!--Departments-->
+                            <Picker Grid.Row="0"
+                                    Grid.ColumnSpan="3" 
+                                    Title="- Departamento -" 
+                                    ItemsSource="{Binding Departments, Mode=TwoWay}" 
+                                    ItemDisplayBinding="{Binding Name, Mode=TwoWay}"
+                                    SelectedItem="{Binding SelectedDepartment , Mode=TwoWay}"/>
+                            <!--/Departments-->
+
+                            <!--Categories-->
+                            <Picker Grid.Row="1"
+                                    Grid.ColumnSpan="3"
+                                    Title="- Categoría -"
+                                    ItemsSource="{Binding Categories, Mode=TwoWay}"
+                                    ItemDisplayBinding="{Binding Name, Mode=TwoWay}"
+                                    SelectedItem="{Binding SelectedCategory , Mode=TwoWay}"/>
+                            <!--/Categories-->
+                            
+                            <!--Sub Categories-->
+                            <Picker Grid.Row="2"
+                                    Grid.ColumnSpan="3"
+                                    Title="- Sub Categoría -"
+                                    ItemsSource="{Binding SubCategories, Mode=TwoWay}"
+                                    ItemDisplayBinding="{Binding Name, Mode=TwoWay}"
+                                    SelectedItem="{Binding SelectedSubCategory , Mode=TwoWay}"/>
+                            <!--/Categories-->
+
+                            <!--ProductUnits-->
+                            <!-- <Picker Grid.Row="7" -->
+                            <!--         Grid.ColumnSpan="3" -->
+                            <!--         Title="- Unidades -"  -->
+                            <!--         ItemsSource="{Binding ProductUnits, Mode=TwoWay}"  -->
+                            <!--         ItemDisplayBinding="{Binding Description, Mode=TwoWay}" -->
+                            <!--         SelectedItem="{Binding SelectedProductUnit, Mode=TwoWay}"/> -->
+                            <!--/ProductUnits-->
+                        </Grid>
+                    </Frame>
+                </Grid>
+            </ScrollView>
+                </StackLayout>
+            </ContentPage.Content>
+        </ContentPage>
+    </TabbedPage.Children>
+</TabbedPage>

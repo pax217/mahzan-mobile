@@ -48,6 +48,9 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings
                 case "Sub Categorías":
                     _navigationService.NavigateAsync("ListSubCategoriesPage");
                     break;
+                case "Unidades de Venta":
+                    _navigationService.NavigateAsync("ListUnitsSalePage");
+                    break;
                 case "Impuestos":
                     _navigationService.NavigateAsync("ListTaxesPage");
                     break;
@@ -86,6 +89,10 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings
                 new SettingsOptions()
                 {
                     Option ="Sub Categorías",OptionDetail="Administra las sub categorías de tus productos."
+                },
+                new SettingsOptions()
+                {
+                    Option ="Unidades de Venta",OptionDetail="Administra tus unidades de venta."
                 },
                 new SettingsOptions()
                 {

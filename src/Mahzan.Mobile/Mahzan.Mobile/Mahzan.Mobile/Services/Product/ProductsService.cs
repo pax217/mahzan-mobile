@@ -78,5 +78,29 @@ namespace Mahzan.Mobile.Services.Product
 
             return httpResponseMessage;
         }
+
+        public async Task<HttpResponseMessage> Delete(string productId)
+        {
+            HttpResponseMessage httpResponseMessage;
+            UriBuilder uriBuilder = new UriBuilder(UrlApi + "/v1/Product/Delete");
+            try
+            {
+                var query = HttpUtility.ParseQueryString(uriBuilder.Query);
+                query["productId"] = productId;
+
+                uriBuilder.Query = query.ToString();
+
+                HttpClient httpClient = new HttpClient();
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
+                httpResponseMessage = await httpClient.DeleteAsync(uriBuilder.ToString());
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+
+            return httpResponseMessage;
+        }
     }
 }

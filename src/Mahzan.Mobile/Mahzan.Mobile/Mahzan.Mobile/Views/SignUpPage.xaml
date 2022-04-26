@@ -318,7 +318,8 @@
                                        Placeholder="Usuario"
                                        MaxLength="50"
                                        Keyboard="Text"
-                                       Text="{Binding UserName}">
+                                       Text="{Binding UserName}"
+                                       TextTransform="Lowercase">
                                     <Entry.Behaviors>
                                         <local:NotEmptyValidatorBehavior x:Name="UserValidator" />
                                     </Entry.Behaviors>

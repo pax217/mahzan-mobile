@@ -11,12 +11,13 @@ using Mahzan.Mobile.Models.Response;
 using Mahzan.Mobile.QrScanning;
 using Mahzan.Mobile.Services.Product;
 using Newtonsoft.Json;
+using Prism.Mvvm;
 using Prism.Navigation;
 using Xamarin.Forms;
 
 namespace Mahzan.Mobile.ViewModels.Administrator.Operations.Products
 {
-    public class ListProductsPageViewModel : ViewModelBase
+    public class ListProductsPageViewModel : BindableBase, INavigationAware
     {
         private readonly INavigationService _navigationService;
 
@@ -57,18 +58,16 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Operations.Products
         private void HandleSelectedProduct()
         {
             var navigationParams = new NavigationParameters();
-            navigationParams.Add("productsId", SelectedProduct.ProductsId);
-            _navigationService.NavigateAsync("AddProductPage", navigationParams);
+            navigationParams.Add("productId", SelectedProduct.ProductId);
+            _navigationService.NavigateAsync("AdminProductPage", navigationParams);
         }
 
         public ListProductsPageViewModel(
             INavigationService navigationService,
             IProductsService productsService)
-            :base(navigationService)
         {
-            //
-            _navigationService = navigationService;
 
+            _navigationService = navigationService;
             _productsService = productsService;
 
             //Services
@@ -84,7 +83,7 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Operations.Products
 
         private async Task OnAddProductCommand()
         {
-            await _navigationService.NavigateAsync("AddProductPage");
+            await _navigationService.NavigateAsync("AdminProductPage");
         }
 
         private async Task GetProducts()
@@ -162,7 +161,7 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Operations.Products
  
                     ListViewProducts.Add(new ListViewProducts
                     {
-                        ProductsId = product.ProductId,
+                        ProductId = product.ProductId,
                         Description = product.Description,
                         ImageSource = imageSource,
                         Price = product.Price
@@ -170,11 +169,21 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Operations.Products
                 }
             }
         }
+
+        public async void OnNavigatedFrom(INavigationParameters parameters)
+        {
+
+        }
+
+        public async void OnNavigatedTo(INavigationParameters parameters)
+        {
+
+        }
     }
 
     public class ListViewProducts
     {
-        public Guid ProductsId { get; set; }
+        public Guid ProductId { get; set; }
         public string Description { get; set; }
         public ImageSource ImageSource { get; set; }
         

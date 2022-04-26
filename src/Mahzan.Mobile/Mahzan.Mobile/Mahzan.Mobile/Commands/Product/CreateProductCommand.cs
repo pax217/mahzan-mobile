@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using SQLite;
 
 namespace Mahzan.Mobile.Commands.Product
@@ -38,8 +39,9 @@ namespace Mahzan.Mobile.Commands.Product
     
         public bool FollowInventory { get; set; }
     
-        public string ProductSaleUnitId { get; set; }
+        public string UnitSaleId { get; set; }
     
+        public List<Guid> TaxesIds { get; set; }
     }
     public class CreateProductOrganizationCommand
     {

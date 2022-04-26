@@ -1,48 +1,56 @@
 using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ImTools;
 using Mahzan.Mobile.Commands.Category;
 using Mahzan.Mobile.Commands.Department;
 using Mahzan.Mobile.Commands.Product;
 using Mahzan.Mobile.Commands.SubCategory;
+using Mahzan.Mobile.Commands.Tax;
+using Mahzan.Mobile.Commands.UnitSale;
 using Mahzan.Mobile.Models.Category;
 using Mahzan.Mobile.Models.Department;
+using Mahzan.Mobile.Models.Product;
 using Mahzan.Mobile.Models.Response;
 using Mahzan.Mobile.Models.SubCategory;
+using Mahzan.Mobile.Models.Tax;
+using Mahzan.Mobile.Models.UnitSale;
 using Mahzan.Mobile.QrScanning;
 using Mahzan.Mobile.Services.Category;
 using Mahzan.Mobile.Services.Department;
 using Mahzan.Mobile.Services.Product;
 using Mahzan.Mobile.Services.SubCategory;
+using Mahzan.Mobile.Services.Tax;
+using Mahzan.Mobile.Services.UnitsSale;
 using Mahzan.Mobile.Utils.Images;
 using Newtonsoft.Json;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
 using Plugin.Toasts;
+using Prism.Mvvm;
 using Prism.Navigation;
 using Prism.Services;
 using Xamarin.Forms;
 
 namespace Mahzan.Mobile.ViewModels.Administrator.Operations.Products
 {
-    public class AddProductPageViewModel : ViewModelBase
+    public class AdminProductPageViewModel : BindableBase, INavigationAware
     {
         #region Attributes
 
         private readonly INavigationService _navigationService;
-
         private readonly IPageDialogService _pageDialogService;
-
         private readonly IProductsService _productsService;
-
         private readonly IDepartmentService _departmentService;
-
         private readonly ICategoryService _categoryService;
-
         private readonly ISubCategoryService _subCategoryService;
+        private readonly ITaxService _taxService;
+        private readonly IUnitSaleService _unitSaleService;
 
         /*private readonly IProductCategoriesService _productCategoriesService;
 
@@ -56,7 +64,7 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Operations.Products
 
         #region Properties
 
-        private Guid? ProductsId { get; set; }
+        private Guid ProductId { get; set; }
 
         //FollowInventory
         private bool _switchFollowInventory;
@@ -181,6 +189,26 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Operations.Products
             }
         }
         
+        //Units Sale
+        private ObservableCollection<UnitSale> _unitsSale;
+        public ObservableCollection<UnitSale> UnitsSale
+        {
+            get => _unitsSale;
+            set => SetProperty(ref _unitsSale, value);
+        }
+        private UnitSale _selectedUnitSale;
+        public UnitSale SelectedUnitSale
+        {
+            get => _selectedUnitSale;
+            set
+            {
+                if (_selectedUnitSale != value)
+                {
+                    _selectedUnitSale = value;
+                }
+            }
+        }
+        
         //Product Units
         private ObservableCollection<Category> _productUnits;
         public ObservableCollection<Category> ProductUnits
@@ -188,45 +216,15 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Operations.Products
             get => _productUnits;
             set => SetProperty(ref _productUnits, value);
         }
-        //
-        // //Taxes
-        // private ObservableCollection<API.Entities.Taxes> _taxes;
-        // public ObservableCollection<API.Entities.Taxes> Taxes
-        // {
-        //     get => _taxes;
-        //     set => SetProperty(ref _taxes, value);
-        // }
-
-
-        //Selected ProductUnitCategory
-        // private ProductCategories _selectedProductCategory;
-        // public ProductCategories SelectedProductCategory
-        // {
-        //     get => _selectedProductCategory;
-        //     set
-        //     {
-        //         if (_selectedProductCategory != value)
-        //         {
-        //             _selectedProductCategory = value;
-        //             HandleSelectedProductCategory();
-        //         }
-        //     }
-        // }
-
-        //Selected ProductUnit
-        // private ProductUnits _selectedProductUnit;
-        // public ProductUnits SelectedProductUnit
-        // {
-        //     get => _selectedProductUnit;
-        //     set
-        //     {
-        //         if (_selectedProductUnit != value)
-        //         {
-        //             _selectedProductUnit = value;
-        //             HandleSelectedProductUnit();
-        //         }
-        //     }
-        // }
+        
+        //Taxes
+        private ObservableCollection<Tax> _taxes;
+        public ObservableCollection<Tax> Taxes
+        {
+            get => _taxes;
+            set => SetProperty(ref _taxes, value);
+        }
+        
 
         //Path Image Product
 
@@ -240,25 +238,23 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Operations.Products
 
         public ICommand OpenCameraCommand { get; set; }
         public ICommand OpenBarCodeCommand { get; set; }
-        public ICommand CreateProductCommand { get; set; }
-
-        public ICommand ShowSnackCommand { get; set; }
+        public ICommand SaveProductCommand { get; set; }
+        
+        public ICommand DeleteProductCommand { get; set; }
+        
 
         #endregion
 
-        public AddProductPageViewModel(
+        public AdminProductPageViewModel(
             INavigationService navigationService,
             IPageDialogService pageDialogService,
             IProductsService productsService,
             IDepartmentService departmentService,
             ICategoryService categoryService,
-            ISubCategoryService subCategoryService
-            /*,
-            IProductCategoriesService productCategoriesService,
-            IProductUnitsService productUnitsService,
-            IProductsService productsService, 
-            ITaxesService taxesService*/):
-            base(navigationService)
+            ISubCategoryService subCategoryService,
+            ITaxService taxService,
+            IUnitSaleService unitSaleService) 
+
         {
             _navigationService = navigationService;
             _pageDialogService = pageDialogService;
@@ -268,46 +264,114 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Operations.Products
             _departmentService = departmentService;
             _categoryService = categoryService;
             _subCategoryService = subCategoryService;
-            
-            /*_productCategoriesService = productCategoriesService;
-            _productUnitsService = productUnitsService;
-            _productsService = productsService;
-            _taxesService = taxesService;*/
-
-            //Pickers
-            Task.Run(() => GetDepartments());
-
-            Task.Run(() => GetProductUnits());
+            _taxService = taxService;
+            _unitSaleService = unitSaleService;
 
             //List
-            Task.Run(() => GetTaxes());
+            Task.Run(GetTaxes);
+
+            //Pickers
+            Task.Run(GetUnitsSale);
+            Task.Run(GetProductUnits);
+            Task.Run(GetDepartments);
 
             //Commands
             OpenCameraCommand = new Command(async () => await OnOpenCameraCommand());
             OpenBarCodeCommand = new Command(async () => await OnOpenBarCodeCommand());
-            CreateProductCommand = new Command(async () => await OnCreateProductCommand());
-
-            //Initialize
+            SaveProductCommand = new Command(async () => await OnSaveProductCommand());
+            DeleteProductCommand = new Command(async () => await OnDeleteProductCommand());
+            
             Initialize();
+        }
 
+        private async Task OnDeleteProductCommand()
+        {
+            var answer = await Application
+                .Current
+                .MainPage
+                .DisplayAlert("Atención!",
+                    "¿Estas seguro de borrar el producto?", "Si", "No");
+            
+            if (answer)
+            {
+                var httpResponseMessage = await _productsService.Delete(ProductId.ToString());
+                
+                var respuesta = await httpResponseMessage.Content.ReadAsStringAsync();
+            
+                if (httpResponseMessage.StatusCode!=HttpStatusCode.OK)
+                {
+                    var errorApi = JsonConvert.DeserializeObject<ApiResponse>(respuesta);
+                    await App.Current.MainPage.DisplayAlert(
+                        "OnDeleteProductCommand", 
+                        errorApi.Message, 
+                        "Ok");
+                }
+                else
+                {
+                    await App.Current.MainPage.DisplayAlert(
+                        "Elimina producto", 
+                        $"Se ha elimindo correctamente el Producto {Description}", 
+                        "Ok");
+
+                    await _navigationService.GoBackAsync();
+                }
+            }
+        }
+
+        private async Task GetUnitsSale()
+        {
+            var httpResponseMessage = await _unitSaleService.Get(new GetUnitsSaleCommand());
+            
+            var respuesta = await httpResponseMessage.Content.ReadAsStringAsync();
+
+            if (httpResponseMessage.StatusCode!= HttpStatusCode.OK)
+            {
+                var errorApi = JsonConvert.DeserializeObject<ApiResponse>(respuesta);
+                await Application.Current.MainPage.DisplayAlert(
+                    "GetUnitsSale", errorApi.Message, "ok");
+                
+            }
+            var getUnitsSaleResponse = JsonConvert.DeserializeObject<GetUnitsSaleResponse>(respuesta);
+
+            if (getUnitsSaleResponse != null)
+                UnitsSale = new ObservableCollection<UnitSale>(getUnitsSaleResponse.Data);
         }
 
         private async Task GetTaxes()
         {
-            // GetTaxesResult result = await _taxesService.GetWhere(new GetTaxesFilter { 
-            //
-            // });
-            //
-            // if (result.IsValid)
-            // {
-            //     Taxes = new ObservableCollection<API.Entities.Taxes>(result.Taxes);
-            // }
+            var httpResponseMessage = await _taxService.Get(new GetTaxCommand());
+            
+            var respuesta = await httpResponseMessage.Content.ReadAsStringAsync();
+
+            if (httpResponseMessage.StatusCode!= HttpStatusCode.OK)
+            {
+                var errorApi = JsonConvert.DeserializeObject<ApiResponse>(respuesta);
+                await Application.Current.MainPage.DisplayAlert(
+                    "GetTaxes", errorApi.Message, "ok");
+                
+            }
+            var getTaxesResponse = JsonConvert.DeserializeObject<GetTaxesResponse>(respuesta);
+
+            if (getTaxesResponse != null)
+                Taxes = new ObservableCollection<Tax>(getTaxesResponse.Data);
         }
 
         #region Private Methods
-        private async Task OnCreateProductCommand()
+        private async Task OnSaveProductCommand()
         {
-            
+            if (ProductId==Guid.Empty)
+            {
+                await CreateProduct();
+            }
+            else
+            {
+                
+            }
+
+        }
+
+        private async Task CreateProduct()
+        {
             var httpResponseMessage =await _productsService.Create(new CreateProductCommand
             {
                 Photo = new CreateProductPhotoCommand
@@ -323,14 +387,17 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Operations.Products
                     Description = Description,
                     Price = Price,
                     Cost = Cost,
-                    FollowInventory = SwitchFollowInventory,
-                    ProductSaleUnitId = "a6013276-7df0-44ed-9685-81ac3489af81"
+                    FollowInventory = false,
+                    UnitSaleId = _selectedUnitSale.UnitSaleId.ToString(),
+                    TaxesIds = Taxes
+                        .Where(t => t.Active == true)
+                        .Select(x => x.TaxId).ToList()
                 },
                 Organization = new CreateProductOrganizationCommand
                 {
-                    DepartmentId = "6bbec42b-9471-4b58-9188-10e80c8b6d48",
-                    CategoryId = "d241c704-6fe3-4019-83a9-8af13deaed2d",
-                    SubCategoryId = "4ec243d1-4550-4936-9169-621cf720b5b9",
+                    DepartmentId = _selectedDepartment.DepartmentId.ToString(),
+                    CategoryId = _selectedCategory.CategoryId.ToString(),
+                    SubCategoryId = _selectedSubCategory.SubCategoryId.ToString(),
                 }
             });
             
@@ -348,9 +415,8 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Operations.Products
                 Color.Green, 
                 "Crea producto",
                 string.Format("Se ha creado correctamente el producto {0}",Description));
-            
         }
-        
+
 
         private async Task GetProductUnits()
         {
@@ -507,40 +573,45 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Operations.Products
 
         public async void OnNavigatedTo(INavigationParameters parameters)
         {
-            ProductsId = parameters.GetValue<Guid>("productsId");
+            ProductId = parameters.GetValue<Guid>("productId");
 
-            if (ProductsId !=Guid.Empty)
+            if (ProductId !=Guid.Empty)
             {
-                await GetProduct(ProductsId.Value);
+                await GetProduct(ProductId);
             }
         }
 
         public async Task GetProduct(Guid productsId) 
         {
-            // GetProductsResult result = await _productsService
-            //                                  .Get(new GetProductsFilter
-            //                                 {
-            //                                    ProductsId = productsId
-            //                                  });
-            //
-            // if (result.IsValid)
-            // {
-            //     API.Entities.Products product = result.Products.FirstOrDefault();
-            //
-            //     var bytes = Convert.FromBase64String(product.ProductsPhotos.Base64);
-            //     ProductImageSource = ImageSource.FromStream(() => new MemoryStream(bytes));
-            //
-            //     SKU = product.SKU;
-            //     BarCode = product.Barcode;
-            //     Description = product.Description;
-            //     SelectedProductCategory = ProductCategories
-            //                               .SingleOrDefault(x => x.ProductCategoriesId == product.ProductCategoriesId);
-            //     SelectedProductUnit = ProductUnits
-            //                           .SingleOrDefault(x => x.ProductUnitsId == product.ProductUnitsId);
-            //
-            //     Price = product.Price;
-            //     Cost = product.Cost;
-            // }
+            var httpResponseMessage= await _productsService.Get(new GetProductsCommand()
+            {
+                ProductId = productsId.ToString()
+            });
+          
+            var respuesta = await httpResponseMessage.Content.ReadAsStringAsync();
+          
+            if (httpResponseMessage.StatusCode != HttpStatusCode.OK)
+            {
+                var errorApi = JsonConvert.DeserializeObject<ApiResponse>(respuesta);
+                await App.Current.MainPage.DisplayAlert("GetProduct", errorApi.Message, "Ok");
+            }
+          
+            var getProductsResponse = JsonConvert.DeserializeObject<GetProductsResponse>(respuesta);
+            if (getProductsResponse != null)
+            {
+                var product = getProductsResponse.Data.FirstOrDefault();
+                if (product != null)
+                {
+                    var bytes = Convert.FromBase64String(product.Image);
+                    ProductImageSource = ImageSource.FromStream(() => new MemoryStream(bytes));
+
+                    AlternativeKey = product.AlternativeKey;
+                    BarCode = product.BarCorde;
+                    Description = product.Description;
+                    Price = product.Price;
+                    Cost = product.Cost;
+                }
+            }
         }
         
         

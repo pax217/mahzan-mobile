@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="defaultdb@mahzan-db-development-do-user-11257629-0.b.db.ondigitalocean.com" uuid="f3dde8a2-374c-438f-8e7a-d24f3d932b65">
+    <data-source source="LOCAL" name="mahzan-db-development" uuid="a5ca728a-4799-4097-8fbf-784daf05e524">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>

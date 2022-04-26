@@ -51,6 +51,7 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings.Taxes
                 }
             }
         }
+        
         private bool _isRefreshing;
         public bool IsRefreshing
         {

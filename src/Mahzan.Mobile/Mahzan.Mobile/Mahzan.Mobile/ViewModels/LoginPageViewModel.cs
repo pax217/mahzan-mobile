@@ -58,7 +58,7 @@ public class LoginPageViewModel : BindableBase, INavigationAware
 
         public async Task OnLogIn()
         {
-            var httpResponseMessage= await _userService.LogIn(UserName, Password);
+            var httpResponseMessage= await _userService.LogIn(UserName.Trim(), Password);
             
             var respuesta = await httpResponseMessage.Content.ReadAsStringAsync();
 

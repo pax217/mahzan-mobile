@@ -10,9 +10,9 @@ using Xamarin.Forms.Xaml;
 namespace Mahzan.Mobile.Views.Administrator.Operations.Products
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class AddProductPage : ContentPage
+    public partial class AdminProductPage : TabbedPage
     {
-        public AddProductPage()
+        public AdminProductPage()
         {
             InitializeComponent();
         }

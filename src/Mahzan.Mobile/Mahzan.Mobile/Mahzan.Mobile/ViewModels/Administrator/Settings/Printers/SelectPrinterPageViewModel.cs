@@ -157,7 +157,7 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings.Printers
         /// </summary>
         async Task BindDeviceList()
         {
-            //Busca si el dispositivo fue previamnete configurato
+            //Busca si el dispositivo fue previamnete configurado
 
             List<BluetoothDevice> bluetoothDevice = await _bluetoothDeviceRepository
                                                     .Get();
@@ -167,7 +167,7 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings.Printers
                 SelectedDevice = bluetoothDevice.FirstOrDefault().DeviceName;
             }
             
-
+            
             var list = _blueToothService.GetDeviceList();
             DeviceList.Clear();
             foreach (var item in list)

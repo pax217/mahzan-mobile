@@ -186,7 +186,7 @@
         <AndroidResource Include="Resources\drawable\stores_background.png">
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </AndroidResource>
-        <AndroidResource Include="Resources\drawable\stores_inventory_background.png">
+        <AndroidResource Include="Resources\drawable\background_product_organization.png">
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </AndroidResource>
         <AndroidResource Include="Resources\drawable\store_background.png">

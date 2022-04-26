@@ -6,16 +6,16 @@
              xmlns:behaviors="clr-namespace:Mahzan.Mobile.Behaviors;assembly=Mahzan.Mobile"
              xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
-             x:Class="Mahzan.Mobile.Views.Administrator.Settings.Taxes.AdminTaxPage">
+             x:Class="Mahzan.Mobile.Views.Administrator.Settings.UnitsSale.AdminUnitSalePage">
     <ContentPage.ToolbarItems>
         <ToolbarItem IconImageSource="icon_delete.png"
-                     Command="{Binding DeleteTaxCommand}">
+                     Command="{Binding DeleteUnitSaleCommand}">
         </ToolbarItem>
         <ToolbarItem IconImageSource="icon_save.png"
-                     Command="{Binding SaveTaxCommand}">
+                     Command="{Binding SaveUnitSaleCommand}">
         </ToolbarItem>
     </ContentPage.ToolbarItems>
-    <ContentPage.Resources>
+        <ContentPage.Resources>
         <behaviors:BooleanToObjectConverter x:Key="boolToStyleImage"
                                             x:TypeArguments="Style">
             <behaviors:BooleanToObjectConverter.FalseObject>
@@ -41,8 +41,8 @@
             <Setter Property="FontAttributes" Value="Italic" />
         </Style>
                 
-        <!--Name-->
-        <behaviors:BooleanToObjectConverter x:Key="boolToStyleName"
+        <!--Abbreviation-->
+        <behaviors:BooleanToObjectConverter x:Key="boolToStyleAbbreviation"
                                             x:TypeArguments="Style">
             <behaviors:BooleanToObjectConverter.FalseObject>
                 <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
@@ -59,10 +59,10 @@
                 </Style>
             </behaviors:BooleanToObjectConverter.TrueObject>
         </behaviors:BooleanToObjectConverter>
-        <!--/Name-->
+        <!--/Abbreviation-->
         
-        <!--Name-->
-        <behaviors:BooleanToObjectConverter x:Key="boolToStylePercentage"
+        <!--Description-->
+        <behaviors:BooleanToObjectConverter x:Key="boolToStyleDescription"
                                             x:TypeArguments="Style">
             <behaviors:BooleanToObjectConverter.FalseObject>
                 <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
@@ -79,7 +79,8 @@
                 </Style>
             </behaviors:BooleanToObjectConverter.TrueObject>
         </behaviors:BooleanToObjectConverter>
-        <!--/Name-->
+        <!--/Description-->
+        
         
     </ContentPage.Resources>
     <ContentPage.Content>
@@ -92,7 +93,7 @@
                     </Grid.RowDefinitions>
                     <forms:CachedImage
                         Grid.Row="0"
-                        Source="background_taxes.png"
+                        Source="background_units.png"
                         HorizontalOptions="FillAndExpand"
                         VerticalOptions="StartAndExpand"
                         CacheType="Memory"
@@ -124,59 +125,57 @@
                             </Grid.ColumnDefinitions>
                             <Label Grid.Row="0"
                                    Grid.ColumnSpan="3"
-                                   Text="Detalle de Impuesto"
+                                   Text="Detalle Unidad de Venta"
                                    HorizontalTextAlignment="Center"
                                    FontSize="18">
                             </Label>
-                            <!-- Name-->
+                            <!-- Abbreviation-->
                             <Entry Grid.Row="1"
                                    Grid.Column="1"
-                                   Placeholder="* Nombre"
+                                   Placeholder="* Abreviación"
                                    Keyboard="Text"
-                                   Text="{Binding Name, Mode=TwoWay}">
+                                   Text="{Binding Abbreviation, Mode=TwoWay}">
                                 <Entry.Behaviors>
-                                    <behaviors:NotEmptyValidatorBehavior x:Name="NameValidator" />
+                                    <behaviors:NotEmptyValidatorBehavior x:Name="AbbreviationValidator" />
                                 </Entry.Behaviors>
                             </Entry>
                             <Image Grid.Row="1" 
                                    Grid.Column="2" 
-                                   x:Name="NameSuccessErrorImage"
-                                   Style="{Binding Source={x:Reference NameValidator}, 
+                                   x:Name="AbbreviationSuccessErrorImage"
+                                   Style="{Binding Source={x:Reference AbbreviationValidator}, 
                                    Path=IsValid, 
                                    Converter={StaticResource boolToStyleImage}}"/>
                             <Label Grid.Row="2" 
                                    Grid.Column="1" 
-                                   Style="{Binding Source={x:Reference NameValidator}, 
+                                   Style="{Binding Source={x:Reference AbbreviationValidator}, 
                                    Path=IsValid, 
-                                   Converter={StaticResource boolToStyleName}}" 
+                                   Converter={StaticResource boolToStyleAbbreviation}}" 
                                    FontSize="16"/>
-                            <!--/Name-->
+                            <!--/Abbreviation-->
                             
-                            <!-- Percentage-->
+                            <!-- Description-->
                             <Entry Grid.Row="3"
                                    Grid.Column="1"
-                                   Placeholder="* Porcentaje"
-                                   Keyboard="Numeric"
-                                   MaxLength="5"
-                                   Text="{Binding Percentage, Mode=TwoWay}">
+                                   Placeholder="* Descripción"
+                                   Keyboard="Text"
+                                   Text="{Binding Description, Mode=TwoWay}">
                                 <Entry.Behaviors>
-                                    <behaviors:DecimalValidatorBehavior x:Name="PercentageValidator" />
-                                    <behaviors:MaskedBehavior Mask="XX.XX" />
+                                    <behaviors:NotEmptyValidatorBehavior x:Name="DescriptionValidator" />
                                 </Entry.Behaviors>
                             </Entry>
                             <Image Grid.Row="3" 
                                    Grid.Column="2" 
-                                   x:Name="PercetageSuccessErrorImage"
-                                   Style="{Binding Source={x:Reference PercentageValidator}, 
+                                   x:Name="DescriptionSuccessErrorImage"
+                                   Style="{Binding Source={x:Reference DescriptionValidator}, 
                                    Path=IsValid, 
                                    Converter={StaticResource boolToStyleImage}}"/>
                             <Label Grid.Row="4" 
                                    Grid.Column="1" 
-                                   Style="{Binding Source={x:Reference PercentageValidator}, 
+                                   Style="{Binding Source={x:Reference DescriptionValidator}, 
                                    Path=IsValid, 
-                                   Converter={StaticResource boolToStylePercentage}}" 
+                                   Converter={StaticResource boolToStyleDescription}}" 
                                    FontSize="16"/>
-                            <!--/Percentage-->
+                            <!--/Description-->
                         </Grid>
                     </Frame>
                 </Grid>
