@@ -54,6 +54,12 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings
                 case "Impuestos":
                     _navigationService.NavigateAsync("ListTaxesPage");
                     break;
+                case "Puntos de Venta":
+                    _navigationService.NavigateAsync("ListPointsSalePage");
+                    break;
+                case "Empleados":
+                    _navigationService.NavigateAsync("ListEmployeesPage");
+                    break;
                 case "Impresora":
                     _navigationService.NavigateAsync("SelectPrinterPage");
                     break;
@@ -97,6 +103,14 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings
                 new SettingsOptions()
                 {
                     Option ="Impuestos",OptionDetail="Administra los impuestos de tus productos."
+                },
+                new SettingsOptions()
+                {
+                    Option ="Puntos de Venta",OptionDetail="Administra tus puntos de Venta."
+                },
+                new SettingsOptions()
+                {
+                    Option ="Empleados",OptionDetail="Crea, Modifica, Elimina, Asigna TPV."
                 },
                 new SettingsOptions()
                 {

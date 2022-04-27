@@ -2,6 +2,8 @@
 using Mahzan.Mobile.Services.CommercialBusiness;
 using Mahzan.Mobile.Services.Company;
 using Mahzan.Mobile.Services.Department;
+using Mahzan.Mobile.Services.Employee;
+using Mahzan.Mobile.Services.PointSale;
 using Mahzan.Mobile.Services.Product;
 using Mahzan.Mobile.Services.SHA1;
 using Mahzan.Mobile.Services.Store;
@@ -20,6 +22,8 @@ using Mahzan.Mobile.ViewModels.Administrator.Settings;
 using Mahzan.Mobile.ViewModels.Administrator.Settings.Categories;
 using Mahzan.Mobile.ViewModels.Administrator.Settings.Companies;
 using Mahzan.Mobile.ViewModels.Administrator.Settings.Departaments;
+using Mahzan.Mobile.ViewModels.Administrator.Settings.Employees;
+using Mahzan.Mobile.ViewModels.Administrator.Settings.PointsSale;
 using Mahzan.Mobile.ViewModels.Administrator.Settings.Printers;
 using Mahzan.Mobile.ViewModels.Administrator.Settings.Profile;
 using Mahzan.Mobile.ViewModels.Administrator.Settings.Stores;
@@ -35,6 +39,8 @@ using Mahzan.Mobile.Views.Administrator.Settings;
 using Mahzan.Mobile.Views.Administrator.Settings.Categories;
 using Mahzan.Mobile.Views.Administrator.Settings.Companies;
 using Mahzan.Mobile.Views.Administrator.Settings.Departments;
+using Mahzan.Mobile.Views.Administrator.Settings.Employees;
+using Mahzan.Mobile.Views.Administrator.Settings.PointsSale;
 using Mahzan.Mobile.Views.Administrator.Settings.Printers;
 using Mahzan.Mobile.Views.Administrator.Settings.Profile;
 using Mahzan.Mobile.Views.Administrator.Settings.Stores;
@@ -109,6 +115,9 @@ namespace Mahzan.Mobile
             containerRegistry.Register<ICommercialBusinessService, CommercialBusinessService>();
             containerRegistry.Register<ITaxService, TaxService>();
             containerRegistry.Register<IUnitSaleService, UnitSaleService>();
+            containerRegistry.Register<IPointSaleService, PointSaleService>();
+            containerRegistry.Register<IEmployeeService, EmployeeService>();
+            
         }
         
         protected void RegisterNavigationDependencies(IContainerRegistry containerRegistry)
@@ -170,6 +179,14 @@ namespace Mahzan.Mobile
             // Taxes
             containerRegistry.RegisterForNavigation<ListTaxesPage, ListTaxesPageViewModel>();
             containerRegistry.RegisterForNavigation<AdminTaxPage, AdminTaxPageViewModel>();
+            
+            // Points Sale
+            containerRegistry.RegisterForNavigation<ListPointsSalePage, ListPointsSalePageViewModel>();
+            containerRegistry.RegisterForNavigation<AdminPointSalePage, AdminPointSalePageViewModel>();
+            
+            // Employees
+            containerRegistry.RegisterForNavigation<ListEmployeesPage, ListEmployeesPageViewModel>();
+            containerRegistry.RegisterForNavigation<AdminEmployeePage, AdminEmployeePageViewModel>();
             
             // Printers
             containerRegistry.RegisterForNavigation<SelectPrinterPage, SelectPrinterPageViewModel>();

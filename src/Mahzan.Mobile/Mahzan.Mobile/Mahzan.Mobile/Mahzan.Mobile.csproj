@@ -35,10 +35,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="ViewModels\Administrator\Settings\Employees" />
-    </ItemGroup>
-
-    <ItemGroup>
       <Compile Update="Views\Administrator\Settings\Stores\AdminStorePage.xaml.cs">
         <DependentUpon>AdminStorePage.xaml</DependentUpon>
         <SubType>Code</SubType>
