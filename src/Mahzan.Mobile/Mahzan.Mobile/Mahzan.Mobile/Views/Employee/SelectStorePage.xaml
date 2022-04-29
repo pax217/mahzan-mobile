@@ -6,15 +6,8 @@
              xmlns:behaviors="clr-namespace:Mahzan.Mobile.Behaviors;assembly=Mahzan.Mobile"
              xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
-             x:Class="Mahzan.Mobile.Views.Administrator.Settings.PointsSale.AdminPointSalePage">
-    <ContentPage.ToolbarItems>
-        <ToolbarItem IconImageSource="icon_delete.png"
-                     Command="{Binding DeletePointSaleCommand}">
-        </ToolbarItem>
-        <ToolbarItem IconImageSource="icon_save.png"
-                     Command="{Binding SavePointSaleCommand}">
-        </ToolbarItem>
-    </ContentPage.ToolbarItems>
+             x:Class="Mahzan.Mobile.Views.Employee.SelectStorePage"
+             Title="Tiendas">
     <ContentPage.Resources>
         <behaviors:BooleanToObjectConverter x:Key="boolToStyleImage"
                                             x:TypeArguments="Style">
@@ -32,7 +25,6 @@
                 </Style>
             </behaviors:BooleanToObjectConverter.TrueObject>
         </behaviors:BooleanToObjectConverter>
-
         <Style x:Key="baseStyle"
                TargetType="Label">
             <Setter Property="XAlign" Value="Start" />
@@ -60,27 +52,6 @@
             </behaviors:StringToObjectConverter.TrueObject>
         </behaviors:StringToObjectConverter>
         <!--/Picker Stores-->
-                
-        <!--Name-->
-        <behaviors:BooleanToObjectConverter x:Key="boolToStyleName"
-                                            x:TypeArguments="Style">
-            <behaviors:BooleanToObjectConverter.FalseObject>
-                <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
-                    <Setter Property="TextColor" Value="#F44336" />
-                    <Setter Property="Text" Value="requerido" />
-                    <Setter Property="FontSize" Value="5" />
-                </Style>
-            </behaviors:BooleanToObjectConverter.FalseObject>
-
-            <behaviors:BooleanToObjectConverter.TrueObject>
-                <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
-                    <Setter Property="TextColor" Value="#4CAF50" />
-                    <Setter Property="Text" Value="correcto" />
-                </Style>
-            </behaviors:BooleanToObjectConverter.TrueObject>
-        </behaviors:BooleanToObjectConverter>
-        <!--/Name-->
-        
     </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout>
@@ -92,7 +63,7 @@
                     </Grid.RowDefinitions>
                     <forms:CachedImage
                         Grid.Row="0"
-                        Source="background_points_sale.png"
+                        Source="stores_background.png"
                         HorizontalOptions="FillAndExpand"
                         VerticalOptions="StartAndExpand"
                         CacheType="Memory"
@@ -108,14 +79,6 @@
                                 <RowDefinition Height="Auto"></RowDefinition>
                                 <RowDefinition Height="Auto"></RowDefinition>
                                 <RowDefinition Height="Auto"></RowDefinition>
-                                <RowDefinition Height="Auto"></RowDefinition>
-                                <RowDefinition Height="Auto"></RowDefinition>
-                                <RowDefinition Height="Auto"></RowDefinition>
-                                <RowDefinition Height="Auto"></RowDefinition>
-                                <RowDefinition Height="Auto"></RowDefinition>
-                                <RowDefinition Height="Auto"></RowDefinition>
-                                <RowDefinition Height="Auto"></RowDefinition>
-                                <RowDefinition Height="Auto"></RowDefinition>
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
@@ -124,14 +87,14 @@
                             </Grid.ColumnDefinitions>
                             <Label Grid.Row="0"
                                    Grid.ColumnSpan="3"
-                                   Text="Detalle Punto de Venta"
+                                   Text="Tiendas"
                                    HorizontalTextAlignment="Center"
                                    FontSize="18">
                             </Label>
                             
                             <!-- Stores-->
                             <Picker Grid.Row="1"
-                                    Grid.Column="1"
+                                    Grid.ColumnSpan="3"
                                     Title="- Tiendas -"
                                     ItemsSource="{Binding Stores, Mode=TwoWay}" 
                                     ItemDisplayBinding="{Binding Name, Mode=TwoWay}"
@@ -146,41 +109,7 @@
                                    Path=SelectedItem, 
                                    Converter={StaticResource boolToStyleStores}}" 
                                    FontSize="16"/>
-                            <!-- /Departments-->
-                            
-                            <!-- Code-->
-                            <Entry Grid.Row="3"
-                                   Grid.Column="1"
-                                   Placeholder="Code"
-                                   Keyboard="Text"
-                                   Text="{Binding Code, Mode=TwoWay}">
-
-                            </Entry>
-                            <!--/Code-->
-                            
-                            <!-- Name-->
-                            <Entry Grid.Row="4"
-                                   Grid.Column="1"
-                                   Placeholder="* Nombre"
-                                   Keyboard="Text"
-                                   Text="{Binding Name, Mode=TwoWay}">
-                                <Entry.Behaviors>
-                                    <behaviors:NotEmptyValidatorBehavior x:Name="NameValidator" />
-                                </Entry.Behaviors>
-                            </Entry>
-                            <Image Grid.Row="4" 
-                                   Grid.Column="2" 
-                                   x:Name="NameSuccessErrorImage"
-                                   Style="{Binding Source={x:Reference NameValidator}, 
-                                   Path=IsValid, 
-                                   Converter={StaticResource boolToStyleImage}}"/>
-                            <Label Grid.Row="5" 
-                                   Grid.Column="1" 
-                                   Style="{Binding Source={x:Reference NameValidator}, 
-                                   Path=IsValid, 
-                                   Converter={StaticResource boolToStyleName}}" 
-                                   FontSize="16"/>
-                            <!--/Name-->
+                            <!-- /Stores-->
                         </Grid>
                     </Frame>
                 </Grid>

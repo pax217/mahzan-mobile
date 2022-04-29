@@ -31,6 +31,7 @@ using Mahzan.Mobile.ViewModels.Administrator.Settings.SubCategories;
 using Mahzan.Mobile.ViewModels.Administrator.Settings.Taxes;
 using Mahzan.Mobile.ViewModels.Administrator.Settings.Tickets;
 using Mahzan.Mobile.ViewModels.Administrator.Settings.UnitsSale;
+using Mahzan.Mobile.ViewModels.Employee;
 using Mahzan.Mobile.Views;
 using Mahzan.Mobile.Views.Administrator;
 using Mahzan.Mobile.Views.Administrator.Operations;
@@ -48,6 +49,7 @@ using Mahzan.Mobile.Views.Administrator.Settings.SubCategories;
 using Mahzan.Mobile.Views.Administrator.Settings.Taxes;
 using Mahzan.Mobile.Views.Administrator.Settings.Tickets;
 using Mahzan.Mobile.Views.Administrator.Settings.UnitsSale;
+using Mahzan.Mobile.Views.Employee;
 using Prism;
 using Prism.Ioc;
 using Xamarin.Forms;
@@ -132,6 +134,8 @@ namespace Mahzan.Mobile
             //Administrator
             RegisterAdministratorSettingsNavigation(containerRegistry);
             
+            //Employee
+            RegisterAdministratorEmployeeNavigation(containerRegistry);
         }
 
         protected void RegisterAdministratorSettingsNavigation(IContainerRegistry containerRegistry)
@@ -144,6 +148,16 @@ namespace Mahzan.Mobile
 
             // Operations
             RegisterAdministratorOperationsCompaniesNavigation(containerRegistry);
+            
+        }
+        protected void RegisterAdministratorEmployeeNavigation(IContainerRegistry containerRegistry)
+        {
+            
+            containerRegistry.RegisterForNavigation<SelectStorePage, SelectStorePageViewModel>();
+            containerRegistry.RegisterForNavigation<SelectPointSalePage, SelectPointSalePageViewModel>();
+            
+            containerRegistry.RegisterForNavigation<EmployeeDashboardPage, EmployeeDashboardPageViewModel>();
+            
             
         }
 

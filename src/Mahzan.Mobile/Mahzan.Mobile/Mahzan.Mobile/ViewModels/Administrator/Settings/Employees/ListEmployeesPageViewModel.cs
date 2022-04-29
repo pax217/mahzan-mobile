@@ -2,6 +2,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Net;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Mahzan.Mobile.Commands.Employee;
 using Mahzan.Mobile.Models.Department;
 using Mahzan.Mobile.Models.Employee;
@@ -20,8 +21,8 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings.Employees
 
         private readonly IEmployeeService _employeeService;
         
-        private ObservableCollection<Employee> _listViewEmployees { get; set; }
-        public ObservableCollection<Employee> ListViewEmployees
+        private ObservableCollection<Models.Employee.Employee> _listViewEmployees { get; set; }
+        public ObservableCollection<Models.Employee.Employee> ListViewEmployees
         {
             get => _listViewEmployees;
             set
@@ -32,9 +33,9 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings.Employees
             }
         }
         
-        private Employee _selectedEmployee { get; set; }
+        private Models.Employee.Employee _selectedEmployee { get; set; }
 
-        public Employee SelectedEmployee
+        public Models.Employee.Employee SelectedEmployee
         {
             get
             {
@@ -49,6 +50,16 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings.Employees
                 }
             }
         }
+        
+        private bool _isRefreshing;
+        public bool IsRefreshing
+        {
+            get { return _isRefreshing; }
+            set { SetProperty(ref _isRefreshing, value); }
+        }
+        
+        public ICommand AddEmployeeCommand { get; set; }
+        public ICommand RefreshCommand { get; set; }
 
         public ListEmployeesPageViewModel(INavigationService navigationService, IEmployeeService employeeService)
         {
@@ -56,6 +67,24 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings.Employees
             _employeeService = employeeService;
 
             Task.Run(GetEmployees);
+            
+            RefreshCommand = new Command(async () => await OnRefreshCommand());
+            AddEmployeeCommand = new Command(async () => await OnAddEmployeeCommand());
+
+        }
+        
+        private async Task OnAddEmployeeCommand()
+        {
+            await _navigationService.NavigateAsync("AdminEmployeePage");
+        }
+        
+        private async Task OnRefreshCommand()
+        {
+            IsRefreshing = true;
+
+            await GetEmployees();
+            
+            IsRefreshing = false;
         }
         
         private void HandleSelectedEmployee()
@@ -82,7 +111,7 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings.Employees
             var getEmployeesResponse = JsonConvert.DeserializeObject<GetEmployeesResponse>(respuesta);
 
             if (getEmployeesResponse != null)
-                ListViewEmployees = new ObservableCollection<Employee>(getEmployeesResponse.Data);
+                ListViewEmployees = new ObservableCollection<Models.Employee.Employee>(getEmployeesResponse.Data);
   
         }
 

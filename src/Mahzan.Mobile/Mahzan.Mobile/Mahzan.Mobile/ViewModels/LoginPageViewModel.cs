@@ -1,3 +1,4 @@
+using System;
 using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -8,6 +9,7 @@ using Mahzan.Mobile.SqLite._Base;
 using Mahzan.Mobile.SqLite.Entities;
 using Mahzan.Mobile.Views;
 using Mahzan.Mobile.Views.Administrator;
+using Mahzan.Mobile.Views.Employee;
 using Newtonsoft.Json;
 using Prism.Mvvm;
 using Prism.Navigation;
@@ -82,7 +84,8 @@ public class LoginPageViewModel : BindableBase, INavigationAware
                     case "Administrator":
                         await _navigationService.NavigateAsync(nameof(MainPage) + "/" + nameof(NavigationPage) + "/" + nameof(AdministratorDashboardPage));
                         break;
-                    case "Cashier":
+                    case "Employee":
+                        await _navigationService.NavigateAsync(nameof(SelectStorePage));
                         break;
                 }
             }
@@ -101,12 +104,15 @@ public class LoginPageViewModel : BindableBase, INavigationAware
         private async Task SaveOnSqlite(LogInResponse logInResponse)
         {
             await _userRepository.DeleteAll();
+            
             await _userRepository.Insert(new User()
             {
+                UserId = logInResponse.UserId,
                 Token = logInResponse.Token,
                 Role = logInResponse.Role,
                 UserName = logInResponse.UserName
-            }); 
+            });
+
         }
 
         public void OnNavigatedFrom(INavigationParameters parameters)

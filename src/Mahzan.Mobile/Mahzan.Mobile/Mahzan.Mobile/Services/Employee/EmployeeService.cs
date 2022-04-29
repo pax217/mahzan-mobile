@@ -1,11 +1,13 @@
 using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using Mahzan.Mobile.Commands.Employee;
 using Mahzan.Mobile.Services._Base;
 using Mahzan.Mobile.SqLite._Base;
+using Newtonsoft.Json;
 
 namespace Mahzan.Mobile.Services.Employee
 {
@@ -46,9 +48,27 @@ namespace Mahzan.Mobile.Services.Employee
             return httpResponseMessage;
         }
 
-        public Task<HttpResponseMessage> Create(CreateEmployeeCommand command)
+        public async Task<HttpResponseMessage> Create(CreateEmployeeCommand command)
         {
-            throw new System.NotImplementedException();
+            HttpResponseMessage httpResponseMessage;
+            UriBuilder uriBuilder = new UriBuilder(UrlApi + "/v1/Employee/Create");
+            try
+            {
+                HttpClient httpClient = new HttpClient();
+
+                string jsonData = JsonConvert.SerializeObject(command);
+                StringContent stringContent = new StringContent(jsonData, UnicodeEncoding.UTF8, "application/json");
+
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
+                httpResponseMessage = await httpClient.PostAsync(uriBuilder.ToString(), stringContent);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            
+            return httpResponseMessage;
         }
 
         public Task<HttpResponseMessage> Delete(string employeeId)

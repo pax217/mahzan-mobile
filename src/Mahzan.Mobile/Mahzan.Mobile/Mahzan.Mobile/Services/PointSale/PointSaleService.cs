@@ -35,6 +35,11 @@ namespace Mahzan.Mobile.Services.PointSale
                     query["pointSale"] = command.PointSale.ToString();
                 }
                 
+                if (command.StoreId!=null)
+                {
+                    query["storeId"] = command.StoreId.ToString();
+                }
+                
                 uriBuilder.Query = query.ToString();
 
                 HttpClient httpClient = new HttpClient();

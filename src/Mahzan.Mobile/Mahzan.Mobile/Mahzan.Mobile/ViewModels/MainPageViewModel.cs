@@ -100,13 +100,16 @@ namespace Mahzan.Mobile.ViewModels
 
             Role = aspNetUsers.FirstOrDefault().Role;
             UserName = aspNetUsers.FirstOrDefault().UserName;
-            // StoreName = aspNetUsers.FirstOrDefault().StoreName;
-            // PontOfSale = aspNetUsers.FirstOrDefault().PointOfSaleName;
+            StoreName = aspNetUsers.FirstOrDefault().StoreName;
+            PontOfSale = aspNetUsers.FirstOrDefault().PointSaleName;
 
             switch (aspNetUsers.FirstOrDefault().Role)
             {
                 case "Administrator":
                     MenuItems = BuildMenuMember();
+                    break;
+                case "Employee":
+                    MenuItems = BuildMenuEmployee();
                     break;
                 default:
                     break;
@@ -129,13 +132,6 @@ namespace Mahzan.Mobile.ViewModels
         {
             ObservableCollection<MyMenuItem> result = new ObservableCollection<MyMenuItem>();
 
-            /*result.Add(new MyMenuItem()
-            {
-                Icon = "ic_viewa",
-                PageName = nameof(IndexSalesPage),
-                Title = "Ventas",
-            });*/
-            
             /*
              * Operaciones
              * Procesos
@@ -159,6 +155,37 @@ namespace Mahzan.Mobile.ViewModels
                 Title = "Configuración",
             });
 
+            result.Add(new MyMenuItem()
+            {
+                Icon = "menu_icon_exit",
+                PageName = nameof(LoginPage),
+                Title = "Salir",
+                ExitAplication = true
+            });
+
+            return result;
+        }
+        
+        private ObservableCollection<MyMenuItem> BuildMenuEmployee()
+        {
+            ObservableCollection<MyMenuItem> result = new ObservableCollection<MyMenuItem>();
+
+            /*
+             * Operaciones
+             * Procesos
+             * Consultas
+             * Reportes
+             * Configuración
+             */
+            
+            
+            result.Add(new MyMenuItem()
+            {
+                Icon = "menu_icon_operations",
+                PageName = nameof(Employee.Operations.IndexOperationsPageViewModel),
+                Title = "Operaciones",
+            });
+            
             result.Add(new MyMenuItem()
             {
                 Icon = "menu_icon_exit",

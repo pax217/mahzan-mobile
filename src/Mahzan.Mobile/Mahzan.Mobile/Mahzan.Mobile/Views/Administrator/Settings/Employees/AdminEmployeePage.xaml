@@ -1,13 +1,383 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Mahzan.Mobile.Views.Administrator.Settings.Employees.AdminEmployeePage">
-    <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Hello, world!"
-                   VerticalOptions="CenterAndExpand"
-                   HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
-    </ContentPage.Content>
-</ContentPage>
+             xmlns:prism="http://prismlibrary.com"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:behaviors="clr-namespace:Mahzan.Mobile.Behaviors;assembly=Mahzan.Mobile"
+             x:Class="Mahzan.Mobile.Views.Administrator.Settings.Employees.AdminEmployeePage"
+             Title="Empleado">
+    <TabbedPage.Resources>
+        <behaviors:BooleanToObjectConverter x:Key="boolToStyleImage"
+                                            x:TypeArguments="Style">
+            <behaviors:BooleanToObjectConverter.FalseObject>
+                <Style TargetType="Image">
+                    <Setter Property="HeightRequest" Value="20" />
+                    <Setter Property="Source" Value="{behaviors:ImageResource Mahzan.Mobile.Images.error.png}" />
+                </Style>
+            </behaviors:BooleanToObjectConverter.FalseObject>
+
+            <behaviors:BooleanToObjectConverter.TrueObject>
+                <Style TargetType="Image">
+                    <Setter Property="HeightRequest" Value="20" />
+                    <Setter Property="Source" Value="{behaviors:ImageResource Mahzan.Mobile.Images.success.png}" />
+                </Style>
+            </behaviors:BooleanToObjectConverter.TrueObject>
+        </behaviors:BooleanToObjectConverter>
+
+        <Style x:Key="baseStyle"
+               TargetType="Label">
+            <Setter Property="XAlign" Value="Start" />
+            <Setter Property="YAlign" Value="Center" />
+            <Setter Property="FontSize" Value="Micro" />
+            <Setter Property="FontAttributes" Value="Italic" />
+        </Style>
+                
+        <!--FirstName-->
+        <behaviors:BooleanToObjectConverter x:Key="boolToStyleFirstName"
+                                            x:TypeArguments="Style">
+            <behaviors:BooleanToObjectConverter.FalseObject>
+                <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+                    <Setter Property="TextColor" Value="#F44336" />
+                    <Setter Property="Text" Value="requerido" />
+                    <Setter Property="FontSize" Value="5" />
+                </Style>
+            </behaviors:BooleanToObjectConverter.FalseObject>
+
+            <behaviors:BooleanToObjectConverter.TrueObject>
+                <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+                    <Setter Property="TextColor" Value="#4CAF50" />
+                    <Setter Property="Text" Value="correcto" />
+                </Style>
+            </behaviors:BooleanToObjectConverter.TrueObject>
+        </behaviors:BooleanToObjectConverter>
+        <!--/FirstName-->
+        
+        <!--LastName-->
+        <behaviors:BooleanToObjectConverter x:Key="boolToStyleLastName"
+                                            x:TypeArguments="Style">
+            <behaviors:BooleanToObjectConverter.FalseObject>
+                <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+                    <Setter Property="TextColor" Value="#F44336" />
+                    <Setter Property="Text" Value="requerido" />
+                    <Setter Property="FontSize" Value="5" />
+                </Style>
+            </behaviors:BooleanToObjectConverter.FalseObject>
+
+            <behaviors:BooleanToObjectConverter.TrueObject>
+                <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+                    <Setter Property="TextColor" Value="#4CAF50" />
+                    <Setter Property="Text" Value="correcto" />
+                </Style>
+            </behaviors:BooleanToObjectConverter.TrueObject>
+        </behaviors:BooleanToObjectConverter>
+        <!--/LastName-->
+        
+        <!--SureName-->
+        <behaviors:BooleanToObjectConverter x:Key="boolToStyleSureName"
+                                            x:TypeArguments="Style">
+            <behaviors:BooleanToObjectConverter.FalseObject>
+                <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+                    <Setter Property="TextColor" Value="#F44336" />
+                    <Setter Property="Text" Value="requerido" />
+                    <Setter Property="FontSize" Value="5" />
+                </Style>
+            </behaviors:BooleanToObjectConverter.FalseObject>
+
+            <behaviors:BooleanToObjectConverter.TrueObject>
+                <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+                    <Setter Property="TextColor" Value="#4CAF50" />
+                    <Setter Property="Text" Value="correcto" />
+                </Style>
+            </behaviors:BooleanToObjectConverter.TrueObject>
+        </behaviors:BooleanToObjectConverter>
+        <!--/SureName-->
+        
+        <!--Email-->
+        <behaviors:BooleanToObjectConverter x:Key="boolToStyleEmail"
+                                            x:TypeArguments="Style">
+            <behaviors:BooleanToObjectConverter.FalseObject>
+                <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+                    <Setter Property="TextColor" Value="#F44336" />
+                    <Setter Property="Text" Value="requerido" />
+                    <Setter Property="FontSize" Value="5" />
+                </Style>
+            </behaviors:BooleanToObjectConverter.FalseObject>
+
+            <behaviors:BooleanToObjectConverter.TrueObject>
+                <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+                    <Setter Property="TextColor" Value="#4CAF50" />
+                    <Setter Property="Text" Value="correcto" />
+                </Style>
+            </behaviors:BooleanToObjectConverter.TrueObject>
+        </behaviors:BooleanToObjectConverter>
+        <!--/Email-->
+        
+        
+    </TabbedPage.Resources>
+    <TabbedPage.Children>
+        <ContentPage Title="Datos">
+            <ContentPage.Content>
+                <StackLayout>
+                    <ScrollView>
+                        <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <forms:CachedImage
+                        Grid.Row="0"
+                        Source="background_employees.png"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="StartAndExpand"
+                        CacheType="Memory"
+                        Aspect="AspectFill"
+                    >
+                    </forms:CachedImage>
+                    <Frame CornerRadius="10" 
+                           BackgroundColor="White" 
+                           Grid.RowSpan="2" 
+                           Margin="20,100,20,20">
+                        <Grid RowSpacing="10">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="20" />
+                            </Grid.ColumnDefinitions>
+                            
+                            <!--Code-->
+                            <Entry Grid.Row="0"
+                                   Grid.Column="1"
+                                   Placeholder="Codigo"
+                                   Keyboard="Text"
+                                   MaxLength="25"
+                                   Text="{Binding Code, Mode=TwoWay}">
+                            </Entry>
+                            <!--/Code-->
+                            
+                            <!--FirstName-->
+                            <Entry Grid.Row="1"
+                                   Grid.Column="1"
+                                   Placeholder="* Primer Nombre"
+                                   Keyboard="Text"
+                                   MaxLength="50"
+                                   Text="{Binding FirstName, Mode=TwoWay}">
+                                <Entry.Behaviors>
+                                    <behaviors:NotEmptyValidatorBehavior x:Name="FirstNameValidator" />
+                                </Entry.Behaviors>
+                            </Entry>
+                            <Image Grid.Row="1" 
+                                   Grid.Column="2" 
+                                   x:Name="FirstNameSuccessErrorImage"
+                                   Style="{Binding Source={x:Reference FirstNameValidator}, 
+                                   Path=IsValid, 
+                                   Converter={StaticResource boolToStyleImage}}"/>
+                            <Label Grid.Row="2" 
+                                   Grid.Column="1" 
+                                   Style="{Binding Source={x:Reference FirstNameValidator}, 
+                                   Path=IsValid, 
+                                   Converter={StaticResource boolToStyleFirstName}}" 
+                                   FontSize="16"/>
+                            <!--/FirstName-->
+                            
+                            <!--SecondName-->
+                            <Entry Grid.Row="3"
+                                   Grid.Column="1"
+                                   Placeholder="Segundo Nombre"
+                                   Keyboard="Text"
+                                   MaxLength="50"
+                                   Text="{Binding SecondName, Mode=TwoWay}">
+                                <Entry.Behaviors>
+                                    <behaviors:NotEmptyValidatorBehavior x:Name="SecondNameValidator" />
+                                </Entry.Behaviors>
+                            </Entry>
+                            <!--/SecondName-->
+                            
+                            <!--LastName-->
+                            <Entry Grid.Row="4"
+                                   Grid.Column="1"
+                                   Placeholder="* Apellido Paterno"
+                                   Keyboard="Text"
+                                   MaxLength="50"
+                                   Text="{Binding LastName, Mode=TwoWay}">
+                                <Entry.Behaviors>
+                                    <behaviors:NotEmptyValidatorBehavior x:Name="LastNameValidator" />
+                                </Entry.Behaviors>
+                            </Entry>
+                            <Image Grid.Row="4" 
+                                   Grid.Column="2" 
+                                   x:Name="LastNameSuccessErrorImage"
+                                   Style="{Binding Source={x:Reference LastNameValidator}, 
+                                   Path=IsValid, 
+                                   Converter={StaticResource boolToStyleImage}}"/>
+                            <Label Grid.Row="5" 
+                                   Grid.Column="1" 
+                                   Style="{Binding Source={x:Reference LastNameValidator}, 
+                                   Path=IsValid, 
+                                   Converter={StaticResource boolToStyleLastName}}" 
+                                   FontSize="16"/>
+                            <!--/LastName-->
+                            
+                            <!--SureName-->
+                            <Entry Grid.Row="6"
+                                   Grid.Column="1"
+                                   Placeholder="* Apellido Materno"
+                                   Keyboard="Email"
+                                   MaxLength="50"
+                                   Text="{Binding SureName, Mode=TwoWay}">
+                                <Entry.Behaviors>
+                                    <behaviors:NotEmptyValidatorBehavior x:Name="SureNameValidator" />
+                                </Entry.Behaviors>
+                            </Entry>
+                            
+                            <Image Grid.Row="6" 
+                                   Grid.Column="2" 
+                                   x:Name="SureSuccessErrorImage"
+                                   Style="{Binding Source={x:Reference SureNameValidator}, 
+                                   Path=IsValid, 
+                                   Converter={StaticResource boolToStyleImage}}"/>
+                            <Label Grid.Row="7" 
+                                   Grid.Column="1" 
+                                   Style="{Binding Source={x:Reference SureNameValidator}, 
+                                   Path=IsValid, 
+                                   Converter={StaticResource boolToStyleSureName}}" 
+                                   FontSize="16"/>
+                            <!--/SureName-->
+                            
+                            <!--Email-->
+                            <Entry Grid.Row="8"
+                                   Grid.Column="1"
+                                   Placeholder="* Email"
+                                   Keyboard="Text"
+                                   MaxLength="50"
+                                   TextTransform="Lowercase"
+                                   Text="{Binding Email, Mode=TwoWay}">
+                                <Entry.Behaviors>
+                                    <behaviors:EmailValidatorBehavior x:Name="EmailNameValidator" />
+                                </Entry.Behaviors>
+                            </Entry>
+                            <Image Grid.Row="8" 
+                                   Grid.Column="2" 
+                                   x:Name="EmailSuccessErrorImage"
+                                   Style="{Binding Source={x:Reference EmailNameValidator}, 
+                                   Path=IsValid, 
+                                   Converter={StaticResource boolToStyleImage}}"/>
+                            <Label Grid.Row="9" 
+                                   Grid.Column="1" 
+                                   Style="{Binding Source={x:Reference EmailNameValidator}, 
+                                   Path=IsValid, 
+                                   Converter={StaticResource boolToStyleEmail}}" 
+                                   FontSize="16"/>
+                            <!--/Email-->
+                            
+                            <!--Phone-->
+                            <Entry Grid.Row="10"
+                                   Grid.Column="1"
+                                   Placeholder="Phone"
+                                   Keyboard="Numeric"
+                                   Text="{Binding Phone, Mode=TwoWay}">
+                                <Entry.Behaviors>
+                                    <behaviors:MaskedBehavior Mask="+52 1 XX XXXX XXXX" />
+                                </Entry.Behaviors>
+                            </Entry>
+                            <!--/Phone-->
+                            
+                            <Button Grid.Row="11"
+                                    Grid.Column="1"
+                                    Text="Guardar"
+                                    BackgroundColor="SteelBlue"
+                                    BorderRadius="20"
+                                    TextColor="White"
+                                    FontAttributes="Bold"
+                                    Command="{Binding SaveEmployeeCommand}">
+                            </Button>
+                            
+                            <Button Grid.Row="12"
+                                    Grid.Column="1"
+                                    Text="Eliminar"
+                                    BackgroundColor="SteelBlue"
+                                    BorderRadius="20"
+                                    TextColor="White"
+                                    FontAttributes="Bold"
+                                    Command="{Binding DeleteEmployeeCommand}">
+                            </Button>
+                        </Grid>
+                    </Frame>
+                </Grid>
+                    </ScrollView>
+                </StackLayout>
+            </ContentPage.Content>
+        </ContentPage>
+        <ContentPage Title="Puntos de Venta">
+            <ContentPage.Content>
+                <StackLayout>
+                    <ScrollView>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <forms:CachedImage
+                                Grid.Row="0"
+                                Source="background_points_sale.png"
+                                HorizontalOptions="FillAndExpand"
+                                VerticalOptions="StartAndExpand"
+                                CacheType="Memory"
+                                Aspect="AspectFill"
+                            >
+                            </forms:CachedImage>
+                            <Frame CornerRadius="10" 
+                                   BackgroundColor="White" 
+                                   Grid.RowSpan="2" 
+                                   Margin="20,150,20,20">
+                                <Grid RowSpacing="10">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"></RowDefinition>
+                                        <RowDefinition Height="Auto"></RowDefinition>
+                                        <RowDefinition Height="Auto"></RowDefinition>
+                                        <RowDefinition Height="Auto"></RowDefinition>
+                                        <RowDefinition Height="Auto"></RowDefinition>
+                                        <RowDefinition Height="Auto"></RowDefinition>
+                                        <RowDefinition Height="Auto"></RowDefinition>
+                                        <RowDefinition Height="Auto"></RowDefinition>
+                                        <RowDefinition Height="Auto"></RowDefinition>
+                                        <RowDefinition Height="Auto"></RowDefinition>
+                                        <RowDefinition Height="Auto"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="20" />
+                                    </Grid.ColumnDefinitions>
+                                    <StackLayout Spacing="0"
+                                                 Grid.Row="0"
+                                                 VerticalOptions="Center">
+                                        <Label Text="¿Puede seleccionar puntos de venta?" />
+                                    </StackLayout>
+                                    <Switch Grid.Row="0"
+                                            Grid.Column="1"
+                                            >
+                                    </Switch>
+                                </Grid>
+                            </Frame>
+                        </Grid>
+                    </ScrollView>
+                </StackLayout>
+            </ContentPage.Content>
+        </ContentPage>
+    </TabbedPage.Children>
+</TabbedPage>

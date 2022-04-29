@@ -6,15 +6,7 @@
              xmlns:behaviors="clr-namespace:Mahzan.Mobile.Behaviors;assembly=Mahzan.Mobile"
              xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
-             x:Class="Mahzan.Mobile.Views.Administrator.Settings.PointsSale.AdminPointSalePage">
-    <ContentPage.ToolbarItems>
-        <ToolbarItem IconImageSource="icon_delete.png"
-                     Command="{Binding DeletePointSaleCommand}">
-        </ToolbarItem>
-        <ToolbarItem IconImageSource="icon_save.png"
-                     Command="{Binding SavePointSaleCommand}">
-        </ToolbarItem>
-    </ContentPage.ToolbarItems>
+             x:Class="Mahzan.Mobile.Views.Employee.SelectPointSalePage">
     <ContentPage.Resources>
         <behaviors:BooleanToObjectConverter x:Key="boolToStyleImage"
                                             x:TypeArguments="Style">
@@ -24,7 +16,7 @@
                     <Setter Property="Source" Value="{behaviors:ImageResource Mahzan.Mobile.Images.error.png}" />
                 </Style>
             </behaviors:BooleanToObjectConverter.FalseObject>
-
+    
             <behaviors:BooleanToObjectConverter.TrueObject>
                 <Style TargetType="Image">
                     <Setter Property="HeightRequest" Value="20" />
@@ -32,7 +24,7 @@
                 </Style>
             </behaviors:BooleanToObjectConverter.TrueObject>
         </behaviors:BooleanToObjectConverter>
-
+    
         <Style x:Key="baseStyle"
                TargetType="Label">
             <Setter Property="XAlign" Value="Start" />
@@ -40,9 +32,9 @@
             <Setter Property="FontSize" Value="Micro" />
             <Setter Property="FontAttributes" Value="Italic" />
         </Style>
-                
+        
         <!--Picker Departments-->
-        <behaviors:StringToObjectConverter x:Key="boolToStyleStores"
+        <behaviors:StringToObjectConverter x:Key="boolToStylePointsSale"
                                            x:TypeArguments="Style">
             <behaviors:StringToObjectConverter.FalseObject>
                 <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
@@ -51,7 +43,7 @@
                     <Setter Property="FontSize" Value="5" />
                 </Style>
             </behaviors:StringToObjectConverter.FalseObject>
-
+    
             <behaviors:StringToObjectConverter.TrueObject>
                 <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
                     <Setter Property="TextColor" Value="#4CAF50" />
@@ -59,28 +51,8 @@
                 </Style>
             </behaviors:StringToObjectConverter.TrueObject>
         </behaviors:StringToObjectConverter>
+    
         <!--/Picker Stores-->
-                
-        <!--Name-->
-        <behaviors:BooleanToObjectConverter x:Key="boolToStyleName"
-                                            x:TypeArguments="Style">
-            <behaviors:BooleanToObjectConverter.FalseObject>
-                <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
-                    <Setter Property="TextColor" Value="#F44336" />
-                    <Setter Property="Text" Value="requerido" />
-                    <Setter Property="FontSize" Value="5" />
-                </Style>
-            </behaviors:BooleanToObjectConverter.FalseObject>
-
-            <behaviors:BooleanToObjectConverter.TrueObject>
-                <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
-                    <Setter Property="TextColor" Value="#4CAF50" />
-                    <Setter Property="Text" Value="correcto" />
-                </Style>
-            </behaviors:BooleanToObjectConverter.TrueObject>
-        </behaviors:BooleanToObjectConverter>
-        <!--/Name-->
-        
     </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout>
@@ -124,63 +96,29 @@
                             </Grid.ColumnDefinitions>
                             <Label Grid.Row="0"
                                    Grid.ColumnSpan="3"
-                                   Text="Detalle Punto de Venta"
+                                   Text="Puntos de Venta"
                                    HorizontalTextAlignment="Center"
                                    FontSize="18">
                             </Label>
-                            
-                            <!-- Stores-->
+                            <!-- Points Sale-->
                             <Picker Grid.Row="1"
                                     Grid.Column="1"
-                                    Title="- Tiendas -"
-                                    ItemsSource="{Binding Stores, Mode=TwoWay}" 
+                                    Title="- Puntos de Venta -"
+                                    ItemsSource="{Binding PointsSale, Mode=TwoWay}"
                                     ItemDisplayBinding="{Binding Name, Mode=TwoWay}"
-                                    SelectedItem="{Binding SelectedStore, Mode=TwoWay}">
+                                    SelectedItem="{Binding SelectedPointsSale, Mode=TwoWay}">
                                 <Picker.Behaviors>
-                                    <behaviors:PickerBehavior x:Name="StoresValidator" />
+                                    <behaviors:PickerBehavior x:Name="PointsSaleValidator" />
                                 </Picker.Behaviors>
                             </Picker>
-                            <Label Grid.Row="2" 
-                                   Grid.Column="1" 
-                                   Style="{Binding Source={x:Reference StoresValidator}, 
-                                   Path=SelectedItem, 
-                                   Converter={StaticResource boolToStyleStores}}" 
-                                   FontSize="16"/>
-                            <!-- /Departments-->
-                            
-                            <!-- Code-->
-                            <Entry Grid.Row="3"
+                            <Label Grid.Row="2"
                                    Grid.Column="1"
-                                   Placeholder="Code"
-                                   Keyboard="Text"
-                                   Text="{Binding Code, Mode=TwoWay}">
-
-                            </Entry>
-                            <!--/Code-->
-                            
-                            <!-- Name-->
-                            <Entry Grid.Row="4"
-                                   Grid.Column="1"
-                                   Placeholder="* Nombre"
-                                   Keyboard="Text"
-                                   Text="{Binding Name, Mode=TwoWay}">
-                                <Entry.Behaviors>
-                                    <behaviors:NotEmptyValidatorBehavior x:Name="NameValidator" />
-                                </Entry.Behaviors>
-                            </Entry>
-                            <Image Grid.Row="4" 
-                                   Grid.Column="2" 
-                                   x:Name="NameSuccessErrorImage"
-                                   Style="{Binding Source={x:Reference NameValidator}, 
-                                   Path=IsValid, 
-                                   Converter={StaticResource boolToStyleImage}}"/>
-                            <Label Grid.Row="5" 
-                                   Grid.Column="1" 
-                                   Style="{Binding Source={x:Reference NameValidator}, 
-                                   Path=IsValid, 
-                                   Converter={StaticResource boolToStyleName}}" 
+                                   Style="{Binding Source={x:Reference PointsSaleValidator},
+                                   Path=SelectedItem,
+                                   Converter={StaticResource boolToStylePointsSale}}"
                                    FontSize="16"/>
-                            <!--/Name-->
+                            <!-- /Points Sale-->
+                            
                         </Grid>
                     </Frame>
                 </Grid>
