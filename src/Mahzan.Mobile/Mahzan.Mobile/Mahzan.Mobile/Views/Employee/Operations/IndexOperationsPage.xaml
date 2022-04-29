@@ -2,12 +2,56 @@
 
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="http://prismlibrary.com"
+             xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="Mahzan.Mobile.Views.Employee.Operations.IndexOperationsPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Hello, world!"
-                   VerticalOptions="CenterAndExpand"
-                   HorizontalOptions="CenterAndExpand" />
+            <ScrollView>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <forms:CachedImage
+                        Grid.Row="0"
+                        Source="background_operations.png"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="StartAndExpand"
+                        CacheType="Memory"
+                        Aspect="AspectFill"
+                    >
+                    </forms:CachedImage>
+                    <Frame CornerRadius="10" 
+                           BackgroundColor="White" 
+                           Grid.RowSpan="2" 
+                           Margin="20,150,20,20">
+                        <Grid RowSpacing="20">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="200"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Label Grid.Row="0"
+                                   Text="Menú de Operaciones"
+                                   HorizontalTextAlignment="Center"
+                                   FontSize="18">
+                            </Label>
+                            <ListView Grid.Row="1"
+                                      ItemsSource="{Binding ListOperationsOptionsItems}"
+                                      SelectedItem="{Binding SelectedOperationOptions}">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextCell Detail="{Binding OptionDetail}" 
+                                                  Text="{Binding Option}">
+                                        </TextCell>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </Grid>
+                    </Frame>
+                </Grid>
+            </ScrollView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

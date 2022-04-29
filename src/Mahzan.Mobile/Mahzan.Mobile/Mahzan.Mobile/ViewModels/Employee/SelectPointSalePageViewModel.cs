@@ -60,20 +60,20 @@ namespace Mahzan.Mobile.ViewModels.Employee
         
         private void HandleSelectedPointSale()
         {
-            Task.Run(()=> UpdateSelectedPointSale(_selectedPointsSale.StoreId, _selectedPointsSale.Name));
+            Task.Run(()=> UpdateSelectedPointSale(_selectedPointsSale));
             _navigationService.NavigateAsync(nameof(MainPage) + "/" + nameof(NavigationPage) + "/" + nameof(EmployeeDashboardPage));
         }
         
-        private async Task UpdateSelectedPointSale(Guid pointSaleId,
-            string pointSaleName)
+        private async Task UpdateSelectedPointSale(PointSale selectedPointSale)
         {
             var user = await _userRepository.Get();
             var userToUpdate = user.FirstOrDefault();
         
             if (userToUpdate != null)
             {
-                userToUpdate.PointSaleId = pointSaleId;
-                userToUpdate.PointSaleName = pointSaleName;
+                userToUpdate.PointSaleId = selectedPointSale.PointSaleId;
+                userToUpdate.PointSaleName = selectedPointSale.Name;
+                userToUpdate.State = selectedPointSale.State;
             }
         
             await _userRepository.Update(userToUpdate);

@@ -5,8 +5,9 @@ using Prism.Navigation;
 namespace Mahzan.Mobile.ViewModels.Administrator.Operations
 {
     public class IndexOperationsPageViewModel: ViewModelBase
-    {
-    private readonly INavigationService _navigationService;
+    { 
+        
+        private readonly INavigationService _navigationService;
 
         public ObservableCollection<OperationsOptions> ListOperationsOptionsItems { get; set; }
 

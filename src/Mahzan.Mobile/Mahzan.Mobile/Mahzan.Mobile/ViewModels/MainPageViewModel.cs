@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -6,9 +7,11 @@ using System.Threading.Tasks;
 using Mahzan.Mobile.Models.Menu;
 using Mahzan.Mobile.SqLite._Base;
 using Mahzan.Mobile.SqLite.Entities;
+using Mahzan.Mobile.ViewModels.Employee.Operations;
 using Mahzan.Mobile.Views;
 using Mahzan.Mobile.Views.Administrator.Operations;
 using Mahzan.Mobile.Views.Administrator.Settings;
+using Mahzan.Mobile.Views.Employee.Operations;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
@@ -77,6 +80,17 @@ namespace Mahzan.Mobile.ViewModels
             }
         }
         
+        private string _state { get; set; }
+        public string State 
+        {
+            get => _state;
+            set
+            {
+                _state = value;
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(State)));
+            }
+        }
+        
         public MainPageViewModel(
             INavigationService navigationService,
             IRepository<User> userRepository)
@@ -98,10 +112,11 @@ namespace Mahzan.Mobile.ViewModels
 
             List<User> aspNetUsers = await _userRepository.Get();
 
-            Role = aspNetUsers.FirstOrDefault().Role;
+            Role = ConvertUserRole(aspNetUsers.FirstOrDefault().Role);
             UserName = aspNetUsers.FirstOrDefault().UserName;
             StoreName = aspNetUsers.FirstOrDefault().StoreName;
             PontOfSale = aspNetUsers.FirstOrDefault().PointSaleName;
+            State = ConvertPointSaleState(aspNetUsers.FirstOrDefault().State);
 
             switch (aspNetUsers.FirstOrDefault().Role)
             {
@@ -144,7 +159,7 @@ namespace Mahzan.Mobile.ViewModels
             result.Add(new MyMenuItem()
             {
                 Icon = "menu_icon_operations",
-                PageName = nameof(IndexOperationsPage),
+                PageName = nameof(Views.Administrator.Operations.IndexOperationsPage),
                 Title = "Operaciones",
             });
 
@@ -182,8 +197,8 @@ namespace Mahzan.Mobile.ViewModels
             result.Add(new MyMenuItem()
             {
                 Icon = "menu_icon_operations",
-                PageName = nameof(Employee.Operations.IndexOperationsPageViewModel),
-                Title = "Operaciones",
+                PageName = nameof(Views.Employee.Operations.IndexOperationsPage),
+                Title = "Operaciónes",
             });
             
             result.Add(new MyMenuItem()
@@ -194,6 +209,40 @@ namespace Mahzan.Mobile.ViewModels
                 ExitAplication = true
             });
 
+            return result;
+        }
+        
+        private string ConvertUserRole(string role)
+        {
+            string result = String.Empty;
+
+            switch (@role)
+            {
+                case "Administrator":
+                    result = "Administrador";
+                    break;
+                case "Employee":
+                    result = "Empleado";
+                    break;
+            }
+            
+            return result;
+        }
+
+        private string ConvertPointSaleState(string state)
+        {
+            string result = String.Empty;
+
+            switch (@state)
+            {
+                case "CLOSED":
+                    result = "CERRADA";
+                    break;
+                case "OPEN":
+                    result = "ABIERTA";
+                    break;
+            }
+            
             return result;
         }
     }

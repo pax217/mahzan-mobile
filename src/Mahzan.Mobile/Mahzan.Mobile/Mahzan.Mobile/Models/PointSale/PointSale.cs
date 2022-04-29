@@ -10,6 +10,8 @@ namespace Mahzan.Mobile.Models.PointSale
         
         public string Name { get; set; }
         
+        public string State { get; set; }
+        
         public Guid StoreId { get; set; }
         
         public Guid MemberId { get; set; }

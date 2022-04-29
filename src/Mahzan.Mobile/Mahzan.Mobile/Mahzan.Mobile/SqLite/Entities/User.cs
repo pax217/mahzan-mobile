@@ -18,6 +18,8 @@ namespace Mahzan.Mobile.SqLite.Entities
         // Point Sale
         public Guid PointSaleId { get; set; }
         public string PointSaleName { get; set; }
+        
+        public string State { get; set; }
 
     }
 }

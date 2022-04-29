@@ -32,6 +32,8 @@ using Mahzan.Mobile.ViewModels.Administrator.Settings.Taxes;
 using Mahzan.Mobile.ViewModels.Administrator.Settings.Tickets;
 using Mahzan.Mobile.ViewModels.Administrator.Settings.UnitsSale;
 using Mahzan.Mobile.ViewModels.Employee;
+using Mahzan.Mobile.ViewModels.Employee.Operations;
+using Mahzan.Mobile.ViewModels.Employee.Operations.PointSaleState;
 using Mahzan.Mobile.Views;
 using Mahzan.Mobile.Views.Administrator;
 using Mahzan.Mobile.Views.Administrator.Operations;
@@ -50,6 +52,8 @@ using Mahzan.Mobile.Views.Administrator.Settings.Taxes;
 using Mahzan.Mobile.Views.Administrator.Settings.Tickets;
 using Mahzan.Mobile.Views.Administrator.Settings.UnitsSale;
 using Mahzan.Mobile.Views.Employee;
+using Mahzan.Mobile.Views.Employee.Operations;
+using Mahzan.Mobile.Views.Employee.Operations.PointSaleState;
 using Prism;
 using Prism.Ioc;
 using Xamarin.Forms;
@@ -158,6 +162,13 @@ namespace Mahzan.Mobile
             
             containerRegistry.RegisterForNavigation<EmployeeDashboardPage, EmployeeDashboardPageViewModel>();
             
+            // Operations
+            containerRegistry.RegisterForNavigation<
+                Views.Employee.Operations.IndexOperationsPage,
+            ViewModels.Employee.Operations.IndexOperationsPageViewModel>();
+            
+            containerRegistry.RegisterForNavigation<AdminPointSaleStatePage, AdminPointSaleStatePageViewModel>();
+
             
         }
 
@@ -215,7 +226,9 @@ namespace Mahzan.Mobile
         protected void RegisterAdministratorOperationsCompaniesNavigation(IContainerRegistry containerRegistry)
         {
             // Operations
-            containerRegistry.RegisterForNavigation<IndexOperationsPage, IndexOperationsPageViewModel>();
+            containerRegistry.RegisterForNavigation<
+                Views.Administrator.Operations.IndexOperationsPage,
+                ViewModels.Administrator.Operations.IndexOperationsPageViewModel>();
             
             // Poducts
             containerRegistry.RegisterForNavigation<ListProductsPage, ListProductsPageViewModel>();
