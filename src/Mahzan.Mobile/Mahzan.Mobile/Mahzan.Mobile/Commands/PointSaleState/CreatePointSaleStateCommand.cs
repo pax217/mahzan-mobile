@@ -1,6 +1,6 @@
 using System;
 
-namespace Mahzan.Mobile.Models.PointSaleState
+namespace Mahzan.Mobile.Commands.PointSaleState
 {
     public class CreatePointSaleStateCommand
     {

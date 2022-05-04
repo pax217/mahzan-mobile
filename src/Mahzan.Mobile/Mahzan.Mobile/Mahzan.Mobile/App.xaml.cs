@@ -5,6 +5,7 @@ using Mahzan.Mobile.Services.Department;
 using Mahzan.Mobile.Services.Employee;
 using Mahzan.Mobile.Services.PointSale;
 using Mahzan.Mobile.Services.PointSaleState;
+using Mahzan.Mobile.Services.Printer.PointSaleState;
 using Mahzan.Mobile.Services.Product;
 using Mahzan.Mobile.Services.SHA1;
 using Mahzan.Mobile.Services.Store;
@@ -125,6 +126,10 @@ namespace Mahzan.Mobile
             containerRegistry.Register<IPointSaleService, PointSaleService>();
             containerRegistry.Register<IEmployeeService, EmployeeService>();
             containerRegistry.Register<IPointSaleStateService, PointSaleStateService>();
+            
+            // Printer
+            containerRegistry.Register<IPrintPointSaleStateService, PrintPointSaleStateService>();
+
         }
         
         protected void RegisterNavigationDependencies(IContainerRegistry containerRegistry)

@@ -3,9 +3,11 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Mahzan.Mobile.Commands.PointSaleState;
 using Mahzan.Mobile.Models.PointSaleState;
 using Mahzan.Mobile.Models.Response;
 using Mahzan.Mobile.Services.PointSaleState;
+using Mahzan.Mobile.Services.Printer.PointSaleState;
 using Mahzan.Mobile.SqLite._Base;
 using Mahzan.Mobile.SqLite.Entities;
 using Newtonsoft.Json;
@@ -19,7 +21,12 @@ namespace Mahzan.Mobile.ViewModels.Employee.Operations.PointSaleState
     {
         private readonly INavigationService _navigationService;
         private readonly IPointSaleStateService _pointSaleStateService;
-        private readonly IRepository<User> _userRepository; 
+        private readonly IRepository<User> _userRepository;
+        private readonly IPrintPointSaleStateService _printPointSaleStateService;
+
+        private User _user;
+
+        private Guid PointSaleId; 
         
         private int _tenCents;
         public int TenCents
@@ -112,16 +119,83 @@ namespace Mahzan.Mobile.ViewModels.Employee.Operations.PointSaleState
             set => SetProperty(ref _oneThousand, value);
         }
 
-        public ICommand OpenPointSalestateCommand { get; set; }
+        public ICommand OpenPointSaleStateCommand { get; set; }
+        public ICommand PrintPointSaleStateCommand { get; set; }
+        
         public AdminPointSaleStatePageViewModel(
             INavigationService navigationService, 
-            IPointSaleStateService pointSaleStateService, IRepository<User> userRepository)
+            IPointSaleStateService pointSaleStateService, 
+            IRepository<User> userRepository, 
+            IPrintPointSaleStateService printPointSaleStateService)
         {
             _navigationService = navigationService;
             _pointSaleStateService = pointSaleStateService;
             _userRepository = userRepository;
+            _printPointSaleStateService = printPointSaleStateService;
 
-            OpenPointSalestateCommand = new Command(async () => await OnOpenPointSaleStateCommand());
+            OpenPointSaleStateCommand = new Command(async () => await OnOpenPointSaleStateCommand());
+            PrintPointSaleStateCommand = new Command(async () => await OnPrintPointSalestateCommand());
+
+            Task.Run(Initialize);
+        }
+
+        private async Task OnPrintPointSalestateCommand()
+        {
+            var getPointsSaleResponse = await GetPintSaleState(_user.PointSaleId);
+            if (getPointsSaleResponse != null)
+                await _printPointSaleStateService.PrintOpenPointSaleState(getPointsSaleResponse);
+        }
+
+        private async Task<GetPointSaleStateResponse> GetPintSaleState(Guid pointSaleId)
+        {
+            var httpResponseMessage = await _pointSaleStateService
+                .Get(new GetPointSaleStateCommand
+                {
+                    PointSaleId = _user.PointSaleId
+                });
+            
+            var response = await httpResponseMessage.Content.ReadAsStringAsync();
+            if (httpResponseMessage.StatusCode!= HttpStatusCode.OK)
+            {
+                var errorApi = JsonConvert.DeserializeObject<ApiResponse>(response);
+                await Application.Current.MainPage.DisplayAlert(
+                    "GetPointsSale", errorApi.Message, "ok");
+                
+                return new GetPointSaleStateResponse();
+            }
+            
+            return JsonConvert.DeserializeObject<GetPointSaleStateResponse>(response);
+        }
+
+        private async Task Initialize()
+        {
+            var users = await _userRepository.Get();
+            _user = users.FirstOrDefault();
+            
+            var getPointSaleStateResponse = await GetPintSaleState(PointSaleId);
+
+            if (getPointSaleStateResponse!=null)
+            {
+                var pointSaleState = getPointSaleStateResponse.Data.FirstOrDefault();
+
+                if (pointSaleState != null)
+                {
+                    TenCents = pointSaleState.Coins.TenCents;
+                    TwentyCents = pointSaleState.Coins.TwentyCents;
+                    FiftyCents = pointSaleState.Coins.FiftyCents;
+                    One = pointSaleState.Coins.One;
+                    Two = pointSaleState.Coins.Two;
+                    Five = pointSaleState.Coins.Five;
+                    Ten = pointSaleState.Coins.Ten;
+
+                    Twenty = pointSaleState.Bills.Twenty;
+                    Fifty = pointSaleState.Bills.Fifty;
+                    Hundred = pointSaleState.Bills.Hundred;
+                    TwoHundred = pointSaleState.Bills.TwoHundred;
+                    FiveHundred = pointSaleState.Bills.FiveHundred;
+                    OneThousand = pointSaleState.Bills.OneThousand;
+                }
+            }
         }
 
         private async Task OnOpenPointSaleStateCommand()
@@ -136,7 +210,7 @@ namespace Mahzan.Mobile.ViewModels.Employee.Operations.PointSaleState
             
             var httpResponseMessage = await _pointSaleStateService.Create(new CreatePointSaleStateCommand
             {
-                PointSaleId = user.PointSaleId,
+                PointSaleId = _user.PointSaleId,
                 Coins = new Coins
                 {
                     TenCents = TenCents,

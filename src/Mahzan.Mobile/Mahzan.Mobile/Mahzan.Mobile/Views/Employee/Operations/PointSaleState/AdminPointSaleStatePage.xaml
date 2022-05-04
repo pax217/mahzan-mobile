@@ -10,13 +10,13 @@
             Title="P. de Venta">
     <TabbedPage.ToolbarItems>
         <ToolbarItem Text="Imprimir"
-                     Command="{Binding PrintPointSalestateCommand}">
+                     Command="{Binding PrintPointSaleStateCommand}">
         </ToolbarItem>
         <ToolbarItem Text="Abrir"
-                     Command="{Binding OpenPointSalestateCommand}">
+                     Command="{Binding OpenPointSaleStateCommand}">
         </ToolbarItem>
         <ToolbarItem Text="Cerrar"
-                     Command="{Binding ClosePointSalestateCommand}">
+                     Command="{Binding ClosePointSaleStateCommand}">
         </ToolbarItem>
     </TabbedPage.ToolbarItems>
     <TabbedPage.Children>
