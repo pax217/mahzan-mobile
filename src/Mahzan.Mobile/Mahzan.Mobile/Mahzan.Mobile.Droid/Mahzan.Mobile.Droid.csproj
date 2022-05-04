@@ -77,6 +77,12 @@
         <None Include="Properties\AndroidManifest.xml" />
     </ItemGroup>
     <ItemGroup>
+        <AndroidResource Include="Resources\drawable\background_bills.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </AndroidResource>
+        <AndroidResource Include="Resources\drawable\background_coins.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </AndroidResource>
         <AndroidResource Include="Resources\drawable\background_employees.png">
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </AndroidResource>

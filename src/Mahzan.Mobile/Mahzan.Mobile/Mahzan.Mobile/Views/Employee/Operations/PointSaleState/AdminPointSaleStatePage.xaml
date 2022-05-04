@@ -1,13 +1,183 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Mahzan.Mobile.Views.Employee.Operations.PointSaleState.AdminPointSaleStatePage">
-    <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Hello, world!"
-                   VerticalOptions="CenterAndExpand"
-                   HorizontalOptions="CenterAndExpand" />
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:prism="http://prismlibrary.com"
+            xmlns:behaviors="clr-namespace:Mahzan.Mobile.Behaviors;assembly=Mahzan.Mobile"
+            xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+            prism:ViewModelLocator.AutowireViewModel="True"
+            x:Class="Mahzan.Mobile.Views.Employee.Operations.PointSaleState.AdminPointSaleStatePage"
+            Title="P. de Venta">
+    <TabbedPage.ToolbarItems>
+        <ToolbarItem Text="Imprimir"
+                     Command="{Binding PrintPointSalestateCommand}">
+        </ToolbarItem>
+        <ToolbarItem Text="Abrir"
+                     Command="{Binding OpenPointSalestateCommand}">
+        </ToolbarItem>
+        <ToolbarItem Text="Cerrar"
+                     Command="{Binding ClosePointSalestateCommand}">
+        </ToolbarItem>
+    </TabbedPage.ToolbarItems>
+    <TabbedPage.Children>
+        <ContentPage Title="Monedas">
+                        <StackLayout>
+                <ScrollView>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <forms:CachedImage
+                        Grid.Row="0"
+                        Source="background_coins.png"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="StartAndExpand"
+                        CacheType="Memory"
+                        Aspect="AspectFill"
+                    >
+                    </forms:CachedImage>
+                    <Frame CornerRadius="10" 
+                           BackgroundColor="White" 
+                           Grid.RowSpan="2" 
+                           Margin="20,150,20,20">
+                        <Grid RowSpacing="10">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Row="0"
+                                   Grid.ColumnSpan="3"
+                                   Text="Ingresa el número de billetes que tienes"
+                                   HorizontalTextAlignment="Center"
+                                   FontSize="12">
+                            </Label>
+                            
+                            <Label Grid.Column="0" Grid.Row="1" Text="$.10"/>
+                            <Entry Grid.Column="1" Grid.Row="1" 
+                                   Keyboard="Numeric" 
+                                   Text="{Binding TenCents, Mode=TwoWay}"/>
+                            
+                            <Label Grid.Column="0" Grid.Row="2" Text="$.20"/>
+                            <Entry Grid.Column="1" Grid.Row="2" Keyboard="Numeric" 
+                                   Text="{Binding TwentyCents, Mode=TwoWay}"/>
+                            
+                            <Label Grid.Column="0" Grid.Row="3" Text="$.50"/>
+                            <Entry Grid.Column="1" Grid.Row="3" Keyboard="Numeric" 
+                                   Text="{Binding FiftyCents, Mode=TwoWay}"/>
+                            
+                            <Label Grid.Column="0" Grid.Row="4" Text="$1"/>
+                            <Entry Grid.Column="1" Grid.Row="4" Keyboard="Numeric" 
+                                   Text="{Binding One, Mode=TwoWay}"/>
+                            
+                            <Label Grid.Column="0" Grid.Row="5" Text="$2"/>
+                            <Entry Grid.Column="1" Grid.Row="5" Keyboard="Numeric" 
+                                   Text="{Binding Two, Mode=TwoWay}"/>
+                            
+                            <Label Grid.Column="0" Grid.Row="6" Text="$5"/>
+                            <Entry Grid.Column="1" Grid.Row="6" Keyboard="Numeric" 
+                                   Text="{Binding Five, Mode=TwoWay}"/>
+                            
+                            <Label Grid.Column="0" Grid.Row="7" Text="$10"/>
+                            <Entry Grid.Column="1" Grid.Row="7" Keyboard="Numeric" 
+                                   Text="{Binding Ten, Mode=TwoWay}"/>
+                            
+                        </Grid>
+                    </Frame>
+                </Grid>
+            </ScrollView>
         </StackLayout>
-    </ContentPage.Content>
-</ContentPage>
+        </ContentPage>
+        <ContentPage Title="Billetes">
+            <StackLayout>
+                <ScrollView>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <forms:CachedImage
+                        Grid.Row="0"
+                        Source="background_bills.png"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="StartAndExpand"
+                        CacheType="Memory"
+                        Aspect="AspectFill"
+                    >
+                    </forms:CachedImage>
+                    <Frame CornerRadius="10" 
+                           BackgroundColor="White" 
+                           Grid.RowSpan="2" 
+                           Margin="20,150,20,20">
+                        <Grid RowSpacing="10">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Row="0"
+                                   Grid.ColumnSpan="3"
+                                   Text="Ingresa el número de billetes que tienes"
+                                   HorizontalTextAlignment="Center"
+                                   FontSize="12">
+                            </Label>
+                            
+                            <Label Grid.Column="0" Grid.Row="1" Text="$20"/>
+                            <Entry Grid.Column="1" Grid.Row="1" Keyboard="Numeric" 
+                                   Text="{Binding Twenty, Mode=TwoWay}"/>
+                            
+                            <Label Grid.Column="0" Grid.Row="2" Text="$50"/>
+                            <Entry Grid.Column="1" Grid.Row="2" Keyboard="Numeric" 
+                                   Text="{Binding Fifty, Mode=TwoWay}"/>
+                            
+                            <Label Grid.Column="0" Grid.Row="3" Text="$100"/>
+                            <Entry Grid.Column="1" Grid.Row="3" Keyboard="Numeric" 
+                                   Text="{Binding Hundred, Mode=TwoWay}"/>
+                            
+                            <Label Grid.Column="0" Grid.Row="4" Text="$200"/>
+                            <Entry Grid.Column="1" Grid.Row="4" Keyboard="Numeric" 
+                                   Text="{Binding TwoHundred, Mode=TwoWay}"/>
+                            
+                            <Label Grid.Column="0" Grid.Row="5" Text="$500"/>
+                            <Entry Grid.Column="1" Grid.Row="5" Keyboard="Numeric" 
+                                   Text="{Binding FiveHundred, Mode=TwoWay}"/>
+                            
+                            <Label Grid.Column="0" Grid.Row="6" Text="$1000"/>
+                            <Entry Grid.Column="1" Grid.Row="6" Keyboard="Numeric" 
+                                   Text="{Binding OneThousand, Mode=TwoWay}"/>
+                            
+                        </Grid>
+                    </Frame>
+                </Grid>
+            </ScrollView>
+        </StackLayout>
+        </ContentPage>
+    </TabbedPage.Children>
+</TabbedPage>

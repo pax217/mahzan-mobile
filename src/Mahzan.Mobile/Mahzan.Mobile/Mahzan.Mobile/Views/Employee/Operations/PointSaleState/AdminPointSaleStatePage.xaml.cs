@@ -10,7 +10,7 @@ using Xamarin.Forms.Xaml;
 namespace Mahzan.Mobile.Views.Employee.Operations.PointSaleState
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class AdminPointSaleStatePage : ContentPage
+    public partial class AdminPointSaleStatePage : TabbedPage
     {
         public AdminPointSaleStatePage()
         {

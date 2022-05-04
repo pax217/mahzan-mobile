@@ -35,7 +35,7 @@ namespace Mahzan.Mobile.ViewModels.Employee.Operations
             {
                 new OperationsOptions()
                 {
-                    Option ="Abrir/Cerrar Caja",
+                    Option ="Abrir/Cerrar Punto de Venta",
                     OptionDetail="Abrir, Cerra, Billetes, Monedas"
                 },
             };
@@ -45,8 +45,8 @@ namespace Mahzan.Mobile.ViewModels.Employee.Operations
         {
             switch (_selectedOpetationOptions.Option)
             {
-                case "Abrir/Cerrar Caja":
-                    _navigationService.NavigateAsync("ListPage");
+                case "Abrir/Cerrar Punto de Venta":
+                    _navigationService.NavigateAsync("AdminPointSaleStatePage");
                     break;
                 default:
                     break;
