@@ -65,13 +65,8 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings.Printers
             set
             {
                 _selectedDevice = value;
-
             }
         }
-
-
-
-        //Commands
         public ICommand PrintCommand { get; set; }
 
         public SelectPrinterPageViewModel(
@@ -88,7 +83,7 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings.Printers
             //Comands
             PrintCommand = new Command(async () => await OnPrintCommand());
 
-            Task.Run(() => BindDeviceList());
+            Task.Run(BindDeviceList);
         }
 
         private async Task OnPrintCommand()
@@ -99,9 +94,16 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings.Printers
                 await Application.Current.MainPage.DisplayAlert(
                     "Impresora", "Debes seleccionar un dispositivo bluethood", "ok");
                 
-                return;
             }
-            else 
+            else
+            {
+                await Print();
+            }
+        }
+
+        private async Task Print()
+        {
+            try
             {
                 await _bluetoothDeviceRepository.DeleteAll();
 
@@ -148,33 +150,32 @@ namespace Mahzan.Mobile.ViewModels.Administrator.Settings.Printers
                 await _printer.WriteLine( DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss tt"));
                 await _printer.Reset();
             }
-
-
+            catch (Exception e)
+            {
+                await Application.Current.MainPage.DisplayAlert(
+                    "Impresora", 
+                    "El dispositivo bluethood, no es una impresora", 
+                    "ok");
+            }
         }
 
-        /// <summary>
-        /// Get Bluetooth device list with DependencyService
-        /// </summary>
         async Task BindDeviceList()
         {
-            //Busca si el dispositivo fue previamnete configurado
+            var bluethoodDeviceOnRepository = await _bluetoothDeviceRepository.Get();
 
-            List<BluetoothDevice> bluetoothDevice = await _bluetoothDeviceRepository
-                                                    .Get();
-
-            if (bluetoothDevice.Any())
+            if (bluethoodDeviceOnRepository.Any())
             {
-                SelectedDevice = bluetoothDevice.FirstOrDefault().DeviceName;
+                SelectedDevice = bluethoodDeviceOnRepository.FirstOrDefault()?.DeviceName;
             }
             
-            
-            var list = _blueToothService.GetDeviceList();
-            DeviceList.Clear();
-            foreach (var item in list)
-                DeviceList.Add(item);
+            var listBluethoodDevices = _blueToothService.GetDeviceList();
+
+            if (listBluethoodDevices.Any())
+            {
+                DeviceList.Clear();
+                foreach (var item in listBluethoodDevices)
+                    DeviceList.Add(item);
+            }
         }
-
-
     }
-
 }

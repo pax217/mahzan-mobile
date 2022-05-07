@@ -203,6 +203,13 @@ namespace Mahzan.Mobile.ViewModels
             
             result.Add(new MyMenuItem()
             {
+                Icon = "menu_icon_settings",
+                PageName = nameof(Views.Employee.Settings.IndexSettingsPage),
+                Title = "Configuración",
+            });
+            
+            result.Add(new MyMenuItem()
+            {
                 Icon = "menu_icon_exit",
                 PageName = nameof(LoginPage),
                 Title = "Salir",

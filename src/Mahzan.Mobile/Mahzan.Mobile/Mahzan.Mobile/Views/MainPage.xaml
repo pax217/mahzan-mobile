@@ -81,7 +81,7 @@
                             </ListView.Behaviors>
 
                         </ListView>
-                        <Label Text="Version 1.11"></Label>
+                        <Label Text="Version 1.13"></Label>
                     </StackLayout>
                 </ContentPage>
             </x:Arguments>

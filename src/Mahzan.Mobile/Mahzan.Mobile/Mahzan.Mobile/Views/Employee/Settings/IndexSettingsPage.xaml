@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"             
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="http://prismlibrary.com"
              xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
-             x:Class="Mahzan.Mobile.Views.Administrator.Settings.Printers.SelectPrinterPage">
+             x:Class="Mahzan.Mobile.Views.Employee.Settings.IndexSettingsPage">
     <ContentPage.Content>
         <StackLayout>
             <ScrollView>
@@ -13,11 +13,10 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
-                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <forms:CachedImage
                         Grid.Row="0"
-                        Source="background_bluetooth.png"
+                        Source="background_settings.png"
                         HorizontalOptions="FillAndExpand"
                         VerticalOptions="StartAndExpand"
                         CacheType="Memory"
@@ -31,29 +30,24 @@
                         <Grid RowSpacing="11">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"></RowDefinition>
-                                <RowDefinition Height="100"></RowDefinition>
-                                <RowDefinition Height="Auto"></RowDefinition>
-                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="500"></RowDefinition>
                             </Grid.RowDefinitions>
                             <Label Grid.Row="0"
-                                   Text="Impresora Bluethooth"
+                                   Text="Menú de Configuracion"
                                    HorizontalTextAlignment="Center"
                                    FontSize="18">
                             </Label>
-                            <Picker Grid.Row="1"
-                                    ItemsSource="{Binding DeviceList}"
-                                    Title="Dispositivos Bluetooth"
-                                    ItemDisplayBinding="{Binding .}"
-                                    SelectedItem="{Binding SelectedDevice}" />
-                            <Label Grid.Row="2"
-                                   Text="ATENCION: si no logras ver dispositivos, 
-                                   asegurate de tener activo tu bluethood e ingresanuevamente"
-                                   HorizontalTextAlignment="Start"
-                                   FontSize="14">
-                            </Label>
-                            <Button Grid.Row="3"
-                                    Text="Asignar/Imprimir Prueba"
-                                    Command="{Binding PrintCommand}"/>
+                            <ListView Grid.Row="1"
+                                      ItemsSource="{Binding ListSettingsOptionsItem}"
+                                      SelectedItem="{Binding SelectedEnviromentOptions}">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextCell Detail="{Binding OptionDetail}" 
+                                                  Text="{Binding Option}">
+                                        </TextCell>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
                         </Grid>
                     </Frame>
                 </Grid>

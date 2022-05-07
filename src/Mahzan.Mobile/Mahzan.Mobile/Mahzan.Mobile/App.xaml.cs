@@ -36,6 +36,7 @@ using Mahzan.Mobile.ViewModels.Administrator.Settings.UnitsSale;
 using Mahzan.Mobile.ViewModels.Employee;
 using Mahzan.Mobile.ViewModels.Employee.Operations;
 using Mahzan.Mobile.ViewModels.Employee.Operations.PointSaleState;
+using Mahzan.Mobile.ViewModels.Employee.Operations.Sales;
 using Mahzan.Mobile.Views;
 using Mahzan.Mobile.Views.Administrator;
 using Mahzan.Mobile.Views.Administrator.Operations;
@@ -56,6 +57,7 @@ using Mahzan.Mobile.Views.Administrator.Settings.UnitsSale;
 using Mahzan.Mobile.Views.Employee;
 using Mahzan.Mobile.Views.Employee.Operations;
 using Mahzan.Mobile.Views.Employee.Operations.PointSaleState;
+using Mahzan.Mobile.Views.Employee.Operations.Sales;
 using Prism;
 using Prism.Ioc;
 using Xamarin.Forms;
@@ -174,7 +176,14 @@ namespace Mahzan.Mobile
             ViewModels.Employee.Operations.IndexOperationsPageViewModel>();
             
             containerRegistry.RegisterForNavigation<AdminPointSaleStatePage, AdminPointSaleStatePageViewModel>();
+            containerRegistry.RegisterForNavigation<ListSalesPage, ListSalesPageViewModel>();
+            containerRegistry.RegisterForNavigation<NewSalePage, NewSalePageViewModel>();
 
+            
+            // Settings
+            containerRegistry.RegisterForNavigation<
+                Views.Employee.Settings.IndexSettingsPage, 
+                ViewModels.Employee.Settings.IndexSettingsPageViewModel>();
             
         }
 

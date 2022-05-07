@@ -1,23 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"             
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="http://prismlibrary.com"
              xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
-             x:Class="Mahzan.Mobile.Views.Administrator.Settings.Printers.SelectPrinterPage">
+             x:Class="Mahzan.Mobile.Views.Employee.Operations.Sales.ListSalesPage"
+             Title="Ventas">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="toolbarItemAddSale"
+                     IconImageSource="icon_add.png"
+                     Command="{Binding AddSaleCommand}">
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <StackLayout>
+        <RefreshView 
+            Command="{Binding RefreshCommand}"
+            IsRefreshing="{Binding IsRefreshing}">
+            <StackLayout>
             <ScrollView>
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
-                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <forms:CachedImage
                         Grid.Row="0"
-                        Source="background_bluetooth.png"
+                        Source="background_sales.png"
                         HorizontalOptions="FillAndExpand"
                         VerticalOptions="StartAndExpand"
                         CacheType="Memory"
@@ -27,37 +36,24 @@
                     <Frame CornerRadius="10" 
                            BackgroundColor="White" 
                            Grid.RowSpan="2" 
-                           Margin="20,150,20,20">
-                        <Grid RowSpacing="11">
+                           Margin="20,100,20,20">
+                        <Grid RowSpacing="1">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"></RowDefinition>
-                                <RowDefinition Height="100"></RowDefinition>
                                 <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="350"></RowDefinition>
                                 <RowDefinition Height="Auto"></RowDefinition>
                             </Grid.RowDefinitions>
                             <Label Grid.Row="0"
-                                   Text="Impresora Bluethooth"
+                                   Text="Mis Ventas"
                                    HorizontalTextAlignment="Center"
                                    FontSize="18">
                             </Label>
-                            <Picker Grid.Row="1"
-                                    ItemsSource="{Binding DeviceList}"
-                                    Title="Dispositivos Bluetooth"
-                                    ItemDisplayBinding="{Binding .}"
-                                    SelectedItem="{Binding SelectedDevice}" />
-                            <Label Grid.Row="2"
-                                   Text="ATENCION: si no logras ver dispositivos, 
-                                   asegurate de tener activo tu bluethood e ingresanuevamente"
-                                   HorizontalTextAlignment="Start"
-                                   FontSize="14">
-                            </Label>
-                            <Button Grid.Row="3"
-                                    Text="Asignar/Imprimir Prueba"
-                                    Command="{Binding PrintCommand}"/>
                         </Grid>
                     </Frame>
                 </Grid>
             </ScrollView>
         </StackLayout>
+        </RefreshView>
     </ContentPage.Content>
 </ContentPage>

@@ -5,7 +5,7 @@
              x:Class="Mahzan.Mobile.Views.Employee.EmployeeDashboardPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Hello, world!"
+            <Label Text="Dashboard!"
                    VerticalOptions="CenterAndExpand"
                    HorizontalOptions="CenterAndExpand" />
         </StackLayout>

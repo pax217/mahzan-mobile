@@ -38,6 +38,11 @@ namespace Mahzan.Mobile.ViewModels.Employee.Operations
                     Option ="Abrir/Cerrar Punto de Venta",
                     OptionDetail="Abrir, Cerra, Billetes, Monedas"
                 },
+                new OperationsOptions()
+                {
+                    Option ="Ventas",
+                    OptionDetail="Vender"
+                },
             };
         }
         
@@ -47,6 +52,9 @@ namespace Mahzan.Mobile.ViewModels.Employee.Operations
             {
                 case "Abrir/Cerrar Punto de Venta":
                     _navigationService.NavigateAsync("AdminPointSaleStatePage");
+                    break;
+                case "Ventas":
+                    _navigationService.NavigateAsync("ListSalesPage");
                     break;
                 default:
                     break;

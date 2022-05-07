@@ -6,6 +6,7 @@ using Mahzan.Mobile.Models.PointSaleState;
 using Mahzan.Mobile.Services.BlueTooth;
 using Mahzan.Mobile.SqLite._Base;
 using Mahzan.Mobile.SqLite.Entities;
+using Xamarin.Forms;
 
 namespace Mahzan.Mobile.Services.Printer.PointSaleState
 {
@@ -29,15 +30,28 @@ namespace Mahzan.Mobile.Services.Printer.PointSaleState
         private async Task InitializePrinter()
         {
             _bluetoothDevices = await _bluetoothDeviceRepository.Get();
-
-
-            _printer = new Printer(_blueToothService);
-            _printer.MyPrinter = "MTP-2";
-
         }
 
         public async Task PrintOpenPointSaleState(GetPointSaleStateResponse getPointSaleStateResponse)
         {
+            await ValidateSelectedPrint();
+            
+            await Print(getPointSaleStateResponse);
+        }
+
+        private async Task ValidateSelectedPrint()
+        {
+            if (!_bluetoothDevices.Any())
+            {
+                throw new Exception("No existe una impresora asignada, ve al menú Configuracion/Impresora");
+            }
+        }
+
+        private async Task Print(GetPointSaleStateResponse getPointSaleStateResponse)
+        { 
+            _printer = new Printer(_blueToothService);
+            _printer.MyPrinter = "MTP-2";
+            
             var pointSaleState = getPointSaleStateResponse.Data.FirstOrDefault();
             
             await _printer.Reset();
@@ -46,10 +60,10 @@ namespace Mahzan.Mobile.Services.Printer.PointSaleState
             await _printer.WriteLine("INFORME DE PUNTO DE VENTA");
             await _printer.WriteLine("-------------------------------");
             await _printer.SetAlignLeft();
-            await _printer.WriteLine("TIENDA:San Andres Totoltepec");
-            await _printer.WriteLine("PUNTO DE VENTA:TPV-01");
-            await _printer.WriteLine("CAJERO:mahzan.carlos.maldonado");
-            await _printer.WriteLine("ESTADO:" + pointSaleState.State);
+            await _printer.WriteLine("TIENDA:" + pointSaleState.StoreName);
+            await _printer.WriteLine("TPV:" + pointSaleState.PointSaleName);
+            await _printer.WriteLine("USR:" + pointSaleState.UserName);
+            await _printer.WriteLine("ESTADO:" + await ConvertState(pointSaleState.PointSaleState.State));
             await _printer.WriteLine("-------------------------------");
             await _printer.WriteLine("************MONEDAS************");
             await _printer.WriteLine("-------------------------------");
@@ -62,7 +76,7 @@ namespace Mahzan.Mobile.Services.Printer.PointSaleState
             await _printer.WriteLine(pointSaleState.Coins.Five + " de $   5.00");
             await _printer.WriteLine(pointSaleState.Coins.Ten + " de $  10.00");
             await _printer.WriteLine("-------------------------------");
-            await _printer.WriteLine("Monto en monedas $ " + pointSaleState.AmountCoins);
+            await _printer.WriteLine("Monto en monedas $ " + pointSaleState.PointSaleState.AmountCoins);
             await _printer.WriteLine("-------------------------------");
             await _printer.WriteLine("************BILLETES***********");
             await _printer.WriteLine("-------------------------------");
@@ -74,10 +88,27 @@ namespace Mahzan.Mobile.Services.Printer.PointSaleState
             await _printer.WriteLine(pointSaleState.Bills.FiveHundred + " de $ 500.00");
             await _printer.WriteLine(pointSaleState.Bills.OneThousand + " de $1000.00");
             await _printer.WriteLine("-------------------------------");
-            await _printer.WriteLine("Monto en billetes $ " + pointSaleState.AmountBills);
+            await _printer.WriteLine("Monto en billetes $ " + pointSaleState.PointSaleState.AmountBills);
             await _printer.WriteLine("-------------------------------");
-            await _printer.WriteLine("TOTAL $ " + (pointSaleState.AmountBills + pointSaleState.AmountCoins));
+            await _printer.WriteLine("TOTAL $ " + 
+                                     (pointSaleState.PointSaleState.AmountBills 
+                                      + pointSaleState.PointSaleState.AmountCoins)
+                                     );
             await _printer.Reset();
+        }
+
+        private async Task<string> ConvertState(string state)
+        {
+            string result = string.Empty;
+
+            switch (@state)
+            {
+                case "opened":
+                    result = "ABIERTO";
+                    break;;
+            }
+            
+            return result;
         }
     }
 }

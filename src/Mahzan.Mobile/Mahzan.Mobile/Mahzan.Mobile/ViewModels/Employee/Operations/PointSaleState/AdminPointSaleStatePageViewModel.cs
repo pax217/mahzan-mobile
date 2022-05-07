@@ -23,6 +23,7 @@ namespace Mahzan.Mobile.ViewModels.Employee.Operations.PointSaleState
         private readonly IPointSaleStateService _pointSaleStateService;
         private readonly IRepository<User> _userRepository;
         private readonly IPrintPointSaleStateService _printPointSaleStateService;
+        
 
         private User _user;
 
@@ -141,9 +142,19 @@ namespace Mahzan.Mobile.ViewModels.Employee.Operations.PointSaleState
 
         private async Task OnPrintPointSalestateCommand()
         {
-            var getPointsSaleResponse = await GetPintSaleState(_user.PointSaleId);
-            if (getPointsSaleResponse != null)
-                await _printPointSaleStateService.PrintOpenPointSaleState(getPointsSaleResponse);
+            try
+            {
+                var getPointsSaleResponse = await GetPintSaleState(_user.PointSaleId);
+                if (getPointsSaleResponse != null)
+                    await _printPointSaleStateService.PrintOpenPointSaleState(getPointsSaleResponse);
+            }
+            catch (Exception e)
+            {
+                await Application.Current.MainPage.DisplayAlert(
+                    "GetPointOnPrintPointSalestateCommandsSale", 
+                    e.Message, 
+                    "ok");
+            }
         }
 
         private async Task<GetPointSaleStateResponse> GetPintSaleState(Guid pointSaleId)
