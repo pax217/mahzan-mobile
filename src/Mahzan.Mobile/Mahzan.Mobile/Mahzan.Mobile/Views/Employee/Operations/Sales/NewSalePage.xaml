@@ -49,12 +49,6 @@
                                    HorizontalTextAlignment="Center"
                                    FontSize="18">
                             </Label>
-                            <Picker Grid.Row="1" 
-                                    Title="- Clientes -" 
-                                    ItemsSource="{Binding ListClients}" 
-                                    ItemDisplayBinding="{Binding BusinessName}"
-                                    SelectedItem="{Binding SelectedClient, Mode=TwoWay}"
-                                    FontSize="14"/>
                             <ListView Grid.Row="2"
                                       ItemsSource="{Binding ListViewTicketDetail}"
                                       CachingStrategy="RecycleElement"
